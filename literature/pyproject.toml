@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "literature"
+version = "0.1.0"
+description = "Literature processing module for complex-task-gen"
+authors = ["Mannes Mokkenstorm <mannesm@hotmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "2.2.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.packages]]
+include = "literature"
+from = "src"
