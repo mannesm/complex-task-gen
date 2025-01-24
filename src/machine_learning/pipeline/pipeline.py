@@ -1,7 +1,7 @@
 from loguru import logger
 from .research_datasets.gsm8k_dataset import GSM8KDataset
 from .models.model_factory import get_model
-from evaluation.pass_k import PassAtK, GSM8KPassAtK
+from .evaluation.pass_k import PassAtK, GSM8KPassAtK
 
 def run_pipeline():
     logger.info("Loading the GSM8K dataset (test split for evaluation)")
