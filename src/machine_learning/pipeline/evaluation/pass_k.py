@@ -39,8 +39,7 @@ class GSM8KPassAtK(PassAtK):
         ]
 
         reference_patterns = [
-            r'<<.*?=(\d+)>>',  # Matches <<...=123>>
-            r'(\d+)'  # Matches any standalone number
+            r'(?<=#### )\d+',  # Matches <<...=123>>
         ]
 
         pred_value = None
@@ -57,7 +56,7 @@ class GSM8KPassAtK(PassAtK):
             match = re.search(pattern, reference)
             logger.debug('Matched reference pattern: %s', pattern)
             if match:
-                ref_value = int(match.group(1))
+                ref_value = int(match.group(0))  # Use group(0) to get the entire match
                 break
 
         if pred_value is not None and ref_value is not None:
