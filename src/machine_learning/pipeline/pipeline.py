@@ -1,37 +1,44 @@
 from loguru import logger
 from .research_datasets.gsm8k_dataset import GSM8KDataset
 from .models.model_factory import get_model
-from .evaluation.pass_k import PassAtK, GSM8KPassAtK
+from evaluation.pass_k import PassAtK, GSM8KPassAtK
+import sys
 
-def run_pipeline():
+
+logger.add(sys.stderr, level="INFO")
+
+
+
+def run_pipeline(model_name: str = "qwen_camel", dataset_name: str = "gsm8k"):
     logger.info("Loading the GSM8K dataset (test split for evaluation)")
-    # 1. Load the GSM8K dataset (test split for evaluation)
-    logger.debug('Loading the GSM8K dataset (test split for evaluation)')
-    dataset = GSM8KDataset(split="test").dataset
+    if dataset_name == 'gsm8k':
+        dataset = GSM8KDataset(split="test").dataset
+    else:
+        logger.error(f"Unknown dataset name: {dataset_name}")
+        logger.error("Defaulting to gsm8k")
+        dataset = GSM8KDataset(split="test").dataset
 
     logger.info("Initializing the model via factory")
-    # 2. Initialize the model via factory
-    #    If you prefer CPU or MPS on a Mac, pass device="cpu" or "mps"
-    model = get_model(model_name="qwen_camel", device="mps")
+    model = get_model(model_name=model_name)
 
     logger.info("Starting inference on the dataset")
-    # 3. Inference: Loop through a subset of the dataset, collect predictions & references
     predictions = []
     references = []
 
-    # Use a small subset to test quickly, e.g. dataset[:5]
     i = 0
+    max_sample_size = 20
     for sample in dataset:
+        logger.info(f"Processing sample {i} out of {len(dataset)}, with a max of {max_sample_size} samples")
         question = sample.get("question")
         reference_answer = sample.get("answer")
 
-        logger.debug(f"Generating prediction for question: {question}")
-        # Generate prediction from the model
+        logger.info(f"Generating prediction for question: {question}")
         prediction = model.generate_solution(question)
+        logger.info(f"Prediction: {prediction}, {reference_answer}")
         predictions.append(prediction)
         references.append(reference_answer)
         i += 1
-        if i >= 2:
+        if i >= max_sample_size:
             break
     logger.info("Computing the Pass@1 metric")
     # 4. Compute the Pass@1 metric
