@@ -39,7 +39,7 @@ class BaseModel:
 
         self.chat_agent = ChatAgent("You are a helpful assistant.", model=self.model)
 
-    def generate_solution(self, prompt: str, max_new_tokens: int = 256):
+    def generate_response(self, prompt: str, max_new_tokens: int = 256):
         result = self.chat_agent.step(prompt)
         full_response = result.msgs[0].content
         return self._extract_answer(full_response)

@@ -3,7 +3,7 @@ from pipeline.pipeline import run_pipeline
 import sys
 import os
 
-from machine_learning.pipeline.models.constants import MODEL_NAMES
+from models.constants import MODEL_NAMES
 
 logger.remove()
 logger.add(sys.stderr, level="INFO")
