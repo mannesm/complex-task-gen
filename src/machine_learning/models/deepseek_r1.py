@@ -2,7 +2,7 @@ from .base_camel import BaseModel, ModelConfig
 from camel.types import ModelPlatformType, ModelType
 
 class DeepseekR1Model(BaseModel):
-    def __init__(self, device: str = "cpu"):
+    def __init__(self):
         """
         Qwen math model loaded with the Camel library.
         """

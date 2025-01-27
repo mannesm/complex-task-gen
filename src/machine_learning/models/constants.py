@@ -10,3 +10,9 @@ MODEL_CONFIG = {
     "LLAMA_3_2": {},
     "DEEPSEEK_R1": {},
 }
+
+TOKEN_MAX_DEFAULT = 1024
+
+HUGGINGFACE_MODEL_NAMES = {
+    "QWEN_2_MATH_7B": "Qwen/Qwen2.5-Math-7B-Instruct",
+}

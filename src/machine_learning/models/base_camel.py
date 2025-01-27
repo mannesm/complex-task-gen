@@ -6,14 +6,6 @@ from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
-def _extract_answer(output: str) -> str:
-    """
-    Simple method to parse or clean up the raw answer from Camel’s output.
-    """
-    if "Answer:" in output:
-        return output.split("Answer:")[-1].strip()
-    return output.strip()
-
 
 @dataclass
 class ModelConfig:
@@ -39,7 +31,7 @@ class BaseModel:
 
         self.chat_agent = ChatAgent("You are a helpful assistant.", model=self.model)
 
-    def generate_response(self, prompt: str, max_new_tokens: int = 256):
+    def generate_response(self, prompt: str):
         result = self.chat_agent.step(prompt)
         full_response = result.msgs[0].content
         return self._extract_answer(full_response)
@@ -50,23 +42,3 @@ class BaseModel:
             return output.split("Answer:")[-1].strip()
         return output.strip()
 
-
-#
-# class DeepseekCamelModel(BaseCamelModel):
-#     def __init__(self, device: str = "cpu"):
-#         """
-#         Qwen math model loaded with the Camel library.
-#         """
-#         super().__init__(
-#             model_platform=ModelPlatformType.DEEPSEEK,
-#             model_type=ModelType.DEEPSEEK_REASONER,
-#             device=device,
-#             model_config_dict={},  # Ensure this dictionary contains only valid keys
-#         )
-#
-#     def generate_solution(self, question: str, max_new_tokens: int = 256):
-#         """
-#         Generate a solution for a math question.
-#         """
-#         prompt = f"Question: {question}\nPlease provide a detailed reasoning and the final answer."
-#         return super().generate_solution(prompt, max_new_tokens)
