@@ -26,18 +26,17 @@ class Tokenizer:
         token_ids = self.tokenizer.convert_tokens_to_ids(tokens)
         return tokens, token_ids
 
-    def calculate_log_probability(self, input_text: str, output_text: str):
+    def calculate_log_probability(self, text: str):
         # Concatenate input and output for the model's context
-        full_text = input_text + output_text
-        inputs = self.tokenizer(full_text, return_tensors="pt")
+        tokenized_input = self.tokenizer(text, return_tensors="pt")
         with torch.no_grad():
-            outputs = self.model(**inputs)
+            outputs = self.model(**tokenized_input)
 
         logits = outputs.logits  # Shape: [batch_size, sequence_length, vocab_size]
         probs = torch.softmax(logits, dim=-1)  # Convert to probabilities
 
         # Tokenize output text
-        output_token_ids = self.tokenizer(output_text, return_tensors="pt")["input_ids"].squeeze()
+        output_token_ids = self.tokenizer(text, return_tensors="pt")["input_ids"].squeeze()
 
         # Extract probabilities of the output tokens
         log_probs = []
@@ -45,4 +44,4 @@ class Tokenizer:
             token_prob = probs[0, -(len(output_token_ids) - i), token_id]  # Probability of the token
             log_probs.append(torch.log(token_prob))
 
-        return log_probs, sum(log_probs).item()  # List of log probabilities and total log probability
+        return tokenized_input, log_probs, sum(log_probs).item()  # List of log probabilities and total log probability

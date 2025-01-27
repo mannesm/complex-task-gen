@@ -1,6 +1,4 @@
-BASIC_REASONING_PROMPT = """
-You are a math reasoning assistant. 
-Your job is to solve the following problem step by step, showing your reasoning clearly and logically.
+BASIC_REASONING_PROMPT = """You are a math reasoning assistant. Your job is to solve the following problem step by step, showing your reasoning clearly and logically.
 
 **Question**: {question}
 
@@ -11,14 +9,10 @@ Your job is to solve the following problem step by step, showing your reasoning 
 
 #### Answer
 <Provide the final solution here with concise explanation>
-
 """
 
 
-BASIC_MATH_PROMPT_NO_REASONING = """
-You are a math reasoning assistant.
-
-Your job is to solve the following problem but only output the final answer. Do not include any reasoning steps or explanations.
+BASIC_MATH_PROMPT_NO_REASONING = """You are a math reasoning assistant. Your job is to solve the following problem but only output the final answer. Do not include any reasoning steps or explanations.
 
 Question: {question}
 
