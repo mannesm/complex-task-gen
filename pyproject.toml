@@ -13,6 +13,9 @@ unsloth = "^2025.1.1"
 python-dotenv = "^0.19.1"
 openai = "^1.4.0"
 pyzotero = "*"
+pandas = "^1.4.0"
+plotly = "*"
+dash = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -20,8 +23,4 @@ build-backend = "poetry.core.masonry.api"
 
 [[tool.poetry.packages]]
 include = "machine_learning"
-from = "src"
-
-[[tool.poetry.packages]]
-include = "literature"
 from = "src"
