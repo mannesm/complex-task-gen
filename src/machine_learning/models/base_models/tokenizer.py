@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from models.constants import MODEL_NAMES, HUGGINGFACE_MODEL_NAMES
+from models.base_models.constants import MODEL_NAMES, HUGGINGFACE_MODEL_NAMES
 
 
 class Tokenizer:
