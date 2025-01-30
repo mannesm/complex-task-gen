@@ -12,13 +12,50 @@ BASIC_REASONING_PROMPT = """You are a math reasoning assistant. Your job is to s
 """
 
 
-BASIC_MATH_PROMPT_NO_REASONING = """You are a math reasoning assistant. Your job is to solve the following problem but only output the final answer. Do not include any reasoning steps or explanations.
-
+BASIC_MATH_PROMPT = """You are a math reasoning assistant. Your job is to solve the following problem:
 Question: {question}
+Answer: {answer}
+"""  #TODO: What is the prompt they normally use in research?
 
-Conclude with the final result in the following format:
 
-Answer
+PERPLEXITY_THRESHOLD = 12
 
-<Provide the final solution here concisely>
+AUGMENTATION_PROMPT = """
+You are given a math word problem and its answer. Your task is to generate a harder version of the given problem while preserving its core concept. The harder version should increase in difficulty in a logical way, such as by adding more steps, increasing numerical complexity, or requiring deeper reasoning.
+
+Rules for augmentation:
+
+The new question must retain the same general topic as the original.
+Increase difficulty by adding complexity, not by making it vague or confusing.
+The harder question should still be solvable.
+Keep the wording natural and clear.
+Provide the correct answer for the harder version.
+Example Format:
+Original Question: {original_question}
+Original Answer: {original_answer}
+
+
+Return the harder question and answer in the following format
+
+Harder Question: [Generated harder version]
+Harder Answer: [Generated correct answer]
+
+"""
+
+SOLVER_PROMPT = """
+Prompt:
+You are given a math word problem and its proposed answer. Your task is to verify whether the given answer is correct. Solve the problem independently and compare your solution with the provided answer.
+
+Rules for verification:
+
+Solve the question step by step.
+Compare your final answer with the given answer.
+If the answers match, return True.
+If the answers do not match, return False.
+Do not assume the provided answer is correct—always verify independently.
+Example Format:
+Question: {question}
+Proposed Answer: {proposed_answer}
+
+Verification Result: [True/False]
 """

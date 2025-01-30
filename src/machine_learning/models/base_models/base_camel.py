@@ -31,14 +31,15 @@ class BaseModel:
 
         self.chat_agent = ChatAgent("You are a helpful assistant.", model=self.model)
 
-    def generate_response(self, prompt: str):
+    def generate_response(self, prompt: str, return_full_response: bool = True) -> str:
         result = self.chat_agent.step(prompt)
         full_response = result.msgs[0].content
-        return self._extract_answer(full_response)
+        if not return_full_response:
+            return self._extract_answer(full_response)
+        return full_response.strip()
 
     @staticmethod
     def _extract_answer(output: str) -> str:
         if "Answer:" in output:
             return output.split("Answer:")[-1].strip()
         return output.strip()
-
