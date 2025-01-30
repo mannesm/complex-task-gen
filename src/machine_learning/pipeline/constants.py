@@ -42,7 +42,7 @@ Harder Answer: [Generated correct answer]
 
 """
 
-SOLVER_PROMPT = """
+VERIFIER_PROMPT = """
 Prompt:
 You are given a math word problem and its proposed answer. Your task is to verify whether the given answer is correct. Solve the problem independently and compare your solution with the provided answer.
 

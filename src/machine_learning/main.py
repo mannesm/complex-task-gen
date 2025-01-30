@@ -2,7 +2,7 @@ import pandas as pd
 from loguru import logger
 from dotenv import load_dotenv
 
-from constants import AUGMENTATION_PROMPT, SOLVER_PROMPT
+from constants import AUGMENTATION_PROMPT
 from models.base_models.deepseek_r1 import DeepseekR1Model
 from pipeline.log_probability_pipeline import generate_log_probabilities
 from models.base_models.qwen_2_math_7b import QWen2Math7BModel
@@ -37,23 +37,23 @@ if __name__ == "__main__":
 
     augmented_df = pd.DataFrame(augmented_data)
 
-    solver_model = DeepseekR1Model()
-    correct_solver_output = []
-    incorrect_solver_output = []
+    verifier_model = DeepseekR1Model()
+    correct_verifier_output = []
+    incorrect_verifier_output = []
     for index, row in augmented_df.iterrows():
         logger.info(f"Augmented question: {row['question']}, Answer: {row['answer']}")
-        solver_model_prompt = SOLVER_PROMPT.format(question=row["question"], proposed_answer=row["answer"])
-        solver_response = solver_model.generate_response(solver_model_prompt)
-        solver_answer = check_verification_result(solver_response)
-        if solver_answer:
-            logger.info("Solver model judgement: {solver_answer}, the model is correctly augmenting")
-            correct_solver_output.append(row)
+        verifier_model_prompt = VERIFIER_PROMPT.format(question=row["question"], proposed_answer=row["answer"])
+        verifier_response = verifier_model.generate_response(verifier_model_prompt)
+        verifier_answer = check_verification_result(verifier_response)
+        if verifier_answer:
+            logger.info("verifier model judgement: {verifier_answer}, the model is correctly augmenting")
+            correct_verifier_output.append(row)
 
         else:
-            logger.info("Solver model judgement: {solver_answer}, the model is not correctly augmenting")
-            incorrect_solver_output.append(row)
-    correct_df = pd.DataFrame(correct_solver_output)
-    # incorrect_df = pd.DataFrame(incorrect_solver_output)
+            logger.info("verifier model judgement: {verifier_answer}, the model is not correctly augmenting")
+            incorrect_verifier_output.append(row)
+    correct_df = pd.DataFrame(correct_verifier_output)
+    # incorrect_df = pd.DataFrame(incorrect_verifier_output)
     log_probabilities_hard_questions = generate_log_probabilities(correct_df, max_sample_size=10)
 
 
