@@ -7,6 +7,7 @@ from models.base_models.tokenizer import Tokenizer
 
 # Adjust logging level as needed
 logger.level("DEBUG")
+tokenizer_model = Tokenizer()
 
 def generate_log_probabilities(input_dataset: pd.DataFrame, max_sample_size=5):
     """
@@ -22,7 +23,7 @@ def generate_log_probabilities(input_dataset: pd.DataFrame, max_sample_size=5):
     model_results = []
 
     # Iterate over your input
-    tokenizer_model = Tokenizer()
+
 
     for i, row in input_dataset.iterrows():
         if i >= max_sample_size:

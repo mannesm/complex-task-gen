@@ -18,7 +18,7 @@ Answer: {answer}
 """  #TODO: What is the prompt they normally use in research?
 
 
-PERPLEXITY_THRESHOLD = 12
+PERPLEXITY_THRESHOLD = 10
 
 AUGMENTATION_PROMPT = """
 You are given a math word problem and its answer. Your task is to generate a harder version of the given problem while preserving its core concept. The harder version should increase in difficulty in a logical way, such as by adding more steps, increasing numerical complexity, or requiring deeper reasoning.
