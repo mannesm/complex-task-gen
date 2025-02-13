@@ -40,17 +40,22 @@ class Tokenizer:
         token_ids = self.tokenizer.convert_tokens_to_ids(tokens)
         return tokens, token_ids
 
-    def calculate_log_probability(self, text: str) -> tuple:
+    def calculate_log_probability(self, text: str, prompt: str = None) -> tuple:
         """
-        Calculate the log probability of the input text using the instantiated model.
+        Calculate the log probability of the input text, optionally focusing on the part after the prompt.
 
         Args:
             text (str): The input text for which to calculate log probabilities.
+            prompt (str, optional): The prompt part of the text. If provided, log probabilities
+                                    are calculated only for the text part after the prompt.
 
         Returns:
-            tuple: A tuple containing the tokenized input, list of log probabilities for each token, and the sum of log probabilities.
+            tuple: A tuple containing the solution tokens, list of log probabilities for each solution token,
+                   and the sum of log probabilities.
         """
+        text, prompt = text.strip(), prompt.strip() if prompt is not None else None
         tokenized_input = self.tokenizer(text, return_tensors="pt").to(self.device)
+
         input_ids = tokenized_input["input_ids"]
 
         with torch.no_grad():
@@ -61,15 +66,31 @@ class Tokenizer:
 
         # Shift logits for next-token prediction
         shifted_log_probs = log_probs[:, :-1, :]  # Ignore last token logit
-        target_ids = input_ids[:, 1:]  # Shift input ids for matching
+        target_ids = input_ids[:, 1:]  # Shift input ids for next-token prediction
 
         # Gather log probabilities for the actual token predictions
         token_log_probs = shifted_log_probs.gather(dim=-1, index=target_ids.unsqueeze(-1)).squeeze(-1)
 
-        # Convert to list and sum log probabilities
-        log_p_list = token_log_probs.squeeze(0).tolist()  # Convert tensor to list
-        log_p_sum = sum(log_p_list)  # Sum log probabilities
+        # Determine start index based on prompt
+        start_idx = 0
+        if prompt is not None:
+            # Tokenize the prompt
+            prompt_input = self.tokenizer(prompt, return_tensors="pt").to(self.device)
+            prompt_ids = prompt_input["input_ids"].squeeze(0)
+            input_ids_seq = input_ids.squeeze(0)
 
-        # Return tokens, log probabilities, and total log probability
+            # Validate prompt is at the beginning of input_ids
+            if prompt_ids.shape[0] > input_ids_seq.shape[0]:
+                raise ValueError("Prompt is longer than the input text.")
+            if not torch.all(input_ids_seq[:len(prompt_ids)] == prompt_ids):
+                raise ValueError("Input text does not start with the provided prompt.")
+            start_idx = len(prompt_ids) - 1
+
+        solution_log_probs = token_log_probs[:, start_idx:]
+        log_p_list = solution_log_probs.squeeze(0).tolist()
+        log_p_sum = sum(log_p_list)
+
         tokens = self.tokenizer.convert_ids_to_tokens(input_ids.squeeze().tolist())
-        return tokens, log_p_list, log_p_sum
+        solution_tokens = tokens[start_idx + 1:]  # +1 to align with shifted log_probs
+
+        return solution_tokens, log_p_list, log_p_sum

@@ -1,7 +1,8 @@
 import re
 from loguru import logger
 
-prediction_patterns = [r"(?<=#### )\d+", r"<<\d+\*\d+=(\d+)>>", r"\\\(\\boxed{(\d+)}\\\)"]
+# Corrected regex pattern for extracting boxed numbers
+prediction_patterns = [r"(?<=#### )\d+", r"<<\d+\*\d+=(\d+)>>", r"\\boxed\{(\d+)\}"]
 
 reference_patterns = [r"(?<=#### )\d+"]
 
@@ -21,19 +22,23 @@ def extract_numeric_value(input_string: str, regex_pattern_list: list[str]) -> i
     return None
 
 
-def is_equal(pred, ref):
+def is_equal(pred: str|int, ref: str|int) -> bool:
     """
     Predicate to determine if the prediction is exactly the same as the reference.
     :param pred:
     :param ref:
     :return:
     """
-    return pred.strip() == ref.strip()
+    if isinstance(pred, str):
+        pred.strip()
+    if isinstance(ref, str):
+        ref.strip()
+    return pred == ref
 
 
 def extract_generated_question_answer(text):
-    question_match = re.search(r'Harder Question: (.*?)\nHarder Answer:', text, re.DOTALL)
-    answer_match = re.search(r'Harder Answer: (.*)', text, re.DOTALL)
+    question_match = re.search(r"Harder Question: (.*?)\nHarder Answer:", text, re.DOTALL)
+    answer_match = re.search(r"Harder Answer: (.*)", text, re.DOTALL)
 
     question = question_match.group(1).strip() if question_match else None
     answer = answer_match.group(1).strip() if answer_match else None

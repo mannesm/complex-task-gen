@@ -29,7 +29,7 @@ class BaseModel:
             model_config_dict=config.model_config_dict,
         )
 
-        self.chat_agent = ChatAgent("You are a helpful assistant.", model=self.model)
+        self.chat_agent = ChatAgent("You are a helpful assistant.", model=self.model)  # cannot make
 
     def generate_response(self, prompt: str, return_full_response: bool = True) -> str:
         result = self.chat_agent.step(prompt)

@@ -1,5 +1,7 @@
-from machine_learning.models.base_models.base_camel import BaseModel, ModelConfig
 from camel.types import ModelPlatformType, ModelType
+
+from models.base_models.base_camel import BaseModel, ModelConfig
+
 
 class DeepseekR1Model(BaseModel):
     def __init__(self):
@@ -12,3 +14,6 @@ class DeepseekR1Model(BaseModel):
 
         )
         super().__init__(config)
+
+
+# DeepseekR1Model().generate_response(prompt="Are there famous people that look like winnie the pooh?")

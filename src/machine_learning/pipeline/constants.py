@@ -1,4 +1,4 @@
-BASIC_REASONING_PROMPT = """You are a math reasoning assistant. Your job is to solve the following problem step by step, showing your reasoning clearly and logically.
+BASIC_MATH_REASONING_PROMPT = """You are a math reasoning assistant. Your job is to solve the following problem step by step, showing your reasoning clearly and logically.
 
 **Question**: {question}
 
@@ -15,13 +15,15 @@ BASIC_REASONING_PROMPT = """You are a math reasoning assistant. Your job is to s
 BASIC_MATH_PROMPT = """You are a math reasoning assistant. Your job is to solve the following problem:
 Question: {question}
 Answer: {answer}
-"""  #TODO: What is the prompt they normally use in research?
-
+"""  #TODO: What is the prompt they normally use in research? Give it a question without answer: what will it generate?
+#TODO: adept prompt to have same format, this will be the format of the prompt. Calculate logP of the solution part only
 
 PERPLEXITY_THRESHOLD = 10
 
 AUGMENTATION_PROMPT = """
-You are given a math word problem and its answer. Your task is to generate a harder version of the given problem while preserving its core concept. The harder version should increase in difficulty in a logical way, such as by adding more steps, increasing numerical complexity, or requiring deeper reasoning.
+You are given a math word problem and its answer.
+Your task is to generate a harder version of the given problem while preserving its core concept.
+The harder version should increase in difficulty in a logical way, such as by adding more steps, increasing numerical complexity, or requiring deeper reasoning.
 
 Rules for augmentation:
 
@@ -44,7 +46,9 @@ Harder Answer: [Generated correct answer]
 
 VERIFIER_PROMPT = """
 Prompt:
-You are given a math word problem and its proposed answer. Your task is to verify whether the given answer is correct. Solve the problem independently and compare your solution with the provided answer.
+You are given a math word problem and its proposed answer. 
+Your task is to verify whether the given answer is correct.
+Solve the problem independently and compare your solution with the provided answer.
 
 Rules for verification:
 

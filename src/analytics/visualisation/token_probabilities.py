@@ -3,7 +3,7 @@ from dash import dcc, html, Input, Output
 import pandas as pd
 import plotly.express as px
 
-df = pd.read_csv("/Users/mannes/thesis/complex-task-gen/src/machine_learning/output/pipeline_output.csv")
+df = pd.read_csv("/complex_task_gen/src/machine_learning/output/pipeline_output.csv")
 
 
 # Initialize the Dash app

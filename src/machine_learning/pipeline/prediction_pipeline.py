@@ -87,7 +87,7 @@ def run_pipeline(model_name: str = "qwen_camel", dataset_name: str = "gsm8k"):
 
     logger.info("Computing the Pass@1 metric")
     pass_k_metric = PassAtK(k=1)
-    pass_k_score = pass_k_metric.compute(df_results["prediction"].tolist(), df_results["reference_answer"].tolist())
+    pass_k_score = compute(df_results["prediction"].tolist(), df_results["reference_answer"].tolist())
     logger.info(f"Pass@1 for Qwen (Camel) on GSM8K: {pass_k_score:.3f}")
 
     return df_results
