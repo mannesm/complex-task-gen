@@ -1,11 +1,11 @@
 import pandas as pd
-from scipy.special import comb  # For binomial coefficient
+from scipy.special import comb
 
 class PassAtKCalculator:
     def __init__(self, k):
         self.k = k
 
-    def compute_per_question(self, df):
+    def compute_per_question(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         Computes Pass@K per unique question using the probabilistic formula.
 
@@ -32,8 +32,8 @@ class PassAtKCalculator:
                 pass_at_k = 0.0
             elif k == 0:  # If k = 0, we can't pick any answers
                 pass_at_k = 0.0
-            elif c == n:  # All answers are correct, pass@k = 1
-                pass_at_k = 1.0
+            # elif c == n:  # All answers are correct, pass@k = 1
+            #     pass_at_k = 1.0
             else:
                 # Compute pass@k probability
                 pass_at_k = 1 - (comb(n - c, k) / comb(n, k))
@@ -42,6 +42,5 @@ class PassAtKCalculator:
 
         return pd.DataFrame(results)
 
-# Example equality check function (adjust as needed)
 def is_equal(pred, actual):
     return pred == actual

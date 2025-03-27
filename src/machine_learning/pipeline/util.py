@@ -2,21 +2,24 @@ import re
 from loguru import logger
 
 # Corrected regex pattern for extracting boxed numbers
-prediction_patterns = [r"(?<=#### )\d+", r"<<\d+\*\d+=(\d+)>>", r"\\boxed\{(\d+)\}"]
 
-reference_patterns = [r"(?<=#### )\d+"]
+prediction_patterns = [
+    r"\\\(\s*\\boxed{(\d+)}\s*\\\)",  # inline math mode
+    r"\[[\s\S]*?\\boxed{(\d+)}[\s\S]*?\]",  # display math mode
+    r"\\boxed{(\d+)}"  # standalone boxed number
+]
 
-
+logger.level("INFO")
 def extract_numeric_value(input_string: str, regex_pattern_list: list[str]) -> int | None:
     for pattern in regex_pattern_list:
         logger.debug(f"Attempting to match pattern: {pattern}")
         match = re.search(pattern, input_string)
         if match:
-            if match.lastindex:  # Check if there are capturing groups
+            if match.lastindex:
                 pred_value = int(match.group(1))
             else:
                 pred_value = int(match.group(0))
-            logger.info(f"Matched prediction value: {pred_value}")
+            logger.debug(f"Matched prediction value: {pred_value}")
             return pred_value
     logger.info(f"Failed to match prediction value for pattern: {regex_pattern_list} to {input_string}")
     return None

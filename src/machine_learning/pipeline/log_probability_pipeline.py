@@ -1,7 +1,9 @@
 import pandas as pd
 import numpy as np
 from loguru import logger
-from constants import BASIC_MATH_PROMPT
+
+from models.base_models.constants import MODEL_NAMES
+from pipeline.constants import BASIC_MATH_PROMPT
 from models.base_models.tokenizer import Tokenizer
 
 
@@ -10,7 +12,7 @@ logger.level("DEBUG")
 
 
     
-def generate_log_probabilities(input_dataset: pd.DataFrame, max_sample_size=10):
+def generate_log_probabilities(input_dataset: pd.DataFrame, max_sample_size=10,model_name:str = MODEL_NAMES["QWEN_2_15B"],):
     """
     input_dataset: pd.DataFrame or list-like structure of {question, answer} dicts
     max_sample_size: number of samples to process
@@ -22,7 +24,7 @@ def generate_log_probabilities(input_dataset: pd.DataFrame, max_sample_size=10):
     """
 
     model_results = []
-    tokenizer_model = Tokenizer()
+    tokenizer_model = Tokenizer(model_name)
     # Iterate over your input
 
     for i, row in input_dataset.iterrows():

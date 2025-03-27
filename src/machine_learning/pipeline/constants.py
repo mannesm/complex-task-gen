@@ -20,30 +20,32 @@ Answer: {answer}
 
 PERPLEXITY_THRESHOLD = 10
 
-AUGMENTATION_PROMPT = """
-You are given a math word problem and its answer.
+AUGMENTATION_PROMPT = """You are given a math word problem and its answer.
 Your task is to generate a harder version of the given problem while preserving its core concept.
-The harder version should increase in difficulty in a logical way, such as by adding more steps, increasing numerical complexity, or requiring deeper reasoning.
+The harder version should increase in difficulty by adding more steps, increasing numerical complexity, or requiring deeper reasoning.
 
 Rules for augmentation:
+1. Retain the same general topic as the original
+2. Increase difficulty through added complexity, not ambiguity
+3. Ensure the harder question remains solvable
+4. Use clear and natural wording
+5. Provide a complete step-by-step solution
 
-The new question must retain the same general topic as the original.
-Increase difficulty by adding complexity, not by making it vague or confusing.
-The harder question should still be solvable.
-Keep the wording natural and clear.
-Provide the correct answer for the harder version.
-Example Format:
-Original Question: {original_question}
-Original Answer: {original_answer}
+Original Question:
+{original_question}
 
+Original Answer:
+{original_answer}
 
-Return the harder question and answer in the following format
+Please format your response as follows:
 
-Harder Question: [Generated harder version]
-Harder Answer: [Generated correct answer]
+Harder Question:
+[Your harder version of the question]
 
-"""
+Solution:
+[Step-by-step solution]
 
+Final Answer: \boxed[numeric result]"""
 VERIFIER_PROMPT = """
 Prompt:
 You are given a math word problem and its proposed answer. 

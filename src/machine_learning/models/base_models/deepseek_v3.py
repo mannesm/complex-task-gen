@@ -3,14 +3,14 @@ from camel.types import ModelPlatformType, ModelType
 from models.base_models.base_camel import BaseModel, ModelConfig
 
 
-class DeepseekR1Model(BaseModel):
+class DeepseekV3Model(BaseModel):
     def __init__(self):
         """
-        Qwen math model loaded with the Camel library.
+        SilliconFlow Deepseek V3 model loaded with the Camel library.
         """
         config = ModelConfig(
-            model_platform=ModelPlatformType.DEEPSEEK,
-            model_type=ModelType.DEEPSEEK_REASONER,
+            model_platform=ModelPlatformType.SILICONFLOW,
+            model_type=ModelType.SILICONFLOW_DEEPSEEK_V3,
 
         )
         super().__init__(config)

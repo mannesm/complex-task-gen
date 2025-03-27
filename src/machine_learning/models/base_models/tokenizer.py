@@ -9,7 +9,7 @@ class Tokenizer:
     A class to handle tokenization and log probability calculation using a pre-trained model.
     """
 
-    def __init__(self, tokenizer_name: str = HUGGINGFACE_MODEL_NAMES["QWEN_2_MATH_7B"]):
+    def __init__(self, tokenizer_name: str = HUGGINGFACE_MODEL_NAMES["QWEN_2_15B"]):
         """
         Initialize the Tokenizer with a specified tokenizer and model.
 
@@ -19,11 +19,14 @@ class Tokenizer:
         if tokenizer_name == MODEL_NAMES["QWEN_2_MATH_7B"]:
             self.tokenizer = AutoTokenizer.from_pretrained(HUGGINGFACE_MODEL_NAMES["QWEN_2_MATH_7B"])
             self.model = AutoModelForCausalLM.from_pretrained(HUGGINGFACE_MODEL_NAMES["QWEN_2_MATH_7B"])
+        if tokenizer_name == MODEL_NAMES["QWEN_2_15B"]:
+            self.tokenizer = AutoTokenizer.from_pretrained(HUGGINGFACE_MODEL_NAMES["QWEN_2_15B"])
+            self.model = AutoModelForCausalLM.from_pretrained(HUGGINGFACE_MODEL_NAMES["QWEN_2_15B"])
         else:
             self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
             self.model = AutoModelForCausalLM.from_pretrained(tokenizer_name)
 
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "mps")
         self.model.to(self.device).eval()
 
     def tokenize_text(self, text: str) -> tuple:
