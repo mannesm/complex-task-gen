@@ -8,7 +8,7 @@ requires-python = ">=3.11,<4.0"
 dependencies = [
     "scikit-learn>=1.2.0,<2.0",
     "numpy>=1.22.0,<2.0",
-    "camel-ai==0.2.16",
+    "camel-ai>=0.2.20",
     "unsloth",
     "python-dotenv>=0.19.1,<1.0",
     "openai>=1.4.0,<2.0",
