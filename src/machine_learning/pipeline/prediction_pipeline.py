@@ -4,10 +4,11 @@ from loguru import logger
 from models.base_models.base_camel import BaseModel
 from models.base_models.tokenizer import Tokenizer
 from constants import BASIC_MATH_PROMPT
-from util import extract_numeric_value, reference_patterns, prediction_patterns
+from research_datasets.math_dataset import MathDataset
+from util import extract_numeric_value, prediction_patterns
 from research_datasets.gsm8k_dataset import GSM8KDataset
 from models.base_models.model_factory import get_model
-from machine_learning.evaluation.pass_k import PassAtK
+from machine_learning.evaluation.pass_k import PassAtKCalculator
 import sys
 
 logger.add(sys.stderr, level="INFO")
@@ -15,14 +16,20 @@ logger.add(sys.stderr, level="INFO")
 MAX_SAMPLE_SIZE = 5
 
 
-def load_dataset(dataset_name: str):
+def load_dataset(dataset_name: str, split: str= "test"):
     logger.info("Loading the GSM8K dataset (test split for evaluation)")
     if dataset_name == "gsm8k":
+        if split == 'train':
+            return GSM8KDataset(split="train").dataset
         return GSM8KDataset(split="test").dataset
+    if dataset_name == "math":
+        if split == "train":
+            return MathDataset(split="train").dataset
+
     else:
         logger.error(f"Unknown dataset name: {dataset_name}")
         logger.error("Defaulting to gsm8k")
-        return GSM8KDataset(split="test").dataset
+        raise NotImplementedError("Unknown dataset name")
 
 
 def initialize_model(model_name: str):
@@ -57,7 +64,7 @@ def run_pipeline(model_name: str = "qwen_camel", dataset_name: str = "gsm8k"):
 
         question = dataset_question_answer.get("question")
         reference_answer = dataset_question_answer.get("answer")
-        extracted_numeric_reference_answer = extract_numeric_value(reference_answer, reference_patterns)
+        extracted_numeric_reference_answer = extract_numeric_value(reference_answer, prediction_patterns)
         formatted_prompt, generated_answer = process_sample(model, question)
         extracted_numeric_predicted_answer = extract_numeric_value(generated_answer, prediction_patterns)
 
@@ -86,8 +93,8 @@ def run_pipeline(model_name: str = "qwen_camel", dataset_name: str = "gsm8k"):
     logger.info("Results DataFrame created")
 
     logger.info("Computing the Pass@1 metric")
-    pass_k_metric = PassAtK(k=1)
-    pass_k_score = compute(df_results["prediction"].tolist(), df_results["reference_answer"].tolist())
-    logger.info(f"Pass@1 for Qwen (Camel) on GSM8K: {pass_k_score:.3f}")
+    pass_k_metric = PassAtKCalculator(k=1)
+    # pass_k_score = (df_results["prediction"].tolist(), df_results["reference_answer"].tolist())
+    # logger.info(f"Pass@1 for Qwen (Camel) on GSM8K: {pass_k_score:.3f}")
 
     return df_results

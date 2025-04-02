@@ -1,10 +1,12 @@
-import pandas as pd
 from datasets import load_dataset
-import json
+import pandas as pd
 import re
+import json
+
+from research_datasets.base_dataset import BaseDataset
 
 
-class GSM8KDataset:
+class GSM8KDataset(BaseDataset):
     def __init__(self, split="test"):
         self.dataset = load_dataset("gsm8k", "main", split=split)
 
@@ -19,6 +21,7 @@ class GSM8KDataset:
 
     def to_dataframe(self):
         return pd.DataFrame(self.dataset)
+
 
 def download_gsm8k_dataset(number_of_problems=5000):
     try:

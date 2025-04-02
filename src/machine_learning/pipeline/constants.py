@@ -1,6 +1,6 @@
 BASIC_MATH_REASONING_PROMPT = """You are a math reasoning assistant. Your job is to solve the following problem step by step, showing your reasoning clearly and logically.
 
-**Question**: {question}
+**Question**: {problem}
 
 1. Break the problem into smaller steps and explain each one as you proceed.
 2. Justify each step of your reasoning, explaining why it is valid.
@@ -46,6 +46,8 @@ Solution:
 [Step-by-step solution]
 
 Final Answer: \boxed[numeric result]"""
+
+
 VERIFIER_PROMPT = """
 Prompt:
 You are given a math word problem and its proposed answer. 
