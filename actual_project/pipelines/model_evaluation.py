@@ -1,10 +1,11 @@
 import re
 import logging
 import sys
+
+from util import extract_generated_question_answer
+
 sys.path.insert(0, "/home/mmokkenstorm/sync")
 
-import pandas as pd
-from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 
 import os
 
@@ -25,14 +26,41 @@ SAVE_EVERY = 5
 SYMBOLIC_HUGGINFACE_NAME = "apple/GSM-Symbolic" # todo: also implement the medium and hard questions with the same index / augmented question answer pair.\
 MATH_HUGGINGFACE_NAME = "HuggingFaceH4/MATH-500"
 GSM8K_HUGGINGFACE_NAME = "openai/gsm8k"
+system_prompt = """You are a math reasoning assistant.
+Your job is to solve math problems step by step, showing your reasoning clearly and logically.
+
+Instructions:
+1. Break the problem into smaller steps and explain each one.
+2. Justify each step, explaining why it is valid.
+3. Highlight any assumptions or edge cases that may affect the solution.
+4. Conclude with the final result using the format:
+
+Final Answer:
+\\boxed{your final answer here}
+
+Only include one boxed expression at the end of your response.
+"""
 
 gsm8k, gsm_easy, gsm_medium, gsm_hard = create_gsm_evaluation_datasets(to_df=True)
 
-def extract_answer_from_gsm_dataset(example):
+all_datasets = [
+    gsm8k, gsm_easy, gsm_medium, gsm_hard
+]
+gsm_answer_pattern = r'####\s*(\d+)'
+
+def extract_answer_from_gsm_dataset(example, regex_patterns: list = [r'####\s*(\d+)']):
+    """
+    Extracts an answer from the example using a list of regex patterns.
+
+    :param example: A dictionary containing the "answer" key.
+    :param regex_patterns: A list of regex patterns to match against the answer.
+    :return: The first matched group or None if no match is found.
+    """
     answer = example["answer"]
-    match = re.search(r'####\s*(\d+)', answer)
-    if match:
-        return match.group(1)
+    for pattern in regex_patterns:
+        match = re.search(pattern, answer)
+        if match:
+            return match.group(1)
     return None
 
 def rename_math_columns(example):
@@ -57,7 +85,7 @@ def generate_answer(question: str) -> str:
         [
             {
                 "role": "system",
-                "content": "Please reason step by step, and put your final answer within \\boxed{}.",
+                "content": system_prompt,
             },
             {"role": "user", "content": question},
         ],
@@ -66,7 +94,7 @@ def generate_answer(question: str) -> str:
     )
 
     input_ids = tokenizer(prompt, return_tensors="pt").to(model.device)
-    output = model.generate(**input_ids, max_new_tokens=200)
+    output = model.generate(**input_ids, max_new_tokens=1024)
     decoded = tokenizer.decode(output[0], skip_special_tokens=True)
 
     # Remove the prompt part from the output if necessary
@@ -74,137 +102,23 @@ def generate_answer(question: str) -> str:
 
 from tqdm import tqdm
 tqdm.pandas()  # Optional: Progress bar
+for dataset in all_datasets:
+    dataset["generated_answer"] = dataset["question"].progress_apply(generate_answer)
+    dataset['extracted_actual_answer'] = dataset.progress_apply(extract_answer_from_gsm_dataset,  axis=1)
+    dataset['extracted_generated_answer'] = dataset.progress_apply(, axis=1)
+    gsm_easy.to_csv("/home/mmokkenstorm/model_outputs/gsm_easy.csv", index=False, sep="|")
+#
 
-gsm_easy["generated_answer"] = gsm_easy["question"].progress_apply(generate_answer)
-gsm_hard["generated_answer"] = gsm_hard["question"].progress_apply(generate_answer)
-gsm_medium["generated_answer"] = gsm_medium["question"].progress_apply(generate_answer)
-gsm8k["generated_answer"] = gsm8k["question"].progress_apply(generate_answer)
+#
+# gsm8k.to_csv("/home/mmokkenstorm/model_outputs/gsm8k.csv", index=False, sep="|")
+# gsm_hard.to_csv("/home/mmokkenstorm/model_outputs/gsm_hard.csv", index=False, sep="|")
+# gsm_medium.to_csv("/home/mmokkenstorm/model_outputs/gsm_medium.csv", index=False, sep="|")
 
-gsm_easy.to_csv("gsm_easy.csv", index=False, sep="|")
 
-gsm8k.to_csv("gsm8k.csv", index=False, sep="|")
-gsm_hard.to_csv("gsm_hard.csv", index=False, sep="|")
-gsm_medium.to_csv("gsm_medium.csv", index=False, sep="|")
 
 # generate_response(model, tokenizer, device, "What is 2 + 2?")
 
 
-def evaluate_math_model(model_name, system_prompt, split="test", max_examples=10):
-    logging.info(f"Loading model: {model_name}")
-
-    try:
-        tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-        # tokenizer.chat_template = (
-        #     "{% for message in messages %}"
-        #     "{% if message['role'] == 'system' %}"
-        #     "<|im_start|>system\n{{ message['content'] }}<|im_end|>\n"
-        #     "{% elif message['role'] == 'user' %}"
-        #     "<|im_start|>user\n{{ message['content'] }}<|im_end|>\n"
-        #     "{% elif message['role'] == 'assistant' %}"
-        #     "<|im_start|>assistant\n{{ message['content'] }}<|im_end|>\n"
-        #     "{% endif %}"
-        #     "{% endfor %}"
-        #     "<|im_start|>assistant\n"
-        # )  #TODO: Remove add generation prompt
-        model = AutoModelForCausalLM.from_pretrained(model_name, trust_remote_code=True, device_map="auto")
-        generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
-        logging.info("Model and tokenizer loaded successfully.")
-    except Exception as e:
-        logging.error(f"Error loading model: {e}")
-        return None
-
-
-    results = []
-    if os.path.exists(RESULTS_FILE):
-        df_existing = pd.read_csv(RESULTS_FILE, sep="|")
-        already_done = set(zip(df_existing["dataset"], df_existing["question"]))
-        logging.info(f"Found {len(already_done)} previously processed examples.")
-    else:
-        df_existing = pd.DataFrame()
-        already_done = set()
-
-    for dataset_name, sub_name in datasets:
-        logging.info(f"Loading dataset: {dataset_name}")
-        load_process_dataset(dataset_name, sub_name=sub_name, split=split)
-        for i, example in enumerate(dataset):
-            if (dataset_name, example["question"]) in already_done:
-                logging.info(f"Skipping already processed example {i + 1}")
-                continue
-            if i >= max_examples:
-                break
-            try:
-                question = example["question"]
-                real_answer = example["actual_extracted_answer"]
-
-                messages = [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": question},
-                ]
-                prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)  #TODO: Remove add generation prompt #
-                response = generator(prompt, max_new_tokens=1024)[0]["generated_text"]
-                new_text = response[len(prompt) :].strip()
-
-                patterns = [
-                    r"\\boxed\{(.+?)\}",
-                    r"boxed\{(.+?)\}",
-                    r"\[?box(?:ed)?\]?\s*\{?([^\}\n]+)\}?",
-                ]
-                logging.info(f"Generated text: {new_text}")
-                generated_answer = None
-                for pattern in patterns:
-                    match = re.search(pattern, new_text)
-                    if match:
-                        generated_answer = match.group(1).strip()
-                        logging.info(f"Generated answer: {generated_answer}")
-                        break
-
-                is_correct = (generated_answer == real_answer)
-
-                results.append({
-                    "question": question,
-                    "answer": real_answer,
-                    "generated_answer": generated_answer,
-                    "full_generated_answer": new_text,
-                    "dataset": dataset_name,
-                    "correct": is_correct,
-                })
-                if len(results) % SAVE_EVERY == 0:
-                    pd.DataFrame(results).to_csv(RESULTS_FILE, mode='a', index=False, sep="|", header=not os.path.exists(RESULTS_FILE))
-                    results.clear()
-
-                logging.info(f"[{dataset_name}] Example {i+1}/{max_examples} processed. Correct: {is_correct}")
-
-            except Exception as e:
-                logging.error(f"Error processing example {i} in {dataset_name}: {e}")
-                continue
-
-    df = pd.DataFrame(results)
-    if results:
-        pd.DataFrame(results).to_csv(
-            RESULTS_FILE,
-            mode="a",
-            index=False,
-            sep="|",
-            header=not os.path.exists(RESULTS_FILE),
-        )
-
-    logging.info("Evaluation completed.")
-    return df
-
-system_prompt = """You are a math reasoning assistant.
-Your job is to solve math problems step by step, showing your reasoning clearly and logically.
-
-Instructions:
-1. Break the problem into smaller steps and explain each one.
-2. Justify each step, explaining why it is valid.
-3. Highlight any assumptions or edge cases that may affect the solution.
-4. Conclude with the final result using the format:
-
-Final Answer:
-\\boxed{your final answer here}
-
-Only include one boxed expression at the end of your response.
-"""
 
 #TODO: Tokenize it and then detokenize to see if I apply chat template correctly
 
