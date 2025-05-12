@@ -2,10 +2,12 @@ import pandas as pd
 from loguru import logger
 
 from models.base_models.base_camel import BaseModel
+from models.base_models.constants import MODEL_NAMES
 from models.base_models.tokenizer import Tokenizer
-from constants import BASIC_MATH_PROMPT
+from pipeline.prompts import BASIC_MATH_PROMPT
 from research_datasets.math_dataset import MathDataset
-from util import extract_numeric_value, prediction_patterns
+from util import extract_numeric_value
+from constants import  prediction_patterns
 from research_datasets.gsm8k_dataset import GSM8KDataset
 from models.base_models.model_factory import get_model
 from machine_learning.evaluation.pass_k import PassAtKCalculator
@@ -98,3 +100,7 @@ def run_pipeline(model_name: str = "qwen_camel", dataset_name: str = "gsm8k"):
     # logger.info(f"Pass@1 for Qwen (Camel) on GSM8K: {pass_k_score:.3f}")
 
     return df_results
+
+QWEN_SMALL = MODEL_NAMES.get("QWEN_2_MATH_7B")
+MODEL_NAMES
+run_pipeline(model_name=QWEN_SMALL, dataset_name="gsm8k")

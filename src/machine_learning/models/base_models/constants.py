@@ -13,9 +13,13 @@ MODEL_CONFIG = {
     "DEEPSEEK_R1": {},
 }
 
-TOKEN_MAX_DEFAULT = 1024
+TOKEN_MAX_EFAULT = 1024
 
 HUGGINGFACE_MODEL_NAMES = {
     "QWEN_2_MATH_7B": "Qwen/Qwen2.5-Math-7B-Instruct",
     "QWEN_2_15B": "Qwen/Qwen2.5-1.5B",
+    "QWEN_25_CODER_7B": "Qwen/Qwen2.5-Coder-7B-Instruct"
 }
+
+OLLAMA = "ollama"
+VLMM = "vllm"

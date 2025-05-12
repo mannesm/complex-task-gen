@@ -1,5 +1,4 @@
 datasets
-camel-ai[all]>=0.2.18
 loguru
 trl
 loguru

@@ -56,6 +56,10 @@ class Tokenizer:
             tuple: A tuple containing the solution tokens, list of log probabilities for each solution token,
                    and the sum of log probabilities.
         """
+        # TODO: Update log P calculation to use the FromChatTemplate function -> Take logits from the model
+        # TODO: Only for the 
+        # TODO: ONly use solver to calculate logP
+        # TODO: Serve augmenter using VLLM
         text, prompt = text.strip(), prompt.strip() if prompt is not None else None
         tokenized_input = self.tokenizer(text, return_tensors="pt").to(self.device)
 

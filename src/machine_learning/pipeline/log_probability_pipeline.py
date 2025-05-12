@@ -3,7 +3,7 @@ import numpy as np
 from loguru import logger
 
 from models.base_models.constants import MODEL_NAMES
-from pipeline.constants import BASIC_MATH_PROMPT
+from pipeline.prompts import BASIC_MATH_PROMPT
 from models.base_models.tokenizer import Tokenizer
 
 
@@ -26,7 +26,13 @@ def generate_log_probabilities(input_dataset: pd.DataFrame, max_sample_size=10,m
     model_results = []
     tokenizer_model = Tokenizer(model_name)
     # Iterate over your input
+    # tokenizer.applychattemplate
 
+    # role user: content: task
+    # role assistant: content: answer
+    # return dict = True
+    # return assistant_token_mask
+    # Calcu
     for i, row in input_dataset.iterrows():
         if i >= max_sample_size:
             break
@@ -34,7 +40,7 @@ def generate_log_probabilities(input_dataset: pd.DataFrame, max_sample_size=10,m
         question = row.get("problem")
         answer = row.get("solution")
         question_id = row.get("id")
-        # Format the prompt
+
         formatted_prompt_qa_pair = BASIC_MATH_PROMPT.format(question=question, answer=answer)
         formatted_prompt_question = BASIC_MATH_PROMPT.format(question=question, answer="")
 
@@ -47,8 +53,11 @@ def generate_log_probabilities(input_dataset: pd.DataFrame, max_sample_size=10,m
 
         model_results.append((question_id, question, answer, formatted_prompt_qa_pair, tokens, log_p, log_p_sum))
     df = pd.DataFrame(model_results, columns=["question_id","question", "answer", "formatted_prompt", "tokens", "log_p", "log_p_sum"])
-
     df["num_tokens"] = df["tokens"].apply(len)
+
+    #!TODO: Add normalised log p
+
+
     df["avg_log_p"] = df["log_p_sum"] / df["num_tokens"]
     df["perplexity"] = np.exp(-df["avg_log_p"])
 

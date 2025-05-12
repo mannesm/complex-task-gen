@@ -3,14 +3,17 @@ from loguru import logger
 
 # Corrected regex pattern for extracting boxed numbers
 
-prediction_patterns = [
-    r"\\\(\s*\\boxed{(\d+)}\s*\\\)",  # inline math mode
-    r"\[[\s\S]*?\\boxed{(\d+)}[\s\S]*?\]",  # display math mode
-    r"\\boxed{(\d+)}"  # standalone boxed number
-]
 
-logger.level("INFO")
+
 def extract_numeric_value(input_string: str, regex_pattern_list: list[str]) -> int | None:
+    """
+    Extracts the numeric value from the input string using the provided regex patterns.
+    Mainly used for the GSM8K dataset to extract the boxed answer (numeric)
+    :param input_string:
+    :param regex_pattern_list:
+    :return:
+    """
+    logger.level("INFO")
     for pattern in regex_pattern_list:
         logger.debug(f"Attempting to match pattern: {pattern}")
         match = re.search(pattern, input_string)
@@ -53,3 +56,9 @@ def check_verification_result(text):
     pattern = r"Verification Result: True"
     match = re.search(pattern, text)
     return bool(match)
+
+
+def extract_math_solution(text):
+    pattern = r"Math Solution: (.*)"
+    match = re.search(pattern, text)
+    return match.group(1).strip() if match else None

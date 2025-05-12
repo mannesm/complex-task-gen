@@ -3,8 +3,8 @@ import pandas as pd
 from dotenv import load_dotenv
 import os
 
-from models.base_models.qwen_2_15b import QWen215BModel
-from pipeline.constants import AUGMENTATION_PROMPT, VERIFIER_PROMPT, PERPLEXITY_THRESHOLD
+from machine_learning.models.base_models.qwen_2_15b import QWen215BModel
+from constants import AUGMENTATION_PROMPT, VERIFIER_PROMPT, PERPLEXITY_THRESHOLD
 from models.base_models.deepseek_r1 import DeepseekR1Model
 from pipeline.log_probability_pipeline import generate_log_probabilities
 

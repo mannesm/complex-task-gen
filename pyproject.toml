@@ -1,5 +1,5 @@
 [project]
-name = "machine_learning"
+name = "complex_task_gen"
 version = "0.1.0"
 description = "Machine learning module for complex-task-gen"
 authors = [{name = "Mannes Mokkenstorm"}]
@@ -7,18 +7,18 @@ requires-python = ">=3.11,<4.0"
 
 dependencies = [
     "scikit-learn>=1.2.0,<2.0",
-    "numpy>=1.22.0,<2.0",
-    "camel-ai>=0.2.20",
     "unsloth",
     "python-dotenv>=0.19.1,<1.0",
-    "openai>=1.4.0,<2.0",
     "pyzotero",
-    "pandas>=1.4.0,<2.0",
     "plotly",
     "dash",
     "uvicorn>=0.22.0,<1.0",
     "seaborn",
     "polars>=1.22.0",
+    "vllm>=0.8.4",
+    "torch>=2.6.0",
+    "transformers>=4.40.0",
+    "tf-keras>=2.18.0",
 ]
 
 [build-system]

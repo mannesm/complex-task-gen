@@ -3,12 +3,12 @@ import pandas as pd
 import re
 import json
 
-from research_datasets.base_dataset import BaseDataset
+from machine_learning.research_datasets.base_dataset import BaseDataset
 
 
-class GSM8KDataset(BaseDataset):
+class GSMSymbolic(BaseDataset):
     def __init__(self, split="test"):
-        self.dataset = load_dataset("gsm8k", "main", split=split)
+        self.dataset = load_dataset("apple/GSM-Symbolic", "main", split=split)
 
     def __len__(self):
         return len(self.dataset)
@@ -23,13 +23,13 @@ class GSM8KDataset(BaseDataset):
         return pd.DataFrame(self.dataset)
 
 
-def download_gsm8k_dataset(number_of_problems=5000):
+def download_gsm_symbolic_dataset(number_of_problems=5000):
     try:
         # Load the dataset using the datasets library
-        dataset = load_dataset("openai/gsm8k", "main")
+        dataset = load_dataset("apple/GSM-Symbolic", "main")
 
         # Get the items from train split
-        data = dataset['train'].select(range(number_of_problems))
+        data = dataset['test'].select(range(number_of_problems))
 
         # Convert to the desired format
         formatted_data = []
@@ -54,7 +54,7 @@ def download_gsm8k_dataset(number_of_problems=5000):
         # Convert to DataFrame
 
         # Save to a file
-        output_file = "downloaded_gsm8k_10.json"
+        output_file = "downloaded_gsm_symbolic.json"
         with open(output_file, "w") as f:
             json.dump(formatted_data, f, indent=2)
 
@@ -64,6 +64,5 @@ def download_gsm8k_dataset(number_of_problems=5000):
         print(f"Error downloading GSM8K dataset: {e}")
 
 if __name__ == "__main__":
-    download_gsm8k_dataset()
-
+    download_gsm_symbolic_dataset()
 
