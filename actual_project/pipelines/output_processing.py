@@ -68,9 +68,10 @@ for dataset_name, dataset in model_output_df_dict.items():
         ),
         axis=1,
     )
+    dataset['correct'] = dataset.apply(
+        lambda x: x['extracted_actual_answer'] == x['extracted_generated_answer'],
+        axis=1,
+    )
     model_output_df_dict[dataset_name] = dataset
-    # dataset.to_csv(
-    #     f'/Users/mannes/PycharmProjects/thesis_project_2/model_outputs/{dataset_name}.csv',
-    #     index=False,
-    #     sep='|'
-    # )
+    print(f'Processed dataset: {dataset_name}')
+    print(dataset['correct'].value_counts())

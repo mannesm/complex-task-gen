@@ -21,7 +21,7 @@ file_name = 'evaluation_results_qwen_finetune_base_gsm8k.csv'
 RESULTS_FILE = f'/home/mmokkenstorm/{file_name}'
 SAVE_EVERY = 5
 
-SYMBOLIC_HUGGINGFACE_NAME = 'apple/GSM-Symbolic'  # todo: also implement the medium and hard questions with the same index / augmented question answer pair.\
+SYMBOLIC_HUGGINGFACE_NAME = 'apple/GSM-Symbolic'
 MATH_HUGGINGFACE_NAME = 'HuggingFaceH4/MATH-500'
 GSM8K_HUGGINGFACE_NAME = 'openai/gsm8k'
 system_prompt = """You are a math reasoning assistant.
