@@ -1,11 +1,15 @@
 import re
 import logging
+
 import pandas as pd
-from datasets import load_dataset
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 
 import os
+
+from gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
+
 # Setup logging
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -19,6 +23,8 @@ SAVE_EVERY = 5  # Save after every N examples
 SYMBOLIC_HUGGINFACE_NAME = "apple/GSM-Symbolic" # todo: also implement the medium and hard questions with the same index / augmented question answer pair.\
 MATH_HUGGINGFACE_NAME = "HuggingFaceH4/MATH-500"
 GSM8K_HUGGINGFACE_NAME = "openai/gsm8k"
+
+create_gsm_evaluation_datasets(to_df=False)
 
 def extract_answer_from_gsm_dataset(example):
     answer = example["answer"]
@@ -57,11 +63,6 @@ def evaluate_math_model(model_name, system_prompt, split="test", max_examples=10
         logging.error(f"Error loading model: {e}")
         return None
 
-    datasets = [
-        (SYMBOLIC_HUGGINFACE_NAME, "main"),
-        (MATH_HUGGINGFACE_NAME, None),
-        (GSM8K_HUGGINGFACE_NAME, "main"),
-    ]
 
     results = []
     if os.path.exists(RESULTS_FILE):
@@ -74,21 +75,7 @@ def evaluate_math_model(model_name, system_prompt, split="test", max_examples=10
 
     for dataset_name, sub_name in datasets:
         logging.info(f"Loading dataset: {dataset_name}")
-        try:
-            if dataset_name == GSM8K_HUGGINGFACE_NAME:
-                dataset = load_dataset(dataset_name, sub_name, split=split)
-                dataset = dataset.map(lambda x: {"actual_extracted_answer": extract_answer_from_gsm_dataset(x)})
-            if dataset_name in [SYMBOLIC_HUGGINFACE_NAME]:
-                dataset = load_dataset(dataset_name, sub_name, split=split)
-                dataset = dataset.map(lambda x: {"actual_extracted_answer": extract_answer_from_gsm_dataset(x)})
-            elif dataset_name == MATH_HUGGINGFACE_NAME:
-                dataset = load_dataset(dataset_name, split=split)
-                dataset = dataset.map(rename_math_columns)
-            logging.info(f"Loaded and processed dataset: {dataset_name}")
-        except Exception as e:
-            logging.warning(f"Failed to load dataset {dataset_name}: {e}")
-            continue
-
+        load_process_dataset(dataset_name, sub_name=sub_name, split=split)
         for i, example in enumerate(dataset):
             if (dataset_name, example["question"]) in already_done:
                 logging.info(f"Skipping already processed example {i + 1}")
