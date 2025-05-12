@@ -1,13 +1,15 @@
 import re
 import logging
+import sys
+sys.path.insert(0, "/home/mmokkenstorm/sync")
 
 import pandas as pd
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 
 import os
 
-from pipelines.gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
-
+from actual_project.pipelines.gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
+from actual_project.models.finetuned_model import load_model
 # Setup logging
 
 logging.basicConfig(
@@ -18,13 +20,13 @@ logging.basicConfig(
 file_name = "evaluation_results_qwen_finetune_base_gsm8k.csv"
 
 RESULTS_FILE = f"/home/mmokkenstorm/{file_name}"
-SAVE_EVERY = 5  # Save after every N examples
+SAVE_EVERY = 5
 
 SYMBOLIC_HUGGINFACE_NAME = "apple/GSM-Symbolic" # todo: also implement the medium and hard questions with the same index / augmented question answer pair.\
 MATH_HUGGINGFACE_NAME = "HuggingFaceH4/MATH-500"
 GSM8K_HUGGINGFACE_NAME = "openai/gsm8k"
 
-create_gsm_evaluation_datasets(to_df=False)
+gsm8k, gsm_easy, gsm_medium, gsm_hard = create_gsm_evaluation_datasets(to_df=True)
 
 def extract_answer_from_gsm_dataset(example):
     answer = example["answer"]
@@ -38,6 +40,54 @@ def rename_math_columns(example):
     example["actual_extracted_answer"] = example.pop("answer")
     example["answer"] = example.pop("solution")
     return example
+
+
+model, tokenizer, device = load_model('/gpfs/home6/mmokkenstorm/sync/qwen_models/finetuned_models/math_instruct/lora')
+
+for question in gsm8k["question"]:
+    print(question)
+    print(tokenizer.tokenize(question))
+    print(tokenizer.decode(tokenizer.tokenize(question)))
+    print(tokenizer.apply_chat_template([{"role": "user", "content": question}], tokenize=False, add_generation_prompt=True))
+    print(tokenizer.apply_chat_template([{"role": "user", "content": question}], tokenize=False, add_generation_prompt=True).split(")\n"))
+    break
+
+def generate_answer(question: str) -> str:
+    prompt = tokenizer.apply_chat_template(
+        [
+            {
+                "role": "system",
+                "content": "Please reason step by step, and put your final answer within \\boxed{}.",
+            },
+            {"role": "user", "content": question},
+        ],
+        tokenize=False,
+        add_generation_prompt=True,
+    )
+
+    input_ids = tokenizer(prompt, return_tensors="pt").to(model.device)
+    output = model.generate(**input_ids, max_new_tokens=200)
+    decoded = tokenizer.decode(output[0], skip_special_tokens=True)
+
+    # Remove the prompt part from the output if necessary
+    return decoded.split("<|im_start|>assistant")[-1].strip()
+
+from tqdm import tqdm
+tqdm.pandas()  # Optional: Progress bar
+
+gsm_easy["generated_answer"] = gsm_easy["question"].progress_apply(generate_answer)
+gsm_hard["generated_answer"] = gsm_hard["question"].progress_apply(generate_answer)
+gsm_medium["generated_answer"] = gsm_medium["question"].progress_apply(generate_answer)
+gsm8k["generated_answer"] = gsm8k["question"].progress_apply(generate_answer)
+
+gsm_easy.to_csv("gsm_easy.csv", index=False, sep="|")
+
+gsm8k.to_csv("gsm8k.csv", index=False, sep="|")
+gsm_hard.to_csv("gsm_hard.csv", index=False, sep="|")
+gsm_medium.to_csv("gsm_medium.csv", index=False, sep="|")
+
+# generate_response(model, tokenizer, device, "What is 2 + 2?")
+
 
 def evaluate_math_model(model_name, system_prompt, split="test", max_examples=10):
     logging.info(f"Loading model: {model_name}")

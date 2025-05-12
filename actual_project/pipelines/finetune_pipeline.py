@@ -188,3 +188,30 @@ model.save_pretrained(adapter_path, safe_serialization=True)
 tokenizer.save_pretrained(adapter_path)
 
 print("✅ Done.  Adapter written to", adapter_path.resolve())
+
+# model, _ = FastLanguageModel.from_pretrained(model_path)  # Unpack if it returns a tuple
+# Load the model and tokenizer
+
+import torch
+from unsloth import FastLanguageModel
+from transformers import AutoTokenizer
+
+model_path = "/gpfs/home6/mmokkenstorm/sync/qwen_models/finetuned_models/math_instruct/lora"
+
+# Load tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained(model_path)
+model, _ = FastLanguageModel.from_pretrained(model_path)
+
+# Set device and move model
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = model.to(device)
+
+# Prepare inputs and move to same device
+input_text = "Solve: What is 12 + 8?"
+inputs = tokenizer(input_text, return_tensors="pt").to(device)
+
+# Generate output
+outputs = model.generate(**inputs, max_new_tokens=500)
+
+# Decode and print
+print(tokenizer.decode(outputs[0], skip_special_tokens=True))
