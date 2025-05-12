@@ -6,7 +6,7 @@ from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 
 import os
 
-from gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
+from pipelines.gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
 
 # Setup logging
 
