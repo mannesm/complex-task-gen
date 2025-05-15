@@ -1,3 +1,4 @@
+import numpy as np
 import requests
 from openai import OpenAI
 
@@ -8,7 +9,6 @@ from pipelines.augmentation.augmentation_prompts import (
     augmentation_prompt,
 )
 
-# TODO: Implement code augmentation Pipeline
 
 config = {
     'text2code_examples': text2code_examples,
@@ -22,7 +22,7 @@ config = {
 model_name = 'Qwen/Qwen2.5-Coder-7B-Instruct'
 client = OpenAI(base_url='http://localhost:8000/v1', api_key='EMPTY')
 
-prompt = 'Hello, how are you?'
+prompt = 'Mary is an avid gardener. Yesterday, she received 18 new potted plants from her favorite plant nursery. She already has 2 potted plants on each of the 40 window ledges of her large country home. Feeling generous, she has decided that she will give 1 potted plant from each ledge to friends and family tomorrow. How many potted plants will Mary remain with?'
 response = requests.post(
     'http://localhost:8000/v1/completions',
     json={
@@ -35,7 +35,11 @@ response = requests.post(
 )
 response_data = response.json()
 log_probs = response_data['choices'][0]['logprobs']['token_logprobs']
-novelty_score = sum(log_probs)  # Aggregate log probabilities (e.g., sum or mean)
+output_text = response_data['choices'][0]['text']
+sum_log_p = sum(log_probs)
 
+num_tokens = len(log_probs)
+avg_log_p = sum_log_p / num_tokens
+perplexity = np.exp(-avg_log_p)
 
-print(f"Novelty score for the prompt '{prompt}': {novelty_score}")
+print(f"Novelty score for the prompt '{prompt}': {perplexity}")

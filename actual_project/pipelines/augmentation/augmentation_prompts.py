@@ -53,7 +53,7 @@ New code:
 ```python
 def main():
     nancy_apples = 10 # Nancy initially had 10 apples
-    bo_oranges = 3 # Bob had 3 oranges
+    bob_oranges = 3 # Bob had 3 oranges
     nancy_apples -= 2 # She gave 2 apples to her friend
     print(nancy_apples)
 
