@@ -12,17 +12,6 @@ from datasets import load_dataset
 from openai import OpenAI
 import sys
 
-"""
-Modified augmentation script that keeps *all* attempted augmentations
-(including those rejected for correctness, novelty, or difficulty) and
-returns two DataFrames:
-  • `best_df`  – only the accepted "gold" augmentations
-  • `all_df`   – every attempted augmentation with a `reason` column
-
-Correctness > Novelty > Difficulty when deciding acceptance.
-Multiple generations per attempt (up to 5) are sampled via the `n`
-parameter of OpenAI chat completions to reduce latency.
-"""
 
 ################################################################################
 #  CONFIGURATION
@@ -68,7 +57,8 @@ VALID_BLOCK_TEMPLATE = (
 
 difficulty = 0
 SYSTEM_PROMPT_TEMPLATE = rf"""
-You are an **Augmenter** of quantitative word-problems.
+You are an **Augmenter** that turns a quantitative word-problem into a
+*strictly harder* variant.
 
 ──────────────── INPUT (always mutually consistent) ────────────────
 {VALID_BLOCK_TEMPLATE.replace('$PY', '…').replace('$TASK', '…')
@@ -80,16 +70,37 @@ You are an **Augmenter** of quantitative word-problems.
                       .replace('$SOL',  '$NEW_SOLUTION')
                       .replace('$ANS',  '$NUMERIC_ANSWER')}
 
-Rules (read carefully):
-1. **Return only the block above** – no extra lines, no commentary.
-2. Copy every delimiter literally: `<code>`, triple-back-tick, the word
-   *python*, `</code>`, `<task>`, `</task>`, `<solution>`, `</solution>`,
-   four `#` characters, the tag `<answer>` and its closing tag.
-3. The new problem must be strictly harder (difficulty target = {difficulty}).
-4. Do **not** repeat any text from the input except the delimiters.\
-5. Make sure the new question uses different numerical values, structure, or problem setup than the input.
-6. Avoid using the same nouns or phrasings.
+━━━━━━━━━━━  RULES (read carefully)  ━━━━━━━━━━━
+1. **Return only the block above** – no extra text.
+2. Copy every delimiter literally:  
+   `<code>`, triple-back-tick python fence, `</code>`,  
+   `<task> … </task>`, `<solution> … </solution>`,  
+   four # characters, `<answer> … </answer>`.
+3. *Harder* means a larger reasoning load – not just bigger numbers.
+   Let **K = {difficulty}**.  Your new problem **must satisfy**:
+      • At least **K + 1 arithmetic/logic steps** in the solution.  
+      • Introduce **min(K, 4) of these complexity devices**  
+        (distinct from the input):  
+          – Fractions / decimals / percentages / ratios  
+          – Unit conversions or rates (speed, price per unit, etc.)  
+          – Conditional statements (“if … then …”) or comparisons  
+          – Multi-entity relations (ages, mixtures, work-rates, etc.)  
+          – Distractor quantities that are *not* needed for the answer  
+          – Re-using an intermediate result in a later step  
+      • The final numeric answer **must differ** from the source.  
+4. Do **not** copy nouns, story setting, or wording from the input.  
+   Change characters, context, and phrasing.  
+5. Preserve internal consistency: the `<code>` output must `print`
+   exactly the number inside `<answer>` when executed.  
+6. Avoid unnecessarily large or tiny numbers; keep them readable.  
+7. If you reference units (kg, km/h, dollars, minutes, etc.), keep
+   them consistent throughout code, task, and solution.  
+8. Never mention these instructions or the value of **K**.
+
+(Think step-by-step **before** writing the final block, but do **not**
+output your thoughts.)
 """
+
 
 TEXT2CODE_SYSTEM_PROMPT = """Convert the <task> and <solution> below into working Python
 that converts the question-answer pair into Python code.
