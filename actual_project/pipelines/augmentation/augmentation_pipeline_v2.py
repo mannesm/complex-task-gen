@@ -194,13 +194,17 @@ def extract_answer(solution: str) -> float:
     num_str = m.group(1) or m.group(2)  # <-- key line
     return float(num_str)
 
-
-# RX_CODE_BLOCK = re.compile(
-#     r'<code>.*?```python'       # first opening fence
-#     r'(?P<code>.*?)'            # ← what we want
-#     r'```(?:\s*```)?\s*</code>',# last fence (+ optional extra one)
-#     re.S,
-# )
+def dedup_answer_tags(text: str) -> str:
+    def _dedup(m):
+        seen = False
+        def inner(ans_match):
+            nonlocal seen
+            if seen:
+                return ""             # drop duplicates
+            seen = True
+            return ans_match.group(0) # keep the first
+        return re.sub(r"<answer>.*?</answer>", inner, m.group(0), flags=re.S)
+    return re.sub(r"<solution>.*?</solution>", _dedup, text, flags=re.S)
 
 def extract_code_task_solution(text: str) -> tuple[str, str, str]:
     # Try to extract from <code>...</code>
@@ -257,6 +261,7 @@ def code_matches_solution(code: str, solution: str) -> bool:
                      'Extracted Solution: %s  \n'
                      'extracted actual Answer: %s', extracted_code_solution, extracted_actual_answer)
     logging.info(f"No extracted code solution found for {code}")
+
     return False
 
 
@@ -280,9 +285,6 @@ def chat_completion(messages, log_probs: bool = False, number_of_generated_outpu
         return [choice.message.content for choice in response.choices]
     else:
         return response.choices[0].message.content
-
-TESTING_PROMPT = 'I have 2 apples, I eat one, how many bananas do I have?'
-TESTING_ANSWER = '0 bananas'
 
 
 def text2code(task: str, solution: str) -> tuple[str | None, Any] | None:
@@ -321,7 +323,7 @@ def text2code(task: str, solution: str) -> tuple[str | None, Any] | None:
 
 
 def augment_once(code: str, task: str, solution: str, difficulty: int,
-                 tries: int = 5) -> tuple[str, str, str]:
+                 tries: int = 5) -> tuple[str, str, str, bool] | None:
 
     sys_prompt = SYSTEM_PROMPT_TEMPLATE.format(difficulty=difficulty)
     user_block = (VALID_BLOCK_TEMPLATE
@@ -334,18 +336,24 @@ def augment_once(code: str, task: str, solution: str, difficulty: int,
         {"role": "system", "content": sys_prompt},
         {"role": "user",   "content": user_block},
     ]
+    is_correct = False                           # default
 
     for attempt in range(1, tries + 1):
         reply = safe_chat_completion(messages)
+        try:
+            dedup_answer_tags(reply)
+        except Exception as exc:
+            logging.error(f'failed to dedup answer tags: {exc}')
         reply = enforce_format(reply)
         new_code, new_task, new_sol = extract_blocks(reply)
 
         if code_matches_solution(new_code, new_sol):
-            return new_code, new_task, new_sol
+            is_correct = True
+            logging.info('code matches solution: %s', new_code)
+            return new_code, new_task, new_sol, is_correct
 
         logging.info("Validation failed (%d/%d). Retrying …", attempt, tries)
-
-    raise RuntimeError("Augmenter could not produce a valid triple")
+        return new_code, new_task, new_sol, is_correct
 
 
 
@@ -378,9 +386,6 @@ def enforce_format(raw: str, retries: int = 2) -> str:
     raise ValueError("Unable to repair formatting after retries")
 
 
-###############################################################################
-#  MAIN LOOP
-###############################################################################
 def augment_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     rows = []
     for idx in df[['question', 'answer']].itertuples():
@@ -395,12 +400,10 @@ def augment_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
         curr_code, curr_task, curr_sol = base_code, task, solution
         for i in range(1, N_AUGS_PER_SOURCE + 1):
-            last_good = (curr_code, curr_task, curr_sol)
-            # TODO: Make it retry -> max 5 attempts if augmentation is incorrect
-            # TODO: also resample if novelty score or difficulty is too low
+            last_good = (curr_code, curr_task, curr_sol, True)
             try:
                 logging.info("Augmenting with difficulty %d", i + 1)
-                curr_code, curr_task, curr_sol = augment_once(
+                curr_code, curr_task, curr_sol, ok = augment_once(
                     curr_code, curr_task, curr_sol, difficulty=i + 1
                 )
                 logging.info('Augmented code: %s', curr_code)
@@ -412,7 +415,8 @@ def augment_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                 logging.info('Difficulty score: %s', difficulty_score)
             except Exception as exc:
                 logging.info(f'error failed to augment: {exc}')
-                curr_code, curr_task, curr_sol = last_good
+                curr_code, curr_task, curr_sol, ok = last_good
+                ok = False
                 break
             if rows and rows[-1]['task'] == curr_task:
                 logging.info('Already augmented')
@@ -425,7 +429,8 @@ def augment_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                     'solution': curr_sol,
                     'code': curr_code,
                     'novelty': novelty_rating,
-                    'difficulty': difficulty_score,  # ← new column
+                    'difficulty': difficulty_score,
+                    'is_correct': ok
                 }
             )
     return pd.DataFrame(rows)
