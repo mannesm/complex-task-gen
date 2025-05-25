@@ -7,7 +7,7 @@ from models.base_models.tokenizer import Tokenizer
 from pipeline.prompts import BASIC_MATH_PROMPT
 from research_datasets.math_dataset import MathDataset
 from util import extract_numeric_value
-# from constants import prediction_patterns
+from constants import prediction_patterns
 from research_datasets.gsm8k_dataset import GSM8KDataset
 from models.base_models.model_factory import get_model
 from machine_learning.evaluation.pass_k import PassAtKCalculator

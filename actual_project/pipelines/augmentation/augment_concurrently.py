@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
 import openai
@@ -16,7 +17,7 @@ from openai import OpenAI
 MODEL_NAME = 'Qwen/Qwen2.5-Coder-7B-Instruct'
 BASE_URL = 'http://localhost:8000/v1'
 N_AUGS_PER_SOURCE = 10  # how many *levels* of augmentation per task
-SAMPLE_PER_AUG = 5  # how many candidate generations at each level
+SAMPLE_PER_AUG = 10  # how many candidate generations at each level
 
 MAX_TOKENS_RESPONSE = 10000
 
@@ -120,20 +121,27 @@ def _strip(text: str) -> str:
 
 
 def safe_chat_completion(
-    messages: list[dict], BACKOFF_BASE: int = 1, presence_penalty: float = 0.6, frequency_penalty: float = 0.4, **kwargs
+    messages: list[dict],
+    backoff_base: int = 1,
+    presence_penalty: float = 0.6,
+    frequency_penalty: float = 0.4,
+    **kwargs,
 ) -> Any:
     for attempt in range(1, MAX_API_RETRIES + 1):
         try:
             response = chat_completion(
-                messages, presence_penalty=presence_penalty, frequency_penalty=frequency_penalty, **kwargs
+                messages,
+                presence_penalty=presence_penalty,
+                frequency_penalty=frequency_penalty,
+                **kwargs,
             )
-            logging.info('Response: %s', response)
+            logging.debug('Response: %s', response)
             return response
 
         except openai.OpenAIError as e:
             if attempt == MAX_API_RETRIES:
                 raise
-            wait = BACKOFF_BASE * 2 ** (attempt - 1) * random.uniform(0.8, 1.2)
+            wait = backoff_base * 2 ** (attempt - 1) * random.uniform(0.8, 1.2)
             logging.warning(
                 'API error (%s). Retry %d/%d after %.1fs',
                 e.__class__.__name__,
@@ -144,18 +152,30 @@ def safe_chat_completion(
             time.sleep(wait)
 
 
-def novelty_score(prompt: str) -> float:
-    """Higher≈more surprising to the model; simple mean‑logP → perplexity."""
+def novelty_score(prompt: str, temperature=0.8, sample_size=8) -> float:
+    """Higher - more surprising to the model; simple mean‑logP → perplexity."""
     r = client.completions.create(
         model=MODEL_NAME,
         prompt=prompt,
-        temperature=0,
-        logprobs=1,
+        n=sample_size,
+        temperature=0.8,
+        # logprobs=1,
     )
-    lps = r.choices[0].logprobs.token_logprobs
-    return math.exp(-sum(lps) / len(lps))
+    # for r in r.choices:
+
+    # lps = r.choices[0].logprobs.token_logprobs
+    # TODO: Change to make it run 8 times - > Claculate how many times it was correct -> Probabiltiy
+    # 1 - (correct / total) -> will show how good my model can solve it
+    # If its not able to solve it -> it will be a good question
+    # then we have a NOVEL GOOD SAMPLE : This is great
+    # If it is able to solve it -> it will be a bad question and we need to augment further / make more difficult
+    # Then train the model
+    # Create a parameter for answer
+    # return math.exp(-sum(lps) / len(lps))
+    raise NotImplementedError
 
 
+# TODO: can I remove this
 def answer_difficulty(task: str, answer: str) -> float:
     """Per‑token perplexity of the numeric answer, conditioned on the task."""
     prompt = task.rstrip() + '\n'
@@ -257,7 +277,7 @@ def code_matches_solution(code: str, solution: str) -> bool:
         executed_code_result = run_code(code)
 
     except Exception as e:
-        logging.info('Code execution error: %s', e)
+        logging.exception('Code execution error: %s', e)
         return False
 
     if isinstance(executed_code_result, str):
@@ -274,7 +294,11 @@ def code_matches_solution(code: str, solution: str) -> bool:
 
 
 def chat_completion(
-    messages: list[dict], *, log_probs: bool = False, number_of_generated_outputs: int = 1, **kwargs
+    messages: list[dict],
+    *,
+    log_probs: bool = False,
+    number_of_generated_outputs: int = 1,
+    **kwargs,
 ) -> Any:
     if log_probs:
         kwargs['logprobs'] = True
@@ -347,7 +371,11 @@ def evaluate_candidate(code: str, task: str, sol: str) -> dict[str, Any]:
 
 
 def augment_once(
-    base_code: str, base_task: str, base_sol: str, difficulty: int, max_samples: int = SAMPLE_PER_AUG
+    base_code: str,
+    base_task: str,
+    base_sol: str,
+    task_difficulty_level: int,
+    max_samples: int = SAMPLE_PER_AUG,
 ) -> tuple[dict[str, Any] | None, list[dict[str, Any]]]:
     """Generate up to `max_samples` harder variants and pick the best accepted one.
 
@@ -358,7 +386,7 @@ def augment_once(
     except Exception as e:
         logging.exception('Failed to extract numeric answer: %s', e)
         return None, []
-    sys_prompt = SYSTEM_PROMPT_TEMPLATE.format(difficulty=difficulty)
+    sys_prompt = SYSTEM_PROMPT_TEMPLATE.format(difficulty=task_difficulty_level)
     user_block = (
         VALID_BLOCK_TEMPLATE.replace('$PY', base_code)
         .replace('$TASK', base_task)
@@ -382,7 +410,7 @@ def augment_once(
             raw_reply = dedup_answer_tags(raw_reply)
             raw_reply = enforce_format(raw_reply)
             new_code, new_task, new_sol = extract_blocks(raw_reply)
-            logging.info('new_code: %s', new_code)
+            logging.debug('new_code: %s', new_code)
         except Exception as e:
             logging.exception('Format/extraction error: %s', e)
             continue
@@ -399,21 +427,16 @@ def augment_once(
             accepted_candidates.append(cand)
 
         if accepted_candidates:
-            logging.info('Accepted candidates: %s', accepted_candidates)
+            logging.debug('Accepted candidates: %s', accepted_candidates)
             best_candidate = max(
                 accepted_candidates,
                 key=lambda c: (c['novelty'], c['difficulty']),  # sort by novelty, then difficulty
             )
-            logging.info('Best candidate: %s', best_candidate)
+            logging.debug('Best candidate: %s', best_candidate)
         else:
             best_candidate = None
-            logging.error('No accepted candidates: %s', accepted_candidates)
+            logging.debug('No accepted candidates: %s', accepted_candidates)
     return best_candidate, attempted
-
-
-################################################################################
-#  ENFORCE FORMAT (unchanged)
-################################################################################
 
 
 def enforce_format(raw: str, retries: int = 2) -> str:
@@ -443,80 +466,100 @@ def enforce_format(raw: str, retries: int = 2) -> str:
     raise ValueError('Unable to repair formatting after retries')
 
 
-################################################################################
-#  MAIN DATAFRAME AUGMENTATION LOOP (rewritten)
-################################################################################
+def augment_one_row(idx: int, task: str, solution: str) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Performs all augmentations for a single row."""
+    try:
+        base_code = text2code(task, solution)
+    except Exception as e:
+        logging.exception('[%s] text2code failed: %s', idx, e)
+        return [], []
+
+    if base_code is None:
+        logging.info('[%s] Failed to obtain base code; skipping.', idx)
+        return [], []
+
+    best_rows = []
+    all_rows = []
+
+    curr_code, curr_task, curr_sol = base_code, task, solution
+
+    for level in range(1, N_AUGS_PER_SOURCE + 1):
+        logging.info('[%s] Augmenting level %d', idx, level + 1)
+        best_candidate, attempts = augment_once(curr_code, curr_task, curr_sol, task_difficulty_level=level + 1)
+
+        for cand in attempts:
+            all_rows.append({'source_idx': idx, 'level': level, **cand})
+
+        if best_candidate is not None:
+            best_rows.append({'source_idx': idx, 'level': level, **best_candidate})
+            curr_code, curr_task, curr_sol = (
+                best_candidate['code'],
+                best_candidate['task'],
+                best_candidate['solution'],
+            )
+        else:
+            logging.info('[%s] No accepted candidate at level %d; stopping.', idx, level + 1)
+            break
+
+    return best_rows, all_rows
 
 
-def augment_dataframe(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Augment the input DataFrame and return (best_df, all_attempts_df)."""
-    best_rows: list[dict[str, Any]] = []
-    all_rows: list[dict[str, Any]] = []
+def augment_dataframe(
+    df: pd.DataFrame,
+    max_concurrent: int = 10,
+    checkpoint_every: int = 100,
+    checkpoint_dir: str = '/home/mmokkenstorm/sync/outputs/augmentation_output',
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Augment the input DataFrame concurrently and return (best_df, all_attempts_df).
+    Saves checkpoint every `checkpoint_every` examples.
+    """
+    os.makedirs(checkpoint_dir, exist_ok=True)
 
-    for idx, question, answer in df[['question', 'answer']].itertuples(index=True, name=None):
-        task, solution = question, answer
-        logging.info('[%s] %s → %s', idx, task[:60], solution)
+    best_rows = []
+    all_rows = []
 
-        try:
-            base_code = text2code(task, solution)
-        except Exception as e:
-            logging.exception('text2code failed: %s', e)
-            continue
+    with ThreadPoolExecutor(max_workers=max_concurrent) as executor:
+        futures = {
+            executor.submit(augment_one_row, idx, row['question'], row['answer']): idx for idx, row in df.iterrows()
+        }
 
-        if base_code is None:
-            logging.info('Failed to obtain base code; skipping.')
-            continue
+        completed = 0
+        for future in as_completed(futures):
+            idx = futures[future]
+            try:
+                best, all_ = future.result()
+                best_rows.extend(best)
+                all_rows.extend(all_)
+                completed += 1
 
-        curr_code, curr_task, curr_sol = base_code, task, solution
+                if completed % checkpoint_every == 0:
+                    best_df = pd.DataFrame(best_rows)
+                    all_df = pd.DataFrame(all_rows)
 
-        for level in range(1, N_AUGS_PER_SOURCE + 1):
-            logging.info('Augmenting level %d', level + 1)
-            best_candidate, attempts = augment_once(curr_code, curr_task, curr_sol, difficulty=level + 1)
+                    best_ckpt = os.path.join(checkpoint_dir, f'checkpoint_best_{completed}.csv')
+                    all_ckpt = os.path.join(checkpoint_dir, f'checkpoint_all_{completed}.csv')
 
-            # Record every attempt
-            for cand in attempts:
-                row_dict = {
-                    'source_idx': idx,
-                    'level': level,
-                    **cand,
-                }
-                all_rows.append(row_dict)
+                    best_df.to_csv(best_ckpt, index=False)
+                    all_df.to_csv(all_ckpt, index=False)
 
-            # If we found an accepted candidate, advance the chain
-            if best_candidate is not None:
-                best_rows.append(
-                    {
-                        'source_idx': idx,
-                        'level': level,
-                        **best_candidate,
-                    }
-                )
-                curr_code, curr_task, curr_sol = (
-                    best_candidate['code'],
-                    best_candidate['task'],
-                    best_candidate['solution'],
-                )
-            else:
-                logging.info('No accepted candidate at level %d; stopping.', level + 1)
-                break
+                    logging.info(f'Checkpoint saved at {completed} examples: {best_ckpt}, {all_ckpt}')
+
+            except Exception as e:
+                logging.exception('Row augmentation failed (idx=%s): %s', idx, e)
 
     return pd.DataFrame(best_rows), pd.DataFrame(all_rows)
 
 
-################################################################################
-#  SCRIPT ENTRY POINT
-################################################################################
-
 if __name__ == '__main__':
     import os
 
-    print(os.getcwd())
+    logging.info(os.getcwd())
     gsm8k_dataset = load_dataset('openai/gsm8k', 'main', split='train')
-    gsm8k_train = pd.DataFrame(gsm8k_dataset)[:1]
+    gsm8k_train = pd.DataFrame(gsm8k_dataset)[:1000]
 
-    best_df, all_df = augment_dataframe(gsm8k_train)
+    best_df, all_df = augment_dataframe(gsm8k_train, max_concurrent=30, checkpoint_every=20)
 
     best_df.to_csv('augmented_best.csv', index=False)
     all_df.to_csv('augmented_all.csv', index=False)
 
-    print('Saved augmented_best.csv and augmented_all.csv')
+    logging.info('Saved augmented_best.csv and augmented_all.csv')

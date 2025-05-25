@@ -5,38 +5,32 @@ import logging
 import math
 import re
 import sys
-from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
-import numpy as np
-import psutil
-from scipy.stats import entropy as voting_entropy, pearsonr, spearmanr
-
 sys.path.extend(
     [
-        '/gpfs/home6/mmokkenstorm/tmp/complex_task_gen/',
-        '/tmp/ChIfXZallM',
-        '/home/mmokkenstorm/tmp/complex_task_gen/actual_project',
+        '/tmp/R9o8sQTVOL/',
+        '/tmp/pycharm_project_977',
     ],
 )
-import time
 
 import pandas as pd
 import torch
 import tqdm
 from openai import AsyncOpenAI
 from pipelines.gsm_evaluation_dataset_creation import create_full_gsm8k_test_dataset
+from scipy.stats import pearsonr, spearmanr
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # ---------------------------------------------------------------------------
 # Configuration -------------------------------------------------------------
 # ---------------------------------------------------------------------------
-MODEL_NAME = 'Qwen/Qwen2.5-Math-7B-Instruct'
+MODEL_NAME = 'Qwen/Qwen2.5-Math-1.5B-Instruct'
 BASE_URL = 'http://localhost:8000/v1'  # local oai mini‑server
-MAX_GEN_TOKENS = 2000  # keep generation short; CoT is long
-N_SAMPLES = 5  # k for pass@1
-BATCH_SIZE = 32  # GPU batch for log‑prob scoring
+MAX_GEN_TOKENS = 512  # keep generation short; CoT is long
+N_SAMPLES = 1  # k for pass@1
+BATCH_SIZE = 16  # GPU batch for log‑prob scoring
 ASYNC_LIMIT = 32  # max concurrent chat calls
 CHECKPOINT_INTERVAL = 100  # examples per checkpoint write
 CHECKPOINT_DIR = Path('checkpoints')
@@ -116,116 +110,142 @@ Let's think step by step"""
 def save_full_dataframe(rows: list[dict], step: int | None = None):
     ts = datetime.now().strftime('%Y%m%d_%H%M%S')
     step_str = f'_step{step}' if step is not None else ''
-    path = CHECKPOINT_DIR / f'eval_full{step_str}_{ts}{MODEL_NAME}.json'
+    path = CHECKPOINT_DIR / f'eval_full{step_str}_{ts}.json'
     pd.DataFrame(rows).to_json(path, orient='records', lines=False, indent=2)
     logger.info('Full checkpoint saved to %s', path)
 
 
+ANS_RE = re.compile(r'(?:####\s*|The answer is\s*|boxed\s{\s*)([0-9\.,\-]+)(?:\s*})?')
+
+# ---------------------------------------------------------------------------
+# Logging -------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 _formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s', '%Y-%m-%d %H:%M:%S')
 stream = logging.StreamHandler()
 stream.setFormatter(_formatter)
 logger.addHandler(stream)
+
 for noisy in ['httpx', 'urllib3', 'openai', 'transformers']:
     logging.getLogger(noisy).setLevel(logging.WARNING)
 
-regex_pattern_list = [
-    r'The answer is\s+\$?\\?\(?boxed\)?\{?([0-9]+(?:\.[0-9]+)?)\}?',  # The answer is \boxed{X} or variants
-    r'####\s*([\d,\.]+)',  # #### X
-    r'\(\s*\\?boxed\s*\{?\$?([\d,\.]+)\}?\)',  # (\boxed{X}) or similar LaTeX
-    r'\$?\\?boxed\s*\{?\$?([\d,\.]+)\}?',  # \boxed{X} without parentheses
-    r'The final answer is\s+\$?\\?\(?boxed\)?\{?([0-9]+(?:\.[0-9]+)?)\}?',  # The final answer is boxed{X}
-    r'The final answer is\s+\$?([0-9]+(?:\.[0-9]+)?)',  # The final answer is 42
-    r'= ([0-9]+(?:\.[0-9]+)?)\s*[\.\)]?\s*$',  # Ends in '= 42.' or '= 42)'
-    r'\$?([0-9]+(?:\.[0-9]+)?)\s*(?:dollars|pounds|km|miles|liters)?',  # Just a number with optional unit
-]
+# ---------------------------------------------------------------------------
+# Helpers -------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+
+import numpy as np
 
 
-def extract_numeric_value(input_string: str) -> float | None:
-    for pattern in regex_pattern_list:
-        match = re.search(pattern, input_string)
-        if match:
-            try:
-                return float(match.group(1).replace(',', ''))  # Strip commas for thousands
-            except ValueError:
-                continue
-    return None
+def sequence_entropy(token_probs: list[list[float]]) -> float:
+    return -np.mean([np.sum(p * np.log(p + 1e-12)) for p in token_probs])
 
 
-class EnhancedLogPScorer:
-    def __init__(self, model_name: str):
+def extract_numeric_from_solution(sol: str) -> float | None:
+    """Return the numeric part of a GSM8K '#### 42' answer, or *None*."""
+    m = ANS_RE.search(sol)
+    if not m:
+        return None
+    try:
+        return float(m.group(1).replace(',', ''))
+    except ValueError:
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Log‑P scorer with batching -------------------------------------------------
+# ---------------------------------------------------------------------------
+class BatchedLogPScorer:
+    """GPU‑efficient log‑prob scorer (fp16) that handles *lists* of examples."""
+
+    def __init__(self, model_name: str, half: bool = True):
+        dtype = torch.float16 if half else torch.float32
         self.tok = AutoTokenizer.from_pretrained(model_name, use_fast=True)
-        self.model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float32, device_map='auto')
+        self.model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            torch_dtype=dtype,
+            device_map='auto',
+        )
         self.model.eval()
 
     @torch.no_grad()
-    def score_detailed(self, prompt: str, answer: str) -> dict:
-        start_time = time.time()
-        full_text = prompt + answer
-        enc = self.tok(full_text, return_tensors='pt').to(self.model.device)
-        plen = len(self.tok(prompt).input_ids)
+    def score_batch(
+        self,
+        prompts: list[str],
+        answers: list[str],
+    ) -> list[dict]:
+        """Return basic metrics for *each* pair (*logp_sum*, *avg_logp*, *ppl*, *n_tokens*)."""
+        full_txt = [p + a for p, a in zip(prompts, answers, strict=False)]
+        enc = self.tok(
+            full_txt,
+            return_tensors='pt',
+            padding=True,
+            truncation=True,
+        ).to(self.model.device)
+
+        prompt_lens = [len(self.tok(p).input_ids) for p in prompts]
         labels = enc.input_ids.clone()
-        labels[:, :plen] = -100
+        for row, plen in enumerate(prompt_lens):
+            labels[row, :plen] = -100  # mask prompt
 
         outputs = self.model(**enc, labels=labels)
-        logits = outputs.logits[0, plen - 1 : -1].float()
-        log_probs = torch.nn.functional.log_softmax(logits, dim=-1)
+        logits = outputs.logits  # (B, L, vocab)
 
-        token_ids = enc.input_ids[0][plen:].cpu().tolist()
-        tokens = self.tok.convert_ids_to_tokens(token_ids)
-        lp = log_probs[torch.arange(len(token_ids)), token_ids].tolist()
-
-        entropies = []
-        for logit in logits:
-            probs = torch.nn.functional.softmax(logit, dim=-1).cpu().numpy()
-            entropies.append(-np.sum(probs * np.log(probs + 1e-12)))
-
-        token_details = [
-            {'position': i, 'token': t, 'token_id': tid, 'logprob': l, 'prob': math.exp(l)}
-            for i, (t, tid, l) in enumerate(zip(tokens, token_ids, lp, strict=False))
-        ]
-        logger.info(f'Took {time.time() - start_time:.2f} seconds to score {len(token_details)} tokens')
-
-        return {
-            'logp_sum': sum(lp),
-            'avg_logp': sum(lp) / len(lp),
-            'perplexity': math.exp(-sum(lp) / len(lp)),
-            'n_tokens': len(lp),
-            'token_entropy': float(np.mean(entropies)),
-            'prompt': prompt,
-            'answer': answer,
-            'tokens': token_details,
-        }
-
-
-def compute_voting_entropy(answers: list[str]) -> float:
-    if not answers:
-        return 0.0
-    counts = Counter(answers)
-    if len(counts) == 1:
-        return 0.0  # No diversity, entropy is 0
-    probs = np.array(list(counts.values()), dtype=np.float64)
-    probs /= probs.sum()
-    return float(voting_entropy(probs))
+        metrics: list[dict] = []
+        for row, plen in enumerate(prompt_lens):
+            tgt_mask = labels[row] != -100
+            l_gt = labels[row][tgt_mask]
+            l_pred = logits[row, tgt_mask.nonzero(as_tuple=True)[0] - 1]
+            log_probs = torch.log_softmax(l_pred.float(), dim=-1)
+            chosen = log_probs[torch.arange(len(l_gt)), l_gt]
+            logp_sum = chosen.sum().item()
+            avg_logp = chosen.mean().item()
+            perplexity = math.exp(-avg_logp)
+            logging.info(
+                'logp_sum: %s',
+                logp_sum,
+                'avg_logp: %s',
+                avg_logp,
+                'perplexity: %s',
+                perplexity,
+                'prompt: %s',
+                prompts[row][:20],
+            )
+            metrics.append(
+                {
+                    'logp_sum': logp_sum,
+                    'avg_logp': avg_logp,
+                    'perplexity': perplexity,
+                    'n_tokens': len(l_gt),
+                },
+            )
+        return metrics
 
 
+# ---------------------------------------------------------------------------
+# Asynchronous pass@1 --------------------------------------------------------
+# ---------------------------------------------------------------------------
 client = AsyncOpenAI(base_url=BASE_URL, api_key='EMPTY')
 sem = asyncio.Semaphore(ASYNC_LIMIT)
 
 
-async def pass_at_1_async(question: str, numeric_gt: float, k: int = N_SAMPLES) -> tuple[bool, list[str]]:
+async def pass_at_1_async(question: str, numeric_gt: float, k: int = N_SAMPLES) -> tuple[bool, str]:
+    """Return a tuple:
+    - *True* if any of *k* completions match *numeric_gt*
+    - The first generated response (or full list if you prefer)
+    """
     if numeric_gt is None:
-        return False, []
+        return False, ''
+
     formatted_question = EVALUATION_PROMPT.format(question=question)
     messages = [
         {
             'role': 'system',
-            'content': 'You are helpful assistant. Solve the question step-by-step. At the end, write: "The final answer is <number>".',
+            'content': 'You are helpful assistant. Always answer the question in numeric. End with "the answer is <number>."',
         },
         {'role': 'user', 'content': formatted_question},
     ]
-    start_api_time = time.time()
+
     async with sem:
         resp = await client.chat.completions.create(
             model=MODEL_NAME,
@@ -234,24 +254,88 @@ async def pass_at_1_async(question: str, numeric_gt: float, k: int = N_SAMPLES) 
             temperature=0.7,
             n=k,
         )
+
     answers = [choice.message.content for choice in resp.choices]
-    numeric_preds = [extract_numeric_value(a) for a in answers]
+    numeric_preds = [extract_numeric_from_solution(a) for a in answers]
+
     pass_1 = any(a is not None and abs(a - numeric_gt) < 1e-6 for a in numeric_preds)
-    logger.info("Pass@1 for '%s' (%.2f seconds): %s", question, time.time() - start_api_time, pass_1)
-    return pass_1, answers
+    return pass_1, answers  # you can also return the whole list if needed
+
+
+# ---------------------------------------------------------------------------
+# Checkpointing --------------------------------------------------------------
+# ---------------------------------------------------------------------------
+class EnhancedLogPScorer:
+    """Provides per-token log-probs and metadata for each (prompt, answer) pair."""
+
+    def __init__(self, model_name: str):
+        self.tok = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+        self.model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            torch_dtype=torch.float32,  # precise token logprobs
+            device_map='auto',
+        )
+        self.model.eval()
+
+    @torch.no_grad()
+    def score_detailed(self, prompt: str, answer: str) -> dict:
+        full_text = prompt + answer
+        enc = self.tok(full_text, return_tensors='pt').to(self.model.device)
+        plen = len(self.tok(prompt).input_ids)
+
+        labels = enc.input_ids.clone()
+        labels[:, :plen] = -100  # ignore prompt in loss
+
+        outputs = self.model(**enc, labels=labels)
+        logits = outputs.logits[0, plen - 1 : -1].float()
+        log_probs = torch.nn.functional.log_softmax(logits, dim=-1)
+
+        token_ids = enc.input_ids[0][plen:].cpu().tolist()
+        tokens = self.tok.convert_ids_to_tokens(token_ids)
+        lp = log_probs[torch.arange(len(token_ids)), token_ids].tolist()
+        entropies = []
+        for logit in logits:
+            probs = torch.nn.functional.softmax(logit, dim=-1).cpu().numpy()
+            entropies.append(-np.sum(probs * np.log(probs + 1e-12)))
+
+        token_details = [
+            {
+                'position': i,
+                'token': t,
+                'token_id': tid,
+                'logprob': l,
+                'prob': math.exp(l),
+            }
+            for i, (t, tid, l) in enumerate(zip(tokens, token_ids, lp, strict=False))
+        ]
+
+        return {
+            'logp_sum': sum(lp),
+            'avg_logp': sum(lp) / len(lp),
+            'perplexity': math.exp(-sum(lp) / len(lp)),
+            'n_tokens': len(lp),
+            'prompt': prompt,
+            'answer': answer,
+            'tokens': token_details,
+        }
 
 
 def save_checkpoint(step: int, rows: list[dict]):
     ts = datetime.now().strftime('%Y%m%d_%H%M%S')
-    path = CHECKPOINT_DIR / f'rows_step{step}_{ts}{MODEL_NAME}.csv'
+    path = CHECKPOINT_DIR / f'rows_step{step}_{ts}_1_5_b.csv'
     pd.DataFrame(rows).to_csv(path, index=False)
     logger.info('Checkpoint → %s (%d rows)', path.name, len(rows))
+
+
+# ---------------------------------------------------------------------------
+# Correlation helper ---------------------------------------------------------
+# ---------------------------------------------------------------------------
 
 
 def corr_table(df: pd.DataFrame) -> pd.DataFrame:
     df['pass1'] = df['pass1'].astype(int)
     rows = []
-    for col in ['logp_sum', 'avg_logp', 'perplexity', 'token_entropy', 'prompt_len', 'num_ops', 'voting_entropy']:
+    for col in ['logp_sum', 'avg_logp', 'perplexity']:
         pear, p_pear = pearsonr(df[col], df['pass1'])
         spear, p_spear = spearmanr(df[col], df['pass1'])
         rows.append(
@@ -266,141 +350,98 @@ def corr_table(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+# ---------------------------------------------------------------------------
+# Main evaluation loop -------------------------------------------------------
+# ---------------------------------------------------------------------------
 async def run_eval(df: pd.DataFrame) -> pd.DataFrame:
     logger.info('Evaluating %d examples (batch=%d, async_limit=%d)', len(df), BATCH_SIZE, ASYNC_LIMIT)
 
-    total_start = time.time()
     scorer = EnhancedLogPScorer(MODEL_NAME)
     rows: list[dict] = []
 
-    # Process memory logging
-    process = psutil.Process()
-    mem_start = process.memory_info().rss / (1024 * 1024)
-    logger.info(f'Initial memory usage: {mem_start:.2f} MB')
-
+    # iterate over chunks for GPU scoring
     for start in tqdm.trange(0, len(df), BATCH_SIZE, desc='batches'):
-        batch_start = time.time()
-        chunk = df.iloc[start : start + BATCH_SIZE].copy()
+        chunk = df.iloc[start : start + BATCH_SIZE]
 
-        # Step 1: Prepare prompts and data
-        step_start = time.time()
-        chunk['prompt_len'] = chunk['question'].apply(lambda x: len(x.split()))
-        chunk['num_ops'] = chunk['question'].apply(lambda x: len(re.findall(r'[\+\-\*/]', x)))
         qs = chunk['question'].tolist()
         ans_text = chunk['answer'].tolist()
-        nums_gt = [extract_numeric_value(a) for a in ans_text]
-        prompts = [PROMPT_TMPL.format(problem=q, answer='') for q in qs]
-        logger.debug(f'Prompt preparation: {time.time() - step_start:.2f}s')
+        nums_gt = [extract_numeric_from_solution(a) for a in ans_text]
 
-        # Step 2: Pass@1 evaluation
-        step_start = time.time()
+        prompts = [PROMPT_TMPL.format(problem=q, answer='') for q in qs]
+
+        # ---- launch pass@1 tasks *first* so they run while GPU is busy ------
         pass_tasks = [asyncio.create_task(pass_at_1_async(q, n)) for q, n in zip(qs, nums_gt, strict=False)]
         pass_outputs = await asyncio.gather(*pass_tasks)
+
         pass_results = []
         generated_answer_lists = []
         for p, g_list in pass_outputs:
             pass_results.append(p)
             generated_answer_lists.append(g_list)
-        logger.debug(f'Pass@1 evaluation: {time.time() - step_start:.2f}s for {len(pass_tasks)} examples')
+        from collections import Counter
 
-        # Step 3: Processing individual results
-        step_start = time.time()
-        scoring_time = 0
-        for row, g_list, passed, prompt, num in zip(
+        from scipy.stats import entropy as voting_entropy
+
+        def compute_voting_entropy(answers: list[str]) -> float:
+            counts = Counter(answers)
+            probs = np.array(list(counts.values())) / sum(counts.values())
+            return float(voting_entropy(probs))
+
+        # score batch on dedicated CPU thread so the event loop can progress
+        score_metrics = await asyncio.to_thread(
+            lambda: [scorer.score_detailed(p, a) for p, a in zip(prompts, ans_text, strict=False)],
+        )
+
+        # aggregate ---------------------------------------------------------
+        for row, detailed, passed, gen_ans, num in zip(
             chunk.itertuples(),
-            generated_answer_lists,
+            score_metrics,
             pass_results,
-            prompts,
+            generated_answers,
             nums_gt,
             strict=False,
         ):
-            # Extract numeric values for each generated answer
-            numeric_preds = [extract_numeric_value(a) for a in g_list]
-
-            # Find the first correct answer (if any)
-            correct_index = next(
-                (i for i, a in enumerate(numeric_preds) if a is not None and abs(a - num) < 1e-6),
-                None,
-            )
-            selected_index = correct_index if correct_index is not None else 0
-            selected_answer = g_list[selected_index]
-            selected_numeric_answer = extract_numeric_value(selected_answer)
-
-            # Time the scoring operation specifically
-            score_start = time.time()
-            detailed = scorer.score_detailed(prompt, selected_answer)
-            score_time = time.time() - score_start
-            scoring_time += score_time
-
             rows.append(
                 {
                     'id': getattr(row, 'id', row.Index),
                     'difficulty': getattr(row, 'difficulty', 'unk'),
                     'pass1': int(passed),
                     'numeric_answer': num,
-                    'generated_answer': selected_answer,
-                    'generated_numeric_answer': selected_numeric_answer,
-                    'correct_answer': selected_answer if correct_index is not None else None,
-                    'generated_answer_list': g_list,
-                    'voting_entropy': compute_voting_entropy(g_list),
-                    'answer_diversity': len(set(g_list)),
-                    'prompt_len': row.prompt_len,
-                    'num_ops': row.num_ops,
-                    'is_correct_present': correct_index is not None,
-                    **{
-                        k: detailed[k]
-                        for k in [
-                            'logp_sum',
-                            'avg_logp',
-                            'perplexity',
-                            'token_entropy',
-                            'n_tokens',
-                            'prompt',
-                            'answer',
-                            'tokens',
-                        ]
-                    },
+                    'generated_answer': gen_ans,
+                    **{k: detailed[k] for k in ['logp_sum', 'avg_logp', 'perplexity', 'n_tokens']},
+                    'prompt': detailed['prompt'],
+                    'answer': detailed['answer'],
+                    'tokens': detailed['tokens'],
+                    'generated_numeric_answer': extract_numeric_from_solution(gen_ans),
                 },
             )
-        logger.debug(f'Result processing: {time.time() - step_start:.2f}s, scoring: {scoring_time:.2f}s')
 
-        batch_time = time.time() - batch_start
-        logger.info(
-            f'Batch {start // BATCH_SIZE + 1}/{(len(df) + BATCH_SIZE - 1) // BATCH_SIZE} completed in {batch_time:.2f}s',
-        )
-
-        # Log memory usage every few batches
-        if start % (BATCH_SIZE * 5) == 0:
-            mem_current = process.memory_info().rss / (1024 * 1024)
-            logger.info(f'Memory usage: {mem_current:.2f} MB (delta: {mem_current - mem_start:.2f} MB)')
-
+        # checkpoint every N examples --------------------------------------
         if len(rows) and (len(rows) % CHECKPOINT_INTERVAL == 0):
-            checkpoint_start = time.time()
             save_checkpoint(len(rows), rows)
-            logger.debug(f'Checkpoint saving: {time.time() - checkpoint_start:.2f}s')
 
+    # final outputs ---------------------------------------------------------
     save_checkpoint(len(rows), rows)
     save_full_dataframe(rows)
 
     df_out = pd.DataFrame(rows)
-    folder_path = '/home/mmokkenstorm/tmp/complex_task_gen/output/'
-    df_out.to_json(folder_path + f'/gsm8k_pass1_logp_{MODEL_NAME}sub_new-prompt.json', index=False)
+    df_out.to_json('gsm8k_pass1_logp_15b.json', index=False)
     corr = corr_table(df_out)
-    corr.to_csv(folder_path + f'correlation_output{MODEL_NAME}.csv')
-    corr.to_json(folder_path + f'metric_correlations15b_sub_new_prompt{MODEL_NAME}.json', index=False)
+    corr.to_json('metric_correlations15b.json', index=False)
 
-    total_time = time.time() - total_start
-    logger.info(f'Evaluation completed in {total_time:.2f}s ({total_time / 60:.1f}min)')
     logger.info('Finished • acc@1=%.3f • median ppl=%.1f', df_out['pass1'].mean(), df_out['perplexity'].median())
     logger.info('Correlation table:\n%s', corr.to_string(index=False))
     return df_out
 
 
+# ---------------------------------------------------------------------------
+# CLI entrypoint -------------------------------------------------------------
+# ---------------------------------------------------------------------------
 if __name__ == '__main__':
+    # Small demo run with 100 examples; change slice as needed
     test_df = create_full_gsm8k_test_dataset(to_df=True)
-    df = test_df.copy()
 
     async def _main():
-        await run_eval(test_df)
+        await run_eval(test_df)  # evaluate entire set
 
     asyncio.run(_main())

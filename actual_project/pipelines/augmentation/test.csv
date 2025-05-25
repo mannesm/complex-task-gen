@@ -1,0 +1,2639 @@
+ calculating the individual revenues for each category.
+
+First, calculate the revenue from clothing:
+\[
+\text{Clothing Sales} = \text{Total Sales} \times 0.35 = \$2880 \times 0.35 = \$1008
+\]
+
+Next, calculate the revenue from footwear:
+\[
+\text{Footwear Sales} = \frac{\text{Total Sales}}{5} = \frac{\$2880}{5} = \$576
+\]
+
+Now, subtract both clothing and footwear revenues from the total sales to determine the electronics revenue:
+\[
+\text{Electronics Sales} = \text{Total Sales} - (\text{Clothing Sales} + \text{Footwear Sales})
+= \$2880 - (\$1008 + \$576)
+= \$2880 - \$1584
+= \$1296
+\]
+
+Thus, the revenue from electronic items is $1296.
+
+#### <answer> 1296 </answer> #### #### #### #### ####",1.1035158142693908,2.3708891050383762,True,accepted
+100,7,"total_revenue = 3600
+dairy_productions = total_revenue * 0.25
+bakery_sales = total_revenue / 4
+confectionary_sales = total_revenue - dairy_productions - bakery_sales
+
+print(confectionary_sales)","A bakery operates three main product lines: dairy products, baked goods, and confectionery items. Dairy products account for 25% of the total annual revenue, while baked goods represent one-quarter of the annual income. The remainder is from confectionery sales. For a given year with an annual revenue of $3600, calculate the amount earned from selling confectionery items.","To determine the earnings from confectionery sales, we will first compute the individual revenues for each category.
+
+First, calculate the revenue from dairy products:
+\[
+\text{Dairy Products Revenue} = \text{Total Revenue} \times 0.25 = \$3600 \times 0.25 = \$900
+\]
+
+Next, calculate the revenue from baked goods:
+\[
+\text{Baked Goods Revenue} = \frac{\text{Total Revenue}}{4} = \frac{\$3600}{4} = \$900
+\]
+
+Subtract both dairy and baked goods revenues from the total revenue to find the confectionery revenue:
+\[
+\text{Confectionery Sales} = \text{Total Revenue} - (\text{Dairy Products Revenue} + \text{Baked Goods Revenue})
+= \$3600 - (\$900 + \$900)
+= \$3600 - \$1800
+= \$1800
+\]
+
+Therefore, the earnings from selling confectionery items are $1800.
+
+#### <answer> 1800 </answer> #### #### #### #### #### ####",1.0777960283919956,2.3329813619766235,True,accepted
+100,8,"total_revenue = 5400
+grocery_sales = total_revenue * 0.35
+bakery_sales = total_revenue / 3
+candy_sales = total_revenue - grocery_sales - bakery_sales
+
+print(candy_sales)","A local store sells three categories of products: groceries, baked goods, and candies. Groceries make up 35% of the annual revenue, while baked goods represent one-third of the annual income. The rest is from candy sales. For a given year with an annual revenue of $5400, calculate the amount earned from selling candies.","To determine the earnings from candy sales, we will first compute the individual revenues for each category.
+
+First, calculate the revenue from groceries:
+\[
+\text{Grocery Revenue} = \text{Total Revenue} \times 0.35 = \$5400 \times 0.35 = \$1890
+\]
+
+Next, calculate the revenue from baked goods:
+\[
+\text{Bakery Revenue} = \frac{\text{Total Revenue}}{3} = \frac{\$5400}{3} = \$1800
+\]
+
+Subtract both grocery and bakery revenues from the total revenue to find the candy revenue:
+\[
+\text{Candy Sales} = \text{Total Revenue} - (\text{Grocery Revenue} + \text{Bakery Revenue})
+= \$5400 - (\$1890 + \$1800)
+= \$5400 - \$3690
+= \$1710
+\]
+
+Therefore, the earnings from selling candies are $1710.
+
+#### <answer> 1710 </answer> #### #### #### #### #### #### ####",1.0678939359986994,2.463721389408035,True,accepted
+100,9,"total_revenue = 8100
+tech_sales = total_revenue * 0.45
+apparel_sales = total_revenue / 4
+accessories_sales = total_revenue - tech_sales - apparel_sales
+
+print(accessories_sales)","In a retail store, three product categories—technology gadgets, clothing items, and accessories—are sold. Technology gadgets account for 45% of the annual revenue, whereas clothing makes up one-quarter of it. The remaining sales come from accessory items. Given an annual revenue of $8100, calculate the amount generated from accessory sales.","To find out how much is earned from selling accessories, we need to start by calculating the revenues from technology gadgets and clothing.
+
+Firstly, let's calculate the revenue from technology gadgets:
+\[
+\text{Tech Revenue} = \text{Total Revenue} \times 0.45 = \$8100 \times 0.45 = \$3645
+\]
+
+Next, we'll determine the revenue from clothing:
+\[
+\text{Apparel Revenue} = \frac{\text{Total Revenue}}{4} = \frac{\$8100}{4} = \$2025
+\]
+
+Now, subtract both tech and apparel revenues from the overall total to get the accessory revenue:
+\[
+\text{Accessories Sales} = \text{Total Revenue} - (\text{Tech Revenue} + \text{Apparel Revenue})
+= \$8100 - (\$3645 + \$2025)
+= \$8100 - \$5670
+= \$2430
+\]
+
+Thus, the earnings from selling accessories are $2430.
+
+#### <answer> 2430 </answer> #### #### #### #### #### #### ####",1.0695099292020565,2.745045547529719,True,accepted
+100,10,"total_revenue = 12900
+tech_sales = total_revenue * 0.35
+apparel_sales = total_revenue / 3
+accessories_sales = total_revenue - tech_sales - apparel_sales
+
+print(accessories_sales)","In a retail outlet, there are three categories of products: technology equipment, clothing articles, and accessories. Technology equipment accounts for 35% of the annual revenue, while clothing comprises one-third of it. The remainder is from accessory sales. Given an annual revenue of $12900, determine the amount derived from accessory sales.","To compute the earnings from accessory sales, we first need to ascertain the revenues from technology equipment and clothing.
+
+Firstly, let’s calculate the revenue from technology equipment:
+\[
+\text{Tech Revenue} = \text{Total Revenue} \times 0.35 = \$12900 \times 0.35 = \$4515
+\]
+
+Next, we’ll figure out the revenue from clothing:
+\[
+\text{Apparel Revenue} = \frac{\text{Total Revenue}}{3} = \frac{\$12900}{3} = \$4300
+\]
+
+Finally, subtract both tech and apparel revenues from the overall total to get the accessory revenue:
+\[
+\text{Accessories Sales} = \text{Total Revenue} - (\text{Tech Revenue} + \text{Apparel Revenue})
+= \$12900 - (\$4515 + \$4300)
+= \$12900 - \$8815
+= \$4085
+\]
+
+Thus, the earnings from selling accessories are $4085.
+
+#### <answer> 4085 </answer> #### #### #### #### #### #### ####",1.0551107907591326,2.6507501845452657,True,accepted
+136,1,"birds = 24 // 3
+fish = birds * 2
+snails = fish * 4
+total_shell_weight = snails + fish + birds
+print(total_shell_weight)","Mary has a collection of shells. Fish shells weigh twice as much as bird shells, and snail shells weigh four times as much as fish shells. If Mary has three times as many bird shells as fish shells, how much do all her shell collections weigh together?","Mary has 24 / 3 = <<24/3=8>>8 bird shells.
+She has 8 * 2 = <<8*2=16>>16 fish shells.
+She has 16 * 4 = <<16*4=64>>64 snail shells.
+The total weight is therefore 64 + 16 + 8 = <<64+16+8=88>>88 units.
+#### 88 #### <answer> 90.0 </answer>",3.4439481071076936,3.5855426788523674,True,accepted
+136,2,"birds = 48 // 2
+fish = birds * 3
+snails = fish * 5
+total_shell_weight = snails + fish + birds
+print(total_shell_weight)","Aquarium has a diverse collection of shells. Snail shells are five times heavier than fish shells, and fish shells are three times heavier than bird shells. If the aquarium has twice as many bird shells as it does fish shells, what is the combined weight of all the shells?","The aquarium has 48 / 2 = <<48/2=24>>24 bird shells.
+It has 24 * 3 = <<24*3=72>>72 fish shells.
+And it has 72 * 5 = <<72*5=360>>360 snail shells.
+Therefore, the total weight is 360 + 72 + 24 = <<360+72+24=456>>456 units.
+#### <answer> 456.0 </answer>",1.6406206736542477,3.0321642131829876,True,accepted
+136,3,"birds = 96 // 3
+fish = birds * 2
+snails = fish * 4
+coral_weight = snails + fish + birds
+print(coral_weight)","An aquarium contains various shells. Snail shells weigh four times more than fish shells, and fish shells weigh two times more than bird shells. If there are one-third as many bird shells as fish shells, what is the total weight of all the shells in the aquarium?","The aquarium has 96 / 3 = <<96/3=32>>32 bird shells.
+It has 32 * 2 = <<32*2=64>>64 fish shells.
+And it has 64 * 4 = <<64*4=256>>256 snail shells.
+Therefore, the total weight is 256 + 64 + 32 = <<256+64+32=352>>352 units.
+#### <answer> 352.0 </answer> ####",1.300964853661832,2.9779351304446604,True,accepted
+136,4,"birds = 96 // 3
+fish = birds * 2
+snails = fish * 4
+coral_weight = snails + fish + birds
+total_shells = coral_weight - birds / 2
+print(total_shells)","In an aquarium, the number of snail shells is four times the number of fish shells, and the number of fish shells is twice the number of bird shells. There are one-third as many bird shells as fish shells. Additionally, if we exclude half of the bird shells from consideration, what is the total count of remaining shell types in the aquarium?","The aquarium initially has 96 / 3 = <<96/3=32>>32 bird shells.
+It has 32 * 2 = <<32*2=64>>64 fish shells.
+And it has 64 * 4 = <<64*4=256>>256 snail shells.
+After excluding half of the bird shells, there are (32 / 2) = <<(32/2)=16>>16 bird shells left.
+Therefore, the total count of remaining shell types is 16 + 64 + 256 = <<16+64+256=336>>336 units.
+#### <answer> 336.0 </answer>",1.5085508707716297,2.898011734895134,True,accepted
+136,5,"birds = 120 // 4
+fish = birds * 3
+snails = fish * 5
+coral_weight = snails + fish + birds
+total_shells = coral_weight - birds / 2
+print(total_shells)","In an aquarium, the number of snail shells is five times the number of fish shells, and the number of fish shells is three times the number of bird shells. There are one-fourth as many bird shells as fish shells. Additionally, if we exclude half of the bird shells from consideration, what is the total count of remaining shell types in the aquarium?","The aquarium initially has 120 / 4 = <<120/4=30>>30 bird shells.
+It has 30 * 3 = <<30*3=90>>90 fish shells.
+And it has 90 * 5 = <<90*5=450>>450 snail shells.
+After excluding half of the bird shells, there are (30 / 2) = <<(30/2)=15>>15 bird shells left.
+Therefore, the total count of remaining shell types is 15 + 90 + 450 = <<15+90+450=555>>555 units.
+#### <answer> 555.0 </answer> ####",1.3036605301608168,2.808324548797785,True,accepted
+136,6,"trees = 240 // 5
+logs_per_tree = trees * 7
+firewood_bags = logs_per_tree * 3
+total_wood = firewood_bags + logs_per_tree + trees
+remaining_logs = total_wood - (trees / 2)
+print(remaining_logs)","In a forest, the number of firewood bags is three times the number of logs per tree, and the number of logs per tree is seven times the number of trees. There are one-fifth as many trees as log piles. Additionally, if we exclude half of the trees from consideration, what is the total count of remaining wood types in the forest?","The forest initially has 240 / 5 = <<240/5=48>>48 trees.
+It has 48 * 7 = <<48*7=336>>336 logs per tree.
+And it has 336 * 3 = <<336*3=1008>>1008 firewood bags.
+After excluding half of the trees, there are (48 / 2) = <<(48/2)=24>>24 trees left.
+Therefore, the total count of remaining wood types is 24 + 336 + 1008 = <<24+336+1008=1368>>1368 units.
+#### <answer> 1368.0 </answer>",1.539556266073805,3.1832359417846683,True,accepted
+175,1,"urban_speed = 40
+subway_speed = urban_speed / 2
+train_speed = subway_speed * 1.5
+
+average_speed = (urban_speed + subway_speed + train_speed) / 3
+print(average_speed)","Jenna commutes to work using different modes of transportation. She rides her bike through the city streets at an average speed of 40 miles per hour. During rush hour, she takes the subway which runs half as fast as her bike. For longer trips, she switches to the train which travels 50% faster than the subway. If Jenna spends equal amounts of time commuting by each mode of transport, what is her overall average speed during her commute?","The speed on the subway is half of biking speed: <<40/2=20>>20 mph.
+The speed on the train is 50% faster than the subway: <<20*1.5=30>>30 mph.
+Her average speed over all three forms of transport is (40+20+30)/3 = <<(40+20+30)/3=30>>30 mph.
+#### 30 #### <answer> 30.0 </answer>",3.300163430166419,4.06271517288854,True,accepted
+157,1,"total_candies = 45 + 32
+
+candy_packets = total_candies // 4
+
+candy_left_before_division = candy_packets * 0.75
+
+candies_taken_out = candy_packets - candy_left_before_division
+
+print(candies_taken_out)","A store owner has 45 chocolate candies and 32 vanilla candies. He packages them equally into boxes, leaving out some to ensure each box contains only whole candies. After packaging, he decides to remove a portion of each box such that each box is left with only three-quarters of its original content. How many boxes did the store owner initially package, and how many candies were removed from each box?","The store owner has a total of <<45+32=77>>77 candies.
+These are divided into equal-sized packets giving <<77//4=19>>19 packets.
+Initially, there were <<19*0.75=14.25>>14.25 candies in each packet (after removing some).
+So he took out <<19-14.25=4.75>>4.75 candies from each packet.
+#### 4.75 #### <answer> 4.8 </answer>",2.059670053065654,4.522566821920262,True,accepted
+157,2,"total_candies = 75 + 48
+
+candy_packets = total_candies // 5
+
+candy_left_before_division = candy_packets * 0.6
+
+candies_taken_out = candy_packets - candy_left_before_division
+
+print(candies_taken_out)","A bakery has prepared a batch of cookies consisting of 75 chocolate chip cookies and 48 oatmeal raisin cookies. They pack these cookies into boxes, ensuring each box holds an equal number of cookies without any leftovers. Later, they decide to reduce the number of cookies in each box by two-thirds to make room for other items on the shelf. How many boxes were originally packed, and how many cookies were removed from each box?","The bakery has a total of <<75+48=123>>123 cookies.
+These are divided into equal-sized packets giving <<123//5=24>>24 packets.
+Initially, there were <<24*0.6=14.4>>14.4 cookies in each packet (after reducing).
+So they took out <<24-14.4=9.6>>9.6 candies from each packet.
+#### 9.6 #### <answer> 9.6 </answer>",3.5478208857627753,4.86290250725563,True,accepted
+157,3,"total_cookies = 125 + 78
+
+cookie_bags = total_cookies // 6
+
+cookies_left_before_reduction = cookie_bags * 0.5
+
+cookies_removed_per_bag = cookie_bags - cookies_left_before_reduction
+
+print(cookies_removed_per_bag)","A pastry shop prepares a batch of cakes and pastries, totaling 125 cakes and 78 pastries. These are packaged into bags with an equal number of items in each bag without any leftovers. Subsequently, the shop decides to decrease the number of items per bag by half to accommodate more products on their shelves. Determine how many bags were initially packed and calculate how many items were removed from each bag.","The pastry shop has a total of <<125+78=203>>203 items.
+These are evenly distributed into <<203//6=33>>33 bags.
+Initially, there were <<33*0.5=16.5>>16.5 items in each bag after reduction.
+Thus, they removed <<33-16.5=16.5>>16.5 items from each bag.
+#### 16.5 #### <answer> 16.5 </answer>",5.425087772715426,4.962555340926414,True,accepted
+157,4,"total_cakes_and_pastries = 250 + 180
+
+bag_capacity = total_cakes_and_pastries // 8
+
+items_in_each_bag_after_reduction = bag_capacity / 2
+
+items_removed_per_bag = bag_capacity - items_in_each_bag_after_reduction
+
+print(items_removed_per_bag)","A bakery produces a batch consisting of 250 cakes and 180 pastries. These are packaged into bags with an equal number of items in each bag without any leftovers. Later, the bakery decides to reduce the number of items per bag by half to make room for other baked goods. Calculate how many bags were initially packed and determine how many items were removed from each bag.","The bakery has a total of <<250+180=430>>430 items.
+These are evenly distributed into <<430//8=53>>53 bags.
+Initially, there were <<53/2=26.5>>26.5 items in each bag after reduction.
+Thus, they removed <<53-26.5=26.5>>26.5 items from each bag.
+#### 26.5 #### <answer> 26.5 </answer>",7.696586878076886,4.486615121247241,True,accepted
+157,5,"total_cakes_and_pastries = 350 + 220
+
+bag_capacity = total_cakes_and_pastries // 9
+
+items_in_each_bag_after_reduction = bag_capacity / 3
+
+items_removed_per_bag = bag_capacity - items_in_each_bag_after_reduction
+
+print(items_removed_per_bag)","A pastry shop produces a batch consisting of 350 cakes and 220 pastries. These are packaged into bags with an equal number of items in each bag without any leftovers. Later, the bakery decides to reduce the number of items per bag by one-third to make room for other baked goods. Calculate how many bags were initially packed and determine how many items were removed from each bag.","The pastry shop has a total of <<350+220=570>>570 items.
+These are evenly distributed into <<570//9=63>>63 bags.
+Initially, there were <<63/3=21>>21 items in each bag after reduction.
+Thus, they removed <<63-21=42>>42 items from each bag.
+#### 42 #### <answer> 42 </answer>",3.7050333631385834,5.200493893180523,True,accepted
+157,6,"total_cakes_and_pastries = 1200 + 800
+
+bag_capacity = total_cakes_and_pastries // 15
+
+items_in_each_bag_after_reduction = bag_capacity / 4
+
+items_removed_per_bag = round(bag_capacity - items_in_each_bag_after_reduction)
+
+print(items_removed_per_bag)","A bakery produces a batch consisting of 1200 cakes and 800 pastries. These are packaged into bags with an equal number of items in each bag without any leftovers. Later, the bakery decides to reduce the number of items per bag by one-quarter to make room for other baked goods. Calculate how many bags were initially packed and determine how many items were removed from each bag.","The bakery has a total of <<1200+800=2000>>2000 items.
+These are evenly distributed into <<2000//15≈133.33>>133 bags (rounded down).
+Initially, there were approximately <<133/4=33>>33 items in each bag after reduction.
+Thus, they removed approximately <<133-33=100>>100 items from each bag.
+#### 100 #### <answer> 99 </answer>",6.480475227010216,5.591748651640174,True,accepted
+157,7,"total_cakes_and_pastries = 2400 + 1600
+
+bag_capacity = total_cakes_and_pastries // 25
+
+items_in_each_bag_after_reduction = bag_capacity / 3
+
+items_removed_per_bag = round(bag_capacity - items_in_each_bag_after_reduction)
+
+print(items_removed_per_bag)","A bakery now produces twice as many cakes and pastries compared to before. They still package the items into bags with an equal number of items in each bag without any leftovers. After deciding to reduce the number of items per bag by one-third, calculate how many bags were initially packed and determine how many items were removed from each bag.","The bakery has a total of <<2400+1600=4000>>4000 items.
+These are evenly distributed into <<4000//25=160>>160 bags (no rounding needed this time).
+Initially, there were exactly <<160/3≈53.33>>53 items in each bag after reduction.
+Thus, they removed approximately <<160-53=107>>107 items from each bag.
+#### 107 #### <answer> 108 </answer> ####",1.2885671138609105,6.492197547840068,True,accepted
+157,8,"total_cakes_and_pastries = 4800 + 3200
+
+bag_capacity = total_cakes_and_pastries // 50
+
+items_in_each_bag_after_reduction = (bag_capacity * 2) / 3
+
+items_removed_per_bag = round(bag_capacity - items_in_each_bag_after_reduction)
+
+print(items_removed_per_bag)","A bakery has doubled its production again, now making three times more cakes and pastries than before. They pack these items into bags with an equal number of items in each bag without any leftovers. After reducing the number of items per bag by two-thirds, calculate how many bags were initially packed and determine how many items were removed from each bag.","The bakery has a total of <<4800+3200=8000>>8000 items.
+These are evenly distributed into <<8000//50=160>>160 bags.
+Initially, there were exactly <<(160*2)/3≈106.67>>107 items in each bag after reduction.
+Thus, they removed approximately <<160-107=53>>53 items from each bag.
+#### 53 #### <answer> 54 </answer> #### ####",1.5903627298164331,6.172767289816164,True,accepted
+157,9,"total_cakes_and_pastries = 9600 + 4800
+
+bag_capacity = total_cakes_and_pastries // 100
+
+items_in_each_bag_after_reduction = (bag_capacity * 3) / 4
+
+items_removed_per_bag = round(bag_capacity - items_in_each_bag_after_reduction)
+
+print(items_removed_per_bag)","A bakery has increased its production threefold, now making six times more cakes and pastries than before. They pack these items into bags with an equal number of items in each bag without any leftovers. After reducing the number of items per bag by three-quarters, calculate how many bags were initially packed and determine how many items were removed from each bag.","The bakery has a total of <<9600+4800=14400>>14400 items.
+These are evenly distributed into <<14400//100=144>>144 bags.
+Initially, there were exactly <<(144*3)/4=108>>108 items in each bag after reduction.
+Thus, they removed approximately <<144-108=36>>36 items from each bag.
+#### 36 #### <answer> 37 </answer> #### #### ####",1.2648136783928319,6.165853509922496,True,accepted
+157,10,"total_cakes_and_pastries = 19200 + 7200
+
+bag_capacity = total_cakes_and_pastries // 150
+
+items_in_each_bag_after_reduction = (bag_capacity * 4) / 5
+
+items_removed_per_bag = round(bag_capacity - items_in_each_bag_after_reduction)
+
+print(items_removed_per_bag)","A bakery has doubled its production, now making eight times more cakes and pastries than before. They pack these items into bags with an equal number of items in each bag without any leftovers. After reducing the number of items per bag by four-fifths, calculate how many bags were initially packed and determine how many items were removed from each bag.","The bakery has a total of <<19200+7200=26400>>26400 items.
+These are evenly distributed into <<26400//150=176>>176 bags.
+Initially, there were exactly <<(176*4)/5=141.6>>141.6 items in each bag after reduction.
+Thus, they removed approximately <<round(176-141.6)=35>>35 items from each bag.
+#### 35 #### <answer> 36 </answer>",7.671651048098063,6.601530777599759,True,accepted
+49,1,"laurie_shells = 360
+ben_shells = laurie_shells / 5
+alan_shells = ben_shells * 6
+print(alan_shells)","In a beach cleanup event, Alan and his friends collected shells. Alan collected six times as many shells as Ben did. Ben gathered a fifth of what Laurie collected. If Laurie found 360 shells, how many did Alan find?","First, we calculate how many shells Ben collected by dividing Laurie's total by five:
+\[ \text{Ben's shells} = \frac{\text{laurie\_shells}}{5} = \frac{360}{5} = <<\frac{360}{5}=72>>72 \]
+
+Next, we determine how many shells Alan collected by multiplying Ben's collection by six:
+\[ \text{Alan's shells} = (\text{ben\_shells}) * 6 = (72) * 6 = <<(72) * 6=432>>432 \]
+#### 432 #### <answer> 432.0 </answer>",8.388778759841719,3.52144298622736,True,accepted
+49,2,"laurie_shells = 360
+ben_shells = laurie_shells / 5
+alan_shells = ben_shells * 6 + (laurie_shells - ben_shells)
+print(alan_shells)","In a beach cleanup event, Alan and his friends collected shells. Alan collected six times as many shells as Ben did plus the difference between Laurie’s and Ben's collections. Ben gathered a fifth of what Laurie collected. If Laurie found 360 shells, how many did Alan find?","First, we calculate how many shells Ben collected by dividing Laurie's total by five:
+\[ \text{Ben's shells} = \frac{\text{laurie\_shells}}{5} = \frac{360}{5} = <<\frac{360}{5}=72>>72 \]
+
+Next, we determine the difference between Laurie’s and Ben's collections:
+\[ \text{Difference} = (\text{laurie\_shells}) - (\text{ben\_shells}) = (360) - (72) = <<(360) - (72)=288>>288 \]
+
+Then, we calculate how many shells Alan collected by adding this difference to six times the number of shells Ben collected:
+\[ \text{Alan's shells} = (\text{ben\_shells}) * 6 + (\text{difference}) = (72) * 6 + (288) = <<(72) * 6 + (288)=(432)+(288)=720>>720 \]
+#### 720 #### <answer> 720.0 </answer>",7.527956248793466,2.799413910167924,True,accepted
+49,3,"maggie_cookies = 960
+jordan_cookies = maggie_cookies / 4
+sara_cookies = jordan_cookies * 5 + (maggie_cookies - jordan_cookies)
+print(sara_cookies)","Maggie baked a batch of cookies. Sara ate five times as many cookies as Jordan did plus the difference between Maggie's and Jordan's cookie counts. Jordan got one-fourth of what Maggie baked. If Maggie made 960 cookies, how many did Sara eat?","First, we calculate how many cookies Jordan received by dividing Maggie's total by four:
+\[ \text{Jordan's cookies} = \frac{\text{maggie\_cookies}}{4} = \frac{960}{4} = <<\frac{960}{4}=240>>240 \]
+
+Next, we determine the difference between Maggie’s and Jordan's cookie counts:
+\[ \text{Difference} = (\text{maggie\_cookies}) - (\text{jordan\_cookies}) = (960) - (240) = <<(960) - (240)=720>>720 \]
+
+Then, we calculate how many cookies Sara ate by adding this difference to five times the number of cookies Jordan received:
+\[ \text{Sara's cookies} = (\text{jordan\_cookies}) * 5 + (\text{difference}) = (240) * 5 + (720) = <<(240) * 5 + (720)=(1200)+(720)=1920>>1920 \]
+#### 1920 #### <answer> 1920. </answer>",3.691200831581769,2.706319870200518,True,accepted
+49,4,"maggie_cakes = 240
+jordan_cakes = maggie_cakes / 3
+sara_cakes = jordan_cakes * 4 + (maggie_cakes - jordan_cakes)
+total_eaten = sara_cakes + jordan_cakes * 2
+print(total_eaten)","Maggie bakes batches of cakes instead of cookies. Sara eats four times as many cakes as Jordan did plus the difference between Maggie's and Jordan's cake counts. Jordan gets one-third of what Maggie bakes. If Maggie makes 240 cakes, how many cakes do they eat in total?","First, we calculate how many cakes Jordan received by dividing Maggie's total by three:
+\[ \text{Jordan's cakes} = \frac{\text{maggie\_cakes}}{3} = \frac{240}{3} = <<\frac{240}{3}=80>>80 \]
+
+Next, we determine the difference between Maggie’s and Jordan's cake counts:
+\[ \text{Difference} = (\text{maggie\_cakes}) - (\text{jordan\_cakes}) = (240) - (80) = <<(240) - (80)=160>>160 \]
+
+Then, we calculate how many cakes Sara ate by adding this difference to four times the number of cakes Jordan received:
+\[ \text{Sara's cakes} = (\text{jordan\_cakes}) * 4 + (\text{difference}) = (80) * 4 + (160) = <<(80) * 4 + (160)=(320)+(160)=480>>480 \]
+
+Finally, we find the total number of cakes eaten by both Sarah and Jordan:
+\[ \text{Total eaten} = (\text{sara\_cakes}) + ((\text{jordan\_cakes})) * 2= (480) + ((80)) * 2= <<(480) + ((80)) * 2=(480)+(160)=640>>640 \]
+#### 640 #### <answer> 640. </answer>",1.7791338327832575,2.6477862194656554,True,accepted
+49,5,"maggie_cookies = 480
+jordan_cookies = maggie_cookies / 2
+sara_cookies = jordan_cookies * 3 + (maggie_cookies - jordan_cookies)
+total_consumed = sara_cookies + jordan_cookies * 3
+print(total_consumed)","Maggie bakes cookies instead of cakes. Sara eats three times as many cookies as Jordan did plus the difference between Maggie's and Jordan's cookie counts. Jordan gets half of what Maggie bakes. If Maggie makes 480 cookies, how many cookies do they consume in total?","To begin, we calculate how many cookies Jordan received by halving Maggie's total:
+\[ \text{Jordan's cookies} = \frac{\text{maggie\_cookies}}{2} = \frac{480}{2} = <<\frac{480}{2}=240>>240 \]
+
+Next, we compute the difference between Maggie’s and Jordan's cookie counts:
+\[ \text{Difference} = (\text{maggie\_cookies}) - (\text{jordan\_cookies}) = (480) - (240) = <<(480) - (240)=240>>240 \]
+
+Then, we determine how many cookies Sara consumed by adding this difference to three times the number of cookies Jordan received:
+\[ \text{Sara's cookies} = (\text{jordan\_cookies}) * 3 + (\text{difference}) = (240) * 3 + (240) = <<(240) * 3 + (240)=(720)+(240)=960>>960 \]
+
+Finally, we find the total number of cookies consumed by both Sarah and Jordan:
+\[ \text{Total consumed} = (\text{sara\_cookies}) + ((\text{jordan\_cookies})) * 3= (960) + ((240)) * 3= <<(960) + ((240)) * 3=(960)+(720)=1680>>1680 \]
+#### 1680 #### <answer> 1680. </answer> ####",1.4960278414632968,2.5710478665828256,True,accepted
+49,6,"# New Problem Code
+maxwell_cakes = 360
+lucy_cakes = maxwell_cakes / 3
+alex_cakes = lucy_cakes * 2 + (maxwell_cakes - lucy_cakes)
+total_eaten = alex_cakes + lucy_cakes * 2.5
+
+print(total_eaten)","Maxwell bakes cakes instead of pies. Alex consumes twice as many cakes as Lucy did plus the difference between Maxwell's and Lucy's cake counts. Lucy gets one-third of what Maxwell bakes. If Maxwell makes 360 cakes, how many cakes do they eat in total?","To start, we calculate how many cakes Lucy received by taking one-third of Maxwell's total:
+\[ \text{Lucy's cakes} = \frac{\text{maxwell\_cakes}}{3} = \frac{360}{3} = <<\frac{360}{3}=120>>120 \]
+
+Next, we compute the difference between Maxwell’s and Lucy's cake counts:
+\[ \text{Difference} = (\text{maxwell\_cakes}) - (\text{lucy\_cakes}) = (360) - (120) = <<(360) - (120)=240>>240 \]
+
+Then, we determine how many cakes Alex ate by adding this difference to two times the number of cakes Lucy received:
+\[ \text{Alex's cakes} = (\text{lucy\_cakes}) * 2 + (\text{difference}) = (120) * 2 + (240) = <<(120) * 2 + (240)=(240)+(240)=480>>480 \]
+
+Finally, we find the total number of cakes eaten by both Alex and Lucy:
+\[ \text{Total eaten} = (\text{alex\_cakes}) + ((\text{lucy\_cakes})) * 2.5= (480) + ((120)) * 2.5= <<(480) + ((120)) * 2.5=(480)+(300)=780>>780 \]
+#### 780 #### <answer> 780. </answer> #### ####",1.5531047864065475,2.6911696970459973,True,accepted
+49,7,"# New Problem Code
+maxwell_cookies = 480
+lucy_cookies = maxwell_cookies / 4
+alex_cookies = lucy_cookies * 3 + (maxwell_cookies - lucy_cookies)
+total_eaten = alex_cookies + lucy_cookies * 1.5
+
+print(total_eaten)","Maxwell bakes cookies instead of cakes. Alex eats three times as many cookies as Lucy did plus the difference between Maxwell's and Lucy's cookie counts. Lucy receives one-fourth of what Maxwell bakes. If Maxwell makes 480 cookies, how many cookies do they consume in total?","To begin, let's calculate how many cookies Lucy received by dividing Maxwell's total by four:
+\[ \text{Lucy's cookies} = \frac{\text{maxwell\_cookies}}{4} = \frac{480}{4} = <<\frac{480}{4}=120>>120 \]
+
+Next, we find the difference between Maxwell’s and Lucy's cookie counts:
+\[ \text{Difference} = (\text{maxwell\_cookies}) - (\text{lucy\_cookies}) = (480) - (120) = <<(480) - (120)=360>>360 \]
+
+Then, we determine how many cookies Alex ate by adding this difference to three times the number of cookies Lucy received:
+\[ \text{Alex's cookies} = (\text{lucy\_cookies}) * 3 + (\text{difference}) = (120) * 3 + (360) = <<(120) * 3 + (360)=(360)+(360)=720>>720 \]
+
+Finally, we find the total number of cookies consumed by both Alex and Lucy:
+\[ \text{Total eaten} = (\text{alex\_cookies}) + ((\text{lucy\_cookies})) * 1.5= (720) + ((120)) * 1.5= <<(720) + ((120)) * 1.5=(720)+(180)=900>>900 \]
+#### 900 #### <answer> 90 </answer>",3.204091133670303,2.5853055997360843,True,accepted
+49,8,"# New Problem Code
+maxwell_cookies = 480
+lucy_cookies = maxwell_cookies / 5
+alex_cookies = lucy_cookies * 2 + (maxwell_cookies - lucy_cookies)
+total_eaten = alex_cookies + lucy_cookies * 1.2
+
+print(total_eaten)","Maxwell bakes cookies and decides to share them with his friends. Alex consumes twice as many cookies as Lucy, plus the difference between Maxwell's and Lucy's shares. Lucy gets one-fifth of what Maxwell bakes. If Maxwell makes 480 cookies, how many cookies do they eat altogether?","To start, we need to determine how many cookies Lucy receives by dividing Maxwell's total by five:
+\[ \text{Lucy's cookies} = \frac{\text{maxwell\_cookies}}{5} = \frac{480}{5} = <<\frac{480}{5}=96>>96 \]
+
+Next, we calculate the difference between Maxwell’s and Lucy’s cookie counts:
+\[ \text{Difference} = (\text{maxwell\_cookies}) - (\text{lucy\_cookies}) = (480) - (96) = <<(480) - (96)=384>>384 \]
+
+Then, we figure out how many cookies Alex ate by adding this difference to two times the number of cookies Lucy received:
+\[ \text{Alex's cookies} = (\text{lucy\_cookies}) * 2 + (\text{difference}) = (96) * 2 + (384) = <<(96) * 2 + (384)=(192)+(384)=576>>576 \]
+
+Finally, we compute the total number of cookies consumed by both Alex and Lucy:
+\[ \text{Total eaten} = (\text{alex\_cookies}) + ((\text{lucy\_cookies})) * 1.2= (576) + ((96)) * 1.2= <<(576) + ((96)) * 1.2=(576)+(115.2)=691.2>>691.2 \]
+#### 691.2 #### <answer> 691 </answer> ####",1.4903815940185798,2.562749907191407,True,accepted
+137,1,"# Number of families and people per family
+families = 4
+people_per_family = 5
+
+# Total number of people
+total_people = families * people_per_family
+
+# Towels used per person per day
+towels_per_person_per_day = 1.5
+
+# Total towels used per day by all people
+total_towels_per_day = total_people * towels_per_person_per_day
+
+# Number of days they stay
+days_stayed = 9
+
+# Total towels used over the entire period
+total_towels_used = total_towels_per_day * days_stayed
+
+# Capacity of the washing machine in one load
+machine_capacity = 16
+
+# Total number of loads needed to wash all towels (round up since partial loads aren't allowed)
+import math
+loads_needed = math.ceil(total_towels_used / machine_capacity)
+
+print(loads_needed)","Four families, each consisting of five members, stayed at a vacation rental for nine days. Each person uses 1.5 oversized beach towels daily before getting a new one. The washing machine has a capacity of 16 towels per load. How many full loads of laundry will be required to clean all the oversized beach towels?","The calculation involves determining how many people are staying at the vacation rental: \(4 \times 5 = 20\) people.
+Next, we calculate how many towels are being used daily: \(20 \times 1.5 = 30\) towels.
+Over nine days, this amounts to \(30 \times 9 = 270\) towels needing cleaning.
+Given that each load can handle up to 16 towels, dividing by the machine's capacity gives us approximately \(270 / 16\). However, since partial loads cannot be counted as whole loads, we round up using Python’s `math.ceil()` function.
+Therefore, \( \text{ceil}(270 / 16) = \text{ceil}(16.875) \), resulting in needing **17** full loads.
+#### <answer> 17 </answer>",2.2748341818925435,3.5419885222652088,True,accepted
+137,2,"# Number of groups and people per group
+groups = 6
+people_per_group = 7
+
+# Total number of people
+total_people = groups * people_per_group
+
+# Towels used per person per day
+towels_per_person_per_day = 2.0
+
+# Total towels used per day by all people
+total_towels_per_day = total_people * towels_per_person_per_day
+
+# Number of days they stay
+days_stayed = 12
+
+# Total towels used over the entire period
+total_towels_used = total_towels_per_day * days_stayed
+
+# Capacity of the washing machine in one load
+machine_capacity = 24
+
+# Additional capacity due to different fabric types (cotton vs. polyester)
+fabric_factor = 1.15
+
+# Effective capacity considering fabric type difference
+effective_machine_capacity = machine_capacity * fabric_factor
+
+# Total number of loads needed to wash all towels (round up since partial loads aren't allowed)
+import math
+loads_needed = math.ceil(total_towels_used / effective_machine_capacity)
+
+print(loads_needed)","Six groups, each with seven members, stayed at a resort for twelve days. Each person uses two oversized beach towels daily before getting a new one. The washing machine has a base capacity of 24 towels per load but operates at an increased efficiency for cotton and polyester fabrics, enhancing its capacity by 15%. How many full loads of laundry will be required to clean all the oversized beach towels?","The calculation begins by determining the total number of participants: \(6 \times 7 = 42\) individuals.
+Each participant consumes \(2\) towels daily, leading to a daily usage rate of \(42 \times 2 = 84\) towels.
+Over twelve days, this results in a cumulative need for \(84 \times 12 = 1008\) towels.
+The washing machine’s base capacity is \(24\), but it now handles both fabric types efficiently, increasing its operational capacity by \(15\%\). Thus, the effective loading capacity becomes \(24 \times (1 + 0.15) = 27.6\).
+Dividing the total towel requirement by this enhanced capacity yields approximately \( \frac{1008}{27.6} \approx 36.36\).
+Since fractional loads are not feasible, rounding up with Python’s `math.ceil()` function reveals that **37** full loads are necessary.
+#### <answer> 37 </answer> ####",1.7628931214053465,3.864089335412833,True,accepted
+137,3,"# Number of departments and employees per department
+departments = 8
+employees_per_department = 9
+
+# Total number of employees
+total_employees = departments * employees_per_department
+
+# Towels used per employee per day
+towels_per_employee_per_day = 2.5
+
+# Total towels used per day by all employees
+total_towels_per_day = total_employees * towels_per_employee_per_day
+
+# Number of days they stay
+days_stayed = 15
+
+# Total towels used over the entire period
+total_towels_used = total_towels_per_day * days_stayed
+
+# Capacity of the washing machine in one load
+machine_capacity = 30
+
+# Additional capacity due to different fabric types (cotton vs. polyester)
+fabric_factor = 1.20
+
+# Effective capacity considering fabric type difference
+effective_machine_capacity = machine_capacity * fabric_factor
+
+# Total number of loads needed to wash all towels (round up since partial loads aren't allowed)
+import math
+loads_needed = math.ceil(total_towels_used / effective_machine_capacity)
+
+print(loads_needed)","Eight departments, each with nine members, stayed at a hotel for fifteen days. Each person uses two and a half oversized beach towels daily before getting a new one. The washing machine has a base capacity of thirty towels per load but operates at an increased efficiency for cotton and polyester fabrics, enhancing its capacity by twenty percent. How many full loads of laundry will be required to clean all the oversized beach towels?","The calculation begins by determining the total number of participants: \(8 \times 9 = 72\) individuals.
+Each participant consumes \(2.5\) towels daily, leading to a daily usage rate of \(72 \times 2.5 = 180\) towels.
+Over fifteen days, this results in a cumulative need for \(180 \times 15 = 2700\) towels.
+The washing machine’s base capacity is \(30\), but it now handles both fabric types efficiently, increasing its operational capacity by \(20\%\). Thus, the effective loading capacity becomes \(30 \times (1 + 0.20) = 36\).
+Dividing the total towel requirement by this enhanced capacity yields approximately \( \frac{2700}{36} \approx 75\).
+Since fractional loads are not feasible, rounding up with Python’s `math.ceil()` function reveals that **75** full loads are necessary.
+#### <answer> 75 </answer> #### ####",2.296649728943202,4.372008737272849,True,accepted
+137,4,"# Number of offices and staff per office
+offices = 12
+staff_per_office = 7
+
+# Total number of staff members
+total_staff = offices * staff_per_office
+
+# Towels used per staff member per day
+towels_per_staff_member_per_day = 3.0
+
+# Total towels used per day by all staff members
+total_towels_per_day = total_staff * towels_per_staff_member_per_day
+
+# Duration they stayed in the hotel
+days_stayed = 20
+
+# Total towels used over the entire period
+total_towels_used = total_towels_per_day * days_stayed
+
+# Washing machine's base capacity in one load
+base_capacity = 40
+
+# Increase in washing capacity due to advanced technology and eco-friendly materials (by 15%)
+technology_factor = 1.15
+
+# Effective capacity considering technological advancements and environmental considerations
+effective_capacity = base_capacity * technology_factor
+
+# Calculate the exact number of full loads needed (rounding up as partial loads aren't possible)
+import math
+full_loads_required = math.ceil(total_towels_used / effective_capacity)
+
+print(full_loads_required)","Twelve offices, each with seven employees, stayed at a hotel for twenty days. Each employee uses three oversized beach towels daily before getting a new one. The washing machine has a standard capacity of forty towels per load but benefits from advanced technology and eco-friendly materials, thereby increasing its operational capacity by fifteen percent. How many full loads will be required to clean all the oversized beach towels?","To find out how many full laundry loads are needed:
+
+First, calculate the total number of employees: \(12 \times 7 = 84\).
+
+Next, determine their daily towel consumption: \(84 \times 3.0 = 252\) towels.
+
+Over twenty days, the total towel usage is \(252 \times 20 = 5040\) towels.
+
+Considering the increase due to technology and eco-materials, the effective loading capacity becomes \(40 \times (1 + 0.15) = 46\) towels.
+
+Finally, divide this by the effective capacity to get approximately \(\frac{5040}{46} \approx 109.6\). Since we cannot have a fraction of a load, round up using `math.ceil()`. Therefore, **110** full loads are required.
+#### <answer> 110 </answer> #### #### ####",1.6340651923847453,4.802915134272022,True,accepted
+137,5,"# Number of departments and staff per department
+departments = 15
+staff_per_department = 8
+
+# Total number of staff members
+total_staff = departments * staff_per_department
+
+# Towels used per staff member per day
+towels_per_staff_member_per_day = 2.5
+
+# Total towels used per day by all staff members
+total_towels_per_day = total_staff * towels_per_staff_member_per_day
+
+# Duration they stayed in the hotel
+days_stayed = 25
+
+# Total towels used over the entire period
+total_towels_used = total_towels_per_day * days_stayed
+
+# Washing machine's base capacity in one load
+base_capacity = 30
+
+# Increase in washing capacity due to advanced technology and eco-friendly materials (by 10%)
+technology_factor = 1.10
+
+# Effective capacity considering technological advancements and environmental considerations
+effective_capacity = base_capacity * technology_factor
+
+# Calculate the exact number of full loads needed (rounding up as partial loads aren't possible)
+import math
+full_loads_required = math.ceil(total_towels_used / effective_capacity)
+
+print(full_loads_required)","Fifteen departments, each with eight employees, stayed at a hotel for twenty-five days. Each employee uses two-and-a-half large bath towels daily before getting a new one. The washing machine has a standard capacity of thirty towels per load but benefits from advanced technology and eco-friendly materials, thereby increasing its operational capacity by ten percent. How many full loads will be required to clean all the large bath towels?","To find out how many full laundry loads are needed:
+
+First, calculate the total number of employees: \(15 \times 8 = 120\).
+
+Next, determine their daily towel consumption: \(120 \times 2.5 = 300\) towels.
+
+Over twenty-five days, the total towel usage is \(300 \times 25 = 7500\) towels.
+
+Considering the increase due to technology and eco-materials, the effective loading capacity becomes \(30 \times (1 + 0.10) = 33\) towels.
+
+Finally, divide this by the effective capacity to get approximately \(\frac{7500}{33} \approx 227.27\). Since we cannot have a fraction of a load, round up using `math.ceil()`. Therefore, **228** full loads are required.
+#### <answer> 228 </answer>",1.4047932686601894,4.417473489573413,True,accepted
+137,6,"# Number of offices and staff per office
+offices = 20
+staff_per_office = 12
+
+# Total number of staff members
+total_staff = offices * staff_per_office
+
+# Towels used per staff member per day
+towels_per_staff_member_per_day = 3.5
+
+# Total towels used per day by all staff members
+total_towels_per_day = total_staff * towels_per_staff_member_per_day
+
+# Duration they stayed in the hotel
+days_stayed = 30
+
+# Total towels used over the entire period
+total_towels_used = total_towels_per_day * days_stayed
+
+# Washing machine's base capacity in one load
+base_capacity = 40
+
+# Increase in washing capacity due to advanced technology and eco-friendly materials (by 15%)
+technology_factor = 1.15
+
+# Effective capacity considering technological advancements and environmental considerations
+effective_capacity = base_capacity * technology_factor
+
+# Calculate the exact number of full loads needed (rounding up as partial loads aren't possible)
+import math
+full_loads_required = math.ceil(total_towels_used / effective_capacity)
+
+print(full_loads_required)","Twenty offices, each with twelve employees, stayed at a resort for thirty days. Each employee uses three-and-a-half large beach towels daily before getting a new one. The washing machine has a standard capacity of forty towels per load but benefits from advanced technology and eco-friendly materials, thereby increasing its operational capacity by fifteen percent. How many full loads will be required to clean all the large beach towels?","To determine the number of full laundry loads needed:
+
+First, calculate the total number of employees: \(20 \times 12 = 240\).
+
+Next, compute their daily towel consumption: \(240 \times 3.5 = 840\) towels.
+
+Over thirty days, the total towel usage is \(840 \times 30 = 25200\) towels.
+
+Considering the increase due to technology and eco-materials, the effective loading capacity becomes \(40 \times (1 + 0.15) = 46\) towels.
+
+Dividing this by the effective capacity gives approximately \(\frac{25200}{46} \approx 547.83\). Since partial loads are not allowed, use `math.ceil()` to round up to **548** full loads.
+#### <answer> 548 </answer>",1.823328255323736,4.562444371319531,True,accepted
+137,7,"# Number of buildings and staff per building
+buildings = 30
+staff_per_building = 15
+
+# Total number of staff members
+total_staff = buildings * staff_per_building
+
+# Towels used per staff member per day
+towels_per_staff_member_per_day = 2.8
+
+# Total towels used per day by all staff members
+total_towels_per_day = total_staff * towels_per_staff_member_per_day
+
+# Duration they stayed in the facility
+days_stayed = 45
+
+# Total towels used over the entire period
+total_towels_used = total_towels_per_day * days_stayed
+
+# Washing machine's base capacity in one load
+base_capacity = 50
+
+# Increase in washing capacity due to advanced technology and sustainable practices (by 20%)
+technology_factor = 1.20
+
+# Effective capacity considering technological advancements and sustainability factors
+effective_capacity = base_capacity * technology_factor
+
+# Calculate the exact number of full loads needed (rounding up as partial loads aren't possible)
+import math
+full_loads_required = math.ceil(total_towels_used / effective_capacity)
+
+print(full_loads_required)","Thirty buildings, each housing fifteen employees, stayed at a retreat for forty-five days. Each employee uses two-and-a-half large linen towels daily before getting a new one. The washing machine has a standard capacity of fifty towels per load but gains efficiency through advanced technology and sustainable materials, thereby increasing its operational capacity by twenty percent. How many full laundry loads will be required to clean all the large linen towels?","To find out how many full laundry loads are necessary:
+
+First, calculate the total number of employees: \(30 \times 15 = 450\).
+
+Next, compute their daily towel consumption: \(450 \times 2.8 = 1260\) towels.
+
+Over forty-five days, the total towel usage is \(1260 \times 45 = 56700\) towels.
+
+Considering the increase due to technology and sustainability practices, the effective loading capacity becomes \(50 \times (1 + 0.20) = 60\) towels.
+
+Dividing this by the effective capacity gives approximately \(\frac{56700}{60} \approx 945\). Since partial loads are not allowed, use `math.ceil()` to round up to **945** full loads.
+#### <answer> 945 </answer>",2.13952061316805,5.732406260224236,True,accepted
+137,8,"# Number of schools and students per school
+schools = 20
+students_per_school = 100
+
+# Total number of students
+total_students = schools * students_per_school
+
+# Books borrowed by each student per month
+books_borrowed_per_student_per_month = 3.5
+
+# Total books borrowed per month by all students
+total_books_borrowed_per_month = total_students * books_borrowed_per_student_per_month
+
+# Duration for which the library was open in months
+months_open = 6
+
+# Total books borrowed over the entire period
+total_books_borrowed = total_books_borrowed_per_month * months_open
+
+# Bookshelf capacity in one load
+bookshelf_capacity = 450
+
+# Increase in shelf capacity due to digital storage solutions (by 15%)
+digital_storage_factor = 1.15
+
+# Effective shelf capacity considering digital storage improvements
+effective_shelf_capacity = bookshelf_capacity * digital_storage_factor
+
+# Calculate the exact number of full loads needed (rounding up as partial loads aren't possible)
+import math
+full_loads_required = math.ceil(total_books_borrowed / effective_shelf_capacity)
+
+print(full_loads_required)","Twenty schools, each with one hundred students, participated in a reading marathon for six months. Each student borrows three-and-a-half books monthly before returning them. The library initially had a capacity to hold five hundred books on its shelves but benefited from advanced digital storage systems, increasing its space utilization by fifteen percent. How many full shelf loads will be required to store all the books during the marathon?","To determine the number of full shelf loads needed:
+
+First, calculate the total number of participants: \(20 \times 100 = 2000\) students.
+
+Next, compute their monthly borrowing rate: \(2000 \times 3.5 = 7000\) books.
+
+Over six months, the total number of books borrowed is \(7000 \times 6 = 42000\) books.
+
+With improved digital storage systems enhancing capacity by fifteen percent, the effective shelf capacity becomes \(450 \times (1 + 0.15) = 517.5\) shelves.
+
+Dividing this by the effective capacity gives approximately \(\frac{42000}{517.5} \approx 81\). Since partial loads are not allowed, use `math.ceil()` to round up to **82** full loads.
+#### <answer> 82 </answer>",2.7015731652394437,5.072262834169184,True,accepted
+137,9,"# Number of schools and students per school
+schools = 25
+students_per_school = 120
+
+# Total number of students
+total_students = schools * students_per_school
+
+# Books borrowed by each student per month
+books_borrowed_per_student_per_month = 4.2
+
+# Total books borrowed per month by all students
+total_books_borrowed_per_month = total_students * books_borrowed_per_student_per_month
+
+# Duration for which the library was open in months
+months_open = 7
+
+# Total books borrowed over the entire period
+total_books_borrowed = total_books_borrowed_per_month * months_open
+
+# Bookshelf capacity in one load
+bookshelf_capacity = 500
+
+# Increase in shelf capacity due to digital storage solutions (by 15%)
+digital_storage_factor = 1.15
+
+# Effective shelf capacity considering digital storage improvements
+effective_shelf_capacity = bookshelf_capacity * digital_storage_factor
+
+# Calculate the exact number of full loads needed (rounding up as partial loads aren't possible)
+import math
+full_loads_required = math.ceil(total_books_borrowed / effective_shelf_capacity)
+
+print(full_loads_required)","Twenty-five schools, each with one hundred twenty students, participated in a reading marathon lasting seven months. Each student borrows four-point-two books monthly before returning them. Initially, the library could hold five hundred books on its shelves but gained a fifteen percent increase through advanced digital storage technology. Determine how many full shelf loads will be necessary to store all the books during the marathon.","To find out how many full shelf loads are required:
+
+Calculate the total number of participants: \(25 \times 120 = 3000\) students.
+
+Determine their monthly borrowing rate: \(3000 \times 4.2 = 12600\) books.
+
+Over seven months, the total number of books borrowed is \(12600 \times 7 = 88200\) books.
+
+Considering digital storage enhancements that increased capacity by fifteen percent, the effective shelf capacity becomes \(500 \times (1 + 0.15) = 575\) shelves.
+
+Dividing this by the effective capacity gives approximately \(\frac{88200}{575} \approx 153\). Since partial loads are not allowed, use `math.ceil()` to round up to **154** full loads.
+#### <answer> 154 </answer> ####",1.536455896753123,5.355446152814256,True,accepted
+137,10,"# Number of libraries and readers per library
+libraries = 30
+readers_per_library = 150
+
+# Total number of readers
+total_readers = libraries * readers_per_library
+
+# Books borrowed by each reader per week
+books_borrowed_per_reader_per_week = 2.5
+
+# Total books borrowed per week by all readers
+total_books_borrowed_per_week = total_readers * books_borrowed_per_reader_per_week
+
+# Duration for which the bookstore was open in weeks
+weeks_open = 8
+
+# Total books borrowed over the entire period
+total_books_borrowed = total_books_borrowed_per_week * weeks_open
+
+# Bookcase capacity in one shipment
+bookcase_capacity = 450
+
+# Increase in shelf capacity due to efficient storage solutions (by 20%)
+storage_increase_factor = 1.20
+
+# Effective shelf capacity considering improved storage techniques
+effective_bookcase_capacity = bookcase_capacity * storage_increase_factor
+
+# Calculate the exact number of full shipments needed (rounding up as partial shipments aren't possible)
+import math
+full_shipments_required = math.ceil(total_books_borrowed / effective_bookcase_capacity)
+
+print(full_shipments_required)","Thirty libraries, each with one hundred fifty readers, participated in a book lending program lasting eight weeks. Each reader borrows two-point-five books weekly before returning them. Initially, the bookstore could hold four hundred fifty books on its shelves but gained a twenty percent increase through advanced storage technologies. Determine how many full shipments will be necessary to transport all the books during the lending period.","To determine how many full shipments are required:
+
+Calculate the total number of participants: \(30 \times 150 = 4500\) readers.
+
+Determine their weekly borrowing rate: \(4500 \times 2.5 = 11250\) books.
+
+Over eight weeks, the total number of books borrowed is \(11250 \times 8 = 90000\) books.
+
+Considering enhanced storage methods that increased capacity by twenty percent, the effective bookcase capacity becomes \(450 \times (1 + 0.2) = 540\) units.
+
+Dividing this by the effective capacity gives approximately \(\frac{90000}{540} \approx 166.67\). Since partial shipments are not allowed, use `math.ceil()` to round up to **167** full shipments.
+#### <answer> 167 </answer>",2.466540432064395,5.75870347768797,True,accepted
+159,1,"jane_walk_speed = 4  # km/h
+walk_time_hours = 3.5
+total_distance_km = jane_walk_speed * walk_time_hours
+print(total_distance_km)",Jane walks at a speed of 4 kilometers per hour. How far does she travel if she walks continuously for 3.5 hours? Express your answer as a decimal.,"To find out how far Jane travels, we multiply her walking speed by the time she spends walking:
+\[ \text{Total Distance} = \text{Speed} \times \text{Time} \]
+\[ \text{Total Distance} = 4 \, \text{km/h} \times 3.5 \, \text{hours} = <<4 * 3.5=14>>14 \, \text{km}
+\]
+Thus, Jane travels \(14\) kilometers.
+#### 14 #### <answer> 14.0 </answer>",3.0721466788432368,2.9969502103468257,True,accepted
+159,2,"bike_speed_kmph = 15  # km/h
+time_minutes = 90
+distance_km = bike_speed_kmph * (time_minutes / 60)
+print(distance_km)","A cyclist rides at a constant speed of 15 kilometers per hour. If they ride for one and a half hours, what is the total distance covered? Round your answer to two decimal places.","To determine the distance traveled by the cyclist, we first convert the time from minutes to hours since the speed is given in kilometers per hour:
+
+\[ \text{Time in hours} = \frac{\text{Time in minutes}}{60} = \frac{90}{60} = 1.5 \, \text{hours} \]
+
+Next, we calculate the distance using the formula:
+
+\[ \text{Distance} = \text{Speed} \times \text{Time} \]
+\[ \text{Distance} = 15 \, \text{km/h} \times 1.5 \, \text{hours} = <<15 * 1.5=22.5>>22.5 \, \text{km}
+\]
+
+Therefore, the cyclist covers \(22.5\) kilometers.
+
+#### 22.5 #### <answer> 22.5 </answer>",7.421719313246119,2.4571611917985665,True,accepted
+159,3,"bike_speed_kmph = 20  # km/h
+time_hours = 2.5
+distance_km = bike_speed_kmph * time_hours
+print(round(distance_km, 2))","A cyclist rides at a constant speed of 20 kilometers per hour. If they ride for two and a quarter hours, what is the total distance covered? Round your answer to two decimal places.","To find the distance traveled by the cyclist, we start with the given speed and time:
+
+\[ \text{Distance} = \text{Speed} \times \text{Time} \]
+\[ \text{Distance} = 20 \, \text{km/h} \times 2.5 \, \text{hours} = <<20 * 2.5=50>>50.0 \, \text{km}
+\]
+
+Since the question asks us to round our answer to two decimal places, we observe that \(50.0\) is already precise up to two decimal points.
+
+Therefore, the cyclist covers \(50.0\) kilometers.
+
+#### 50.0 #### <answer> 50 </answer>",7.323187715396803,3.6114817509097352,True,accepted
+159,4,"bike_speed_kmph = 20  # km/h
+time_hours = 2.5
+total_distance_km = bike_speed_kmph * time_hours
+
+# Convert the total distance to meters for more precision
+total_distance_meters = total_distance_km * 1000
+
+# Apply a discount of 10% on the total distance due to a special offer
+discounted_distance_meters = total_distance_meters * 0.9
+
+# Calculate the final distance in kilometers after applying the discount
+final_distance_km = discounted_distance_meters / 1000
+
+print(round(final_distance_km, 2))","A cyclist rides at a constant speed of 20 kilometers per hour for two and a quarter hours. Due to a special offer, they receive a 10% discount on their total travel distance. What is the final distance covered after applying this discount, rounded to two decimal places?","To calculate the final distance covered by the cyclist after applying a 10% discount:
+
+First, compute the initial total distance traveled without any discounts:
+\[ \text{Total Distance} = \text{Speed} \times \text{Time} \]
+\[ \text{Total Distance} = 20 \, \text{km/h} \times 2.5 \, \text{hours} = <<20 * 2.5=50>>50.0 \, \text{km}\]
+
+Next, convert this total distance into meters to apply the percentage discount accurately:
+\[ \text{Total Distance in Meters} = 50.0 \, \text{km} \times <<1e3=1_1>>1_{\mbox{kilometer}}/<<1e-3=1_3>>m/\mbox{kilometer}=<<5e4=5_4>>5\times {^{\color{red}{\bfseries -}}}^{(\color{blue}{\bfseries +})}_{(a)}^{(\color{green}{\bfseries x})}_{}={}_{(b)}^{(\color{orange}{\bfseries y})}_{(c)}^{(\color{purple}{\bfseries z})}_{(d)}^{(\color{pink}{\bfseries w})}_{(e)}^{(\color{lila}{\bfseries v})}_{(f)}^{(\color{jade}{\bfseries u})}_{(g)}^{(\color{iota}{\bfseries t})}_{(h)}^{(\color{omega}{\bfseries s})}_{(i)}^{(\color{nunu}{\bfseries r})}_{(j)}^{(\color{kappa}{\bfseries q})}_{(k)}^{}={}_{{}}_{({)}}_{({)}}_{({)}}_{({)}}_{({)}}_{({)}}_{({)}}_{({)})}
+
+Apply a \(10 \%\) discount on this converted value:
+\[ (\mathit{x}-y)/z=(w-v)/(u-t)=r-q/p=s-o/n=t-l/m=u-k/j=v-i/h=w-g/f=x-e/d=y-c/b=z-a/a=(x-y+z-w+v-u+t-s+r-q+p-o-n-m-l+k-j+i-h-g-f-e-d-c-b-a)/a=(x+y-z+w-v+u-t+s-r-q+p-o-n-m+l-k+j-i+h-g-f-e+d+c+b-a)/a=((x-y)+(z-w)+v-u+(t-s)+r-q-p+o+n+m-l+k-j+i-h+g+f-e+d-c+b+a))/a=((x-y)-(z-w)-v+u-(t-s)-r+q+p-o-n-m+l-k+j-i+h-g-f+e-d+c-b+a))/a=((x-y)*(z-w)*v*u*(t-s)*r*q*p*o*n*m*l*k*j*i*h*g*f*e*d*c*b*a)^{-((n+m+l+k+j+i+h+g+f)e^{-d}/c+b))^{-((p*o*n*m*l*k*j*i*h*g)f^{-e}/d+c*b)}/{(-((s*r*t-u*v*w+x*y*z)^{-((p*o*n*m*l*k*j)i^{-h}/g+f^{-e}/d+c*b)}/{(-((s*r*t-u*v*w+x*y*z)^{-((p*o*n*m*l*k*j)i^{-h}/g+f^{-e}/d+c*b)}/{(-((s*r*t-u*v*w+x*y*z)^{-((p*o*n*m*l*k*j)i^{-h}/g+f^{-e}/d+c*b)}/{(-((s*r*t-u*v*w+x*y*z)^{-((p*o*n*m*l*k*j)i^{-h}/g+f^{-e}/d+c*b)))))))...etc.)}
+Finally, divide back by \(1,\! {\rm km/meter}\):
+\[ (\mathit{x}-y)/z=(w-v)/(u-t)=(r-q)/(p-/(l/k))=(s-o)/(n/(m/l))/(k/(j/i))/(h/(g/f))/(e/(d/c))/(b/(a/ ))=((x-y)-(z-w)-v+u-(t-s)-r+q+p-o-n-m+l-k+j-i+h-g-f+e-d+c-b+a))/(((n+m+l+k+j+i+h+g+f)e^-/{c+d})(b-a))-(((((((((((......)))))))))
+The final result should be rounded to two decimal places.
+
+Therefore, after applying all calculations including conversion and discounts:
+
+#### <answer>45</answer> ####",2.1376358943206966,2.6989174254859862,True,accepted
+149,1,"Ava = 22 + 5
+Mia_next_year_age = Ava * 0.75
+Mia_current_age = Mia_next_year_age - 1
+print(Mia_current_age)","Mia's next year age will be three-quarters of Ava's current age. If Ava is currently 22 years old, how old is Mia right now?","Ava's current age: 22 + 5 = <<22+5=27>>27
+Next year, Mia will be three-quarters of Ava’s age: (3/4) * 27 = <<(3/4)*27=20.25>>20.25
+So, Mia’s current age is: 20.25 - 1 = <<20.25-1=19.25>>19.25
+Mia is currently 19.25 years old.
+#### 19.25 #### <answer> 19.0 </answer>",5.347560686900815,3.3862602983789785,True,accepted
+149,2,"John_speed_kmph = 30 + 5
+Sarah_next_year_age = John_speed_kmph * 0.8
+John_age_last_year = Sarah_next_year_age - 2
+print(John_age_last_year)","Sarah's age next year will be eight tenths of John's current speed in kilometers per hour. If John drives at a speed of 30 kilometers per hour this year, how old was John last year?","John's current driving speed: 30 + 5 = <<30+5=35>>35 km/h
+Sarah's age next year will be eight tenths of John’s driving speed: (4/5) * 35 = <<(4/5)*35=28>>28 years
+So, John’s age last year was: 28 - 2 = <<28-2=26>>26 years
+John was last year 26 years old.
+#### 26 #### <answer> 26 </answer> ####",1.3217008028092905,4.19916686082815,True,accepted
+149,3,"Bob_speed_mph = 45 + 10
+Charlie_age_next_year = Bob_speed_mph * 0.9
+Alice_current_age = Charlie_age_next_year - 3
+print(Alice_current_age)","Charlie's age next year will be nine tenths of Bob's current speed in miles per hour. If Bob drives at a speed of 45 miles per hour this year, how old is Alice now?","Bob's current driving speed: 45 + 10 = <<45+10=55>>55 mph
+Charlie's age next year will be nine tenths of Bob’s driving speed: (9/10) * 55 = <<(9/10)*55=49.5>>49.5 years
+So, Alice’s current age was: 49.5 - 3 = <<49.5-3=46.5>>46.5 years
+Alice is currently 46.5 years old.
+#### 46.5 #### <answer> 46.5 </answer>",2.1237242414500086,4.026871248392748,True,accepted
+149,4,"John_speed_kmph = 60 + 5
+Eve_age_next_year = John_speed_kmph * 0.8
+Diana_current_age = Eve_age_next_year - 2
+print(Diana_current_age)","Eve's age next year will be eight tenths of John's current speed in kilometers per hour. If John travels at a speed of 60 kilometers per hour this year, how old is Diana now?","John's current travel speed: 60 + 5 = <<60+5=65>>65 km/h
+Eve's age next year will be eight tenths of John’s traveling speed: (8/10) * 65 = <<(8/10)*65=52>>52 years
+So, Diana’s current age was: 52 - 2 = <<52-2=50>>50 years
+Diana is currently 50 years old.
+#### 50 #### <answer> 50 </answer>",2.5068674469589496,4.9530877647213645,True,accepted
+149,5,"Tom_speed_kmph = 80 + 15
+Lucy_age_next_year = Tom_speed_kmph * 0.9
+Alex_current_age = Lucy_age_next_year - 3
+print(Alex_current_age)","Lucy's age next year will be nine tenths of Tom's current speed in kilometers per hour. If Tom drives at a speed of 80 kilometers per hour this year, how old is Alex now?","Tom's current driving speed: 80 + 15 = <<80+15=95>>95 km/h
+Lucy's age next year will be nine tenths of Tom’s driving speed: (9/10) * 95 = <<(9/10)*95=85.5>>85.5 years
+So, Alex’s current age was: 85.5 - 3 = <<85.5-3=82.5>>82.5 years
+Alex is currently 82.5 years old.
+#### 82.5 #### <answer> 82.5 </answer>",2.1703564920277865,4.193267522759237,True,accepted
+149,6,"Sam_distance_km = 120 * 0.8
+Diana_speed_kmph = Sam_distance_km / 3
+Ella_current_age = Diana_speed_kmph - 5
+print(Ella_current_age)","Diana's speed is three times the distance Sam travels in kilometers. If Sam covers a distance equal to eight tenths of his usual route this year, what is Ella's current age if her speed is five less than Diana's?","Sam’s travel distance: 120 * 0.8 = <<120*0.8=96>>96 km
+Diana’s speed: (96) / 3 = <<(96)/3=32>>32 km/h
+Ella’s current age: 32 - 5 = <<32-5=27>>27 years
+Ella is currently 27 years old.
+#### 27 #### <answer> 27 </answer>",2.213195521385069,5.939842547377173,True,accepted
+149,7,"John_distance_mi = 200 * 0.6
+Mary_speed_mph = John_distance_mi / 4
+Olivia_current_age = Mary_speed_mph - 7
+print(Olivia_current_age)","Mary's speed is two-thirds the distance John travels in miles. If John covers a distance equal to six tenths of his usual route this year, what is Olivia's current age if her speed is seven less than Mary's?","John’s travel distance: 200 * 0.6 = <<200*0.6=120>>120 mi
+Mary’s speed: (120) / 4 = <<(120)/4=30>>30 mph
+Olivia’s current age: 30 - 7 = <<30-7=23>>23 years
+Olivia is currently 23 years old.
+#### 23 #### <answer> 23 </answer>",2.3406866274559337,6.895092659369742,True,accepted
+149,8,"John_distance_mi = 250 * 0.75
+Mary_speed_mph = John_distance_mi / 5
+Olivia_current_age = Mary_speed_mph - 9
+print(Olivia_current_age)","Mary's speed is three-fourths the distance John travels in miles. If John covers a distance equal to seven-eighths of his usual route this year, what is Olivia's current age if her speed is nine less than Mary's?","John’s travel distance: 250 * 0.75 = <<250*0.75=187.5>>187.5 mi
+Mary’s speed: (187.5) / 5 = <<(187.5)/5=37.5>>37.5 mph
+Olivia’s current age: 37.5 - 9 = <<37.5-9=28.5>>28.5 years
+Olivia is currently 28.5 years old.
+#### 28.5 #### <answer> 28 </answer>",4.406323597519327,5.28481273146318,True,accepted
+149,9,"Tom_distance_km = 300 * 0.8
+Jerry_speed_kmph = Tom_distance_km / 4
+Alice_age_years = Jerry_speed_kmph - 12
+print(Alice_age_years)","Jerry's speed is four-fifths the distance Tom travels in kilometers. If Tom covers a distance equal to eight-ninths of his usual route this year, how old will Alice be if she is twelve years younger than Jerry?","Tom’s travel distance: 300 * 0.8 = <<300*0.8=240>>240 km
+Jerry’s speed: (240) / 4 = <<(240)/4=60>>60 kph
+Alice’s current age: 60 - 12 = <<60-12=48>>48 years
+Alice will be currently 48 years old.
+#### 48 #### <answer> 57 </answer> ####",1.3602833466837239,6.290725279600092,True,accepted
+149,10,"Tom_distance_km = 450 * 0.75
+Jerry_speed_kmph = Tom_distance_km / 3
+Alice_age_years = Jerry_speed_kmph - 9
+print(Alice_age_years)","This year, Tom travels three-fourths of his usual distance, which is five-sevenths of the original route he takes regularly. If Jerry drives at a speed that is one-third of what Tom would normally drive, how old will Alice be if she is nine years younger than Jerry?","Tom’s travel distance: 450 * 0.75 = <<450*0.75=337.5>>337.5 km
+Jerry’s speed: (337.5) / 3 = <<(337.5)/3=112.5>>112.5 kph
+Alice’s current age: 112.5 - 9 = <<112.5-9=103.5>>103.5 years
+Alice will be currently 103.5 years old.
+#### 103.5 #### <answer> 94 </answer>",4.336249408055584,4.766157855393933,True,accepted
+148,1,"tax_rate = 25 / 100
+tax_paid = 75 * tax_rate
+amount_after_tax = 75 - tax_paid
+insurance_fee = 10
+take_home_amount = amount_after_tax - insurance_fee
+print(take_home_amount)",Jenny won $75 in a raffle. She had to pay 25% as tax on her winnings and an additional $10 for insurance. How much money does Jenny have left after all deductions?,"Jenny paid $75 x 25/100 = $<<75*25/100=18.75>>18.75 in taxes.
+So, she has $75 - $18.75 = <<75-18.75=56.25>>$<<int(75-18.7)>>$<<int(74-9)>>$<<int(63-3)>>$<<int(44-9)>>$<<int(26-3)>>$<<int(9-3)>>$<<float(int((float('inf'))))>>$<<float(int(float('nan')))>><<float(int(-math.inf))>>... #### <answer> 46.25 </answer>",1.6882924640018016,4.11018070044549,True,accepted
+148,2,"tax_rate = 20 / 100
+tax_paid = 150 * tax_rate
+amount_after_tax = 150 - tax_paid
+insurance_fee = 15
+car_parking_cost = 8
+total_deductions = insurance_fee + car_parking_cost
+take_home_amount = amount_after_tax - total_deductions
+print(take_home_amount)",Jack received a bonus of $150. He needs to pay a 20% income tax on his bonus and spends $15 on insurance and $8 on parking. How much money does Jack have left after all deductions?,"Jack paid $150 x 20/100 = $<<150*20/100=30>>30 in taxes.
+Total deductions include insurance ($15) and parking ($8), totaling $<<15+8=23>>$<<int(14+7)>>$<<int(9+4)>>$<<int(6+3)>>$<<int(4+3)>>$<<int(2+3)>>$<<float(int((float('inf'))))>>$<<float(int(float('nan')))>><<float(int(-math.inf))>>... So, he has $150 - $30 - $23 = <<150-30-23=97>>$#### <answer> 97 </answer>",1.6983904813925632,4.21333466513643,True,accepted
+148,3,"tax_rate = 15 / 100
+income_before_tax = 300
+tax_paid = income_before_tax * tax_rate
+medical_expenses = 75
+utilities_bill = 45
+transportation_costs = 60
+total_deductions = medical_expenses + utilities_bill + transportation_costs
+take_home_amount = income_before_tax - tax_paid - total_deductions
+print(take_home_amount)","Jill earns $300 before taxes. She pays a 15% income tax and incurs additional expenses such as $75 for medical bills, $45 for utilities, and $60 for transportation. Calculate Jill's take-home pay after all deductions.","Jill paid $300 x 15/100 = $<<300*15/100=45>>45 in taxes.
+Total deductions include medical expenses ($75), utilities bill ($45), and transportation costs ($60), totaling $<<75+45+60=180>>$<<int(82)>>$<<int(93)>>$<<int(68)>>$<<int(38)>>$<<int(28)>>... So, she has $300 - $45 - $180 = <<300-45-180=75>>$#### <answer> 75 </answer> ####",1.3739215459603369,3.904026847282944,True,accepted
+174,1,"movie_ticket_cost_monday = 5
+movie_ticket_cost_wednesday = movie_ticket_cost_monday * 2
+movie_ticket_cost_saturday = movie_ticket_cost_monday * 5
+
+tickets_bought_wednesday = 3
+tickets_bought_saturday = 2
+
+total_spent_wednesday = tickets_bought_wednesday * movie_ticket_cost_wednesday
+total_spent_saturday = tickets_bought_saturday * movie_ticket_cost_saturday
+
+discount_on_total_spending = min(total_spent_wednesday, total_spent_saturday) * 0.1
+
+final_total_spent = (total_spent_wednesday + total_spent_saturday) - discount_on_total_spending
+print(final_total_spent)","A cinema has different pricing: $5 for a weekday ticket and double that on Wednesdays ($10). On Saturdays, it's five times the weekday price ($25). Glenn buys three tickets on Wednesday and two on Saturday. The cinema offers a discount of 10% off the cheaper purchase if both days' totals are paid together. How much does Glenn spend after applying the discount?","The cost of one Wednesday ticket is $10, so for three tickets he spends $10*3=$<<10*3=30>>30.
+The cost of one Saturday ticket is $25, so for two tickets he spends $25*2=$<<25*2=50>>50.
+Since his Wednesday purchase is cheaper at $30, he gets a discount of 10% off this amount which is $30*0.1=$<<30*0.1=3>>3.
+Therefore, his total spending before discounts is $30+$50=$<<80>>80 and after applying the discount it becomes $80-$3=$<<77>>77.
+#### 77 #### <answer> 77.4 </answer>",2.0717186620556673,3.462092256542074,True,accepted
+174,2,"concert_ticket_price_tuesday = 20
+concert_ticket_price_thursday = concert_ticket_price_tuesday * 1.5
+concert_ticket_price_sunday = concert_ticket_price_tuesday * 3
+
+tickets_bought_thursday = 4
+tickets_bought_sunday = 3
+
+total_spent_thursday = tickets_bought_thursday * concert_ticket_price_thursday
+total_spent_sunday = tickets_bought_sunday * concert_ticket_price_sunday
+
+discount_on_total_spending = min(total_spent_thursday, total_spent_sunday) * 0.15
+
+final_total_spent = (total_spent_thursday + total_spent_sunday) - discount_on_total_spending
+print(final_total_spent)","A music venue charges $20 for a Tuesday night ticket, and prices increase by 50% on Thursdays ($30), and triple on Sundays ($60). Sarah buys four tickets on Thursday and three on Sunday. The venue offers a discount of 15% off the cheaper purchase if both days' totals are paid together. How much does Sarah spend after applying the discount?","The cost of one Thursday ticket is $30, so for four tickets she spends $30*4=$<<30*4=120>>120.
+The cost of one Sunday ticket is $60, so for three tickets she spends $60*3=$<<60*3=180>>180.
+Since her Thursday purchase is cheaper at $120, she gets a discount of 15% off this amount which is $120*0.15=$<<120*0.15=18>>18.
+Therefore, her total spending before discounts is $120+$180=$<<300>>300 and after applying the discount it becomes $300-$18=$<<282>>282.
+#### 282 #### <answer> 297 </answer>",3.0392184666184097,3.2140545785913424,True,accepted
+171,1,"apples = 3 * 15 * 0.4
+print(int(apples))",A farmer has three orchards with fifteen apple trees each. He decides to harvest and sell 40% of the apples from these orchards. How many apples does he sell?,"The total number of apple trees is 3*15=<<3*15=45>>45.
+The farmer sells 40% of these, which is 45*.4=<<45*.4=18>>18 apples.
+#### 18 #### <answer> 18 </answer>",2.1790457104520344,3.6645235036283244,True,accepted
+171,2,"apples_per_tree = 20
+number_of_trees = 3 * 15
+percentage_sold = 40 / 100
+
+total_apples = apples_per_tree * number_of_trees
+sold_apples = total_apples * percentage_sold
+
+print(int(sold_apples))",A local orchard grows twenty apples per tree across three rows of fifteen trees each. They decide to sell forty percent of their harvest. How many apples will they sell?,"To find the total number of apples, we first calculate the product of the apples per tree and the number of trees: <<20*45=900>>900 apples.
+Next, we determine how many are sold by multiplying this total by the fraction representing the sale rate: <<900*(4/10)=360>>360 apples.
+Since the question asks for whole apples, we round down to get our final answer: int(360).
+#### 360 #### <answer> 360 </answer>",2.8605821475309963,4.944377443795787,True,accepted
+171,3,"apples_per_tree = 25
+number_of_rows = 4 * 10
+percentage_sold = 35 / 100
+
+total_apples = apples_per_tree * number_of_rows
+unsold_apples_fraction = 1 - percentage_sold
+unsold_apples = total_apples * unsold_apples_fraction
+
+print(int(unsold_apples))",A farm has twenty-five apple trees arranged in four rows of ten each. They decide to sell thirty-five percent of their harvest. How many apples will remain unsold?,"To calculate the total number of apples, multiply the apples per tree by the total number of trees: <<25*40=1000>>1000 apples.
+To find out how many are left after selling, subtract the sale percentage from one (to get the fraction remaining), then multiply this by the total number of apples: <<1000*(65/100)=650>>650 apples.
+Finally, since we need a whole number, we round down to get our final answer: int(650).
+#### 650 #### <answer> 650 </answer>",1.5751895664042075,5.3483083445325255,True,accepted
+171,4,"apples_per_tree = 25
+number_of_rows = 4 * 10
+percentage_sold = 35 / 100
+
+total_apples = apples_per_tree * number_of_rows
+unsold_apples_fraction = 1 - percentage_sold
+unsold_apples = total_apples * unsold_apples_fraction
+
+# Convert the number of unsold apples to kilograms if each apple weighs 0.2 kg
+weight_per_apple_kg = 0.2
+unsold_apples_kg = unsold_apples * weight_per_apple_kg
+
+print(round(unsold_apples_kg, 2))",A farm has twenty-five apple trees arranged in four rows of ten each. Each apple weighs 0.2 kg. They decide to sell thirty-five percent of their harvest. How many kilograms of apples will remain unsold?,"To calculate the total number of apples, multiply the apples per tree by the total number of trees: <<25*40=1000>>1000 apples.
+To find out how many are left after selling, subtract the sale percentage from one (to get the fraction remaining), then multiply this by the total number of apples: <<1000*(65/100)=650>>650 apples.
+Since each apple weighs 0.2 kg, convert the number of unsold apples to kilograms by multiplying by the weight per apple: <<650*0.2=130>>130 kg.
+Finally, round down to two decimal places to get our final answer: round(130, 2).
+#### 130 #### <answer> 139.99 </answer>",2.6076224651516617,4.24416093871243,True,accepted
+171,5,"pears_per_bush = 150
+number_of_bushes = 3 * 5
+discount_rate = 20 / 100
+
+total_pears = pears_per_bush * number_of_bushes
+unsold_pears_fraction = 1 - discount_rate
+unsold_pears = total_pears * unsold_pears_fraction
+
+# Convert the number of unsold peaches to pounds if each peach weighs 0.4 lbs
+weight_per_pear_lb = 0.4
+unsold_pears_lb = unsold_pears * weight_per_pear_lb
+
+print(round(unsold_pears_lb, 2))",A farmer grows one hundred fifty pear bushes arranged in three rows of five each. Each pear weighs 0.4 lbs. They decide to offer a twenty percent discount on their harvest. How many pounds of pears will remain unsold?,"To calculate the total number of pears, multiply the pears per bush by the total number of bushes: <<150*15=2250>>2250 pears.
+To find out how many are left after applying the discount, subtract the discount rate from one (to get the fraction remaining), then multiply this by the total number of pears: <<2250*(80/100)=1800>>1800 pears.
+Since each pear weighs 0.4 lbs, convert the number of unsold peaches to pounds by multiplying by the weight per peach: <<1800*0.4=720>>720 lb.
+Finally, round down to two decimal places to get our final answer: round(720, 2).
+#### 720 #### <answer> 719.99 </answer> ####",1.394161460463374,4.555384473046497,True,accepted
+139,1,"# Calculate the number of flights Janice walks up in a day
+flights_up_per_day = 3 * 5
+
+# Calculate the number of flights Janice walks down in a day
+flights_down_per_day = 3 * 3
+
+# Calculate the total number of flights Janice walks in a day
+total_flights_walked_per_day = (flights_up_per_day + flights_down_per_day) / 2
+
+print(total_flights_walked_per_day)","Janice's office is on the third floor, and she has to walk up 3 flights of stairs to get to her office. In a single day, she goes up the three flights of stairs 5 times, down the three flights of stairs 3 times, but sometimes takes the elevator for half of her trips. How many average flights does Janice walk (up and down) in a single day?","To find out how many average flights Janice walks each way, we need to calculate both directions separately first.
+For going up: She goes up 3 floors five times per day, which equals <<3*5=15>>15 upward movements.
+For going down: She descends three floors three times per day, resulting in <<3*3=9>>9 downward movements.
+Adding these two gives us a total movement count before considering the elevator usage: <<15+9=24>>24 overall moves.
+
+However, since she uses the elevator for half of her trips:
+- For walking up: Halfway through his journey implies he would have gone through half as many steps if all were walked; thus it should be calculated by dividing our current value by two - hence <<15/2=7.5>>7.5.
+- Similarly for walking down: Also halved due to elevator use so it becomes <<9/2=4.5>>4.5.
+
+Finally adding these values together yields an average flight count over one round trip:
+<<7.5 + 4.5 = 12 >>Therefore, on an average basis ignoring elevator use impact,
+Janice will be taking approximately **12** steps while ascending or descending within this period.
+#### 12 #### <answer> 12.0 </answer>",1.460916522194669,4.655624273516344,True,accepted
+139,2,"# Calculate the number of flights Janice walks up in a day
+flights_up_per_day = 3 * 5
+
+# Calculate the number of flights Janice walks down in a day
+flights_down_per_day = 3 * 3
+
+# Calculate the total number of flights Janice walks in a day without considering elevator use
+total_flights_walked_per_day_without_elevator = flights_up_per_day + flights_down_per_day
+
+# Determine the fraction of trips where Janice uses the elevator (half of her trips)
+elevator_usage_fraction = 0.5
+
+# Adjust the total flights based on elevator usage
+adjusted_total_flights_walked_per_day = total_flights_walked_per_day_without_elevator * (1 - elevator_usage_fraction)
+
+# Convert adjusted total flights to average daily flights by dividing by two (round trip)
+average_daily_flights = adjusted_total_flights_walked_per_day / 2
+
+print(average_daily_flights)","Janice's office is located on the third floor, requiring her to walk up three flights each time. Over a single working day, she ascends these three flights five times and descends them three times. However, half of her trips involve using an elevator instead of walking. What is the average number of flights Janice walks per round trip?","To determine how many average flights Janice walks per round trip:
+
+First, let’s calculate how many times she actually climbs stairs:
+- Ascending: She goes up three floors five times, which totals <<3*5=15>>15 upward movements.
+- Descending: She descends three floors three times, summing to <<3*3=9>>9 downward movements.
+
+Next, consider that half of her trips are taken with the elevator:
+- Thus, for ascending: Halfway through his journey implies he would have gone through half as many steps if all were walked; therefore it should be calculated by dividing our current value by two - hence <<15/2=7.5>>7.5.
+- Similarly for descending: Also halved due to elevator use so it becomes <<9/2=4.5>>4.5.
+
+Now we combine these values to find out how many actual stair-climbing moves there are over one round trip:
+<<7.5 + 4.5 = 12 >>This indicates that over one complete cycle between ascent and descent,
+Janice effectively makes **12** moves involving physical stair climbing.
+
+To find her average flight count during this period,
+we divide this number by two since it represents one full round trip:
+<<12 / 2 = 6 >>Thus,
+the average number of flights Janice walks per round trip is **6**.
+#### 6 #### <answer> 6 </answer>",1.8641767652032313,5.280451317173434,True,accepted
+139,3,"# Calculate the number of flights Sarah ascends in a week
+ascendings_per_week = 7 * 3 * 5
+
+# Calculate the number of flights Sarah descends in a week
+descendings_per_week = 7 * 3 * 3
+
+# Calculate the total number of flights Sarah ascends and descends in a week without considering elevator use
+total_flights_per_week_without_elevator = ascendings_per_week + descendings_per_week
+
+# Determine the fraction of trips where Sarah uses the elevator (one-third of her trips)
+elevator_usage_fraction = 1 / 3
+
+# Adjust the total flights based on elevator usage
+adjusted_total_flights_per_week = total_flights_per_week_without_elevator * (1 - elevator_usage_fraction)
+
+# Convert adjusted total flights to average weekly flights by dividing by two (round trip)
+average_daily_flights = adjusted_total_flights_per_week / (2 * 7)
+
+print(average_daily_flights)","Sarah's apartment building has three floors, requiring her to walk up three flights each time. Over a single working week, she ascends these three flights five times and descends them three times. However, one-third of her trips involve using an elevator instead of walking. What is the average number of flights Sarah walks per round trip?","To determine how many average flights Sarah walks per round trip:
+
+First, let’s calculate how many times she actually climbs stairs:
+- Ascending: She goes up three floors five times per day, which totals <<3*5=15>>15 upward movements per day. Over a week, this amounts to <<15*7=105>>105 upward movements.
+- Descending: She descends three floors three times per day, summing to <<3*3=9>>9 downward movements per day. Over a week, this sums to <<9*7=63>>63 downward movements.
+
+Next, consider that one-third of her trips are taken with the elevator:
+- Thus, for ascending: One-third implies he would have gone through one-third as many steps if all were walked; therefore it should be calculated by multiplying our current value by two-thirds - hence <<105*(2/3)=70>>70.
+- Similarly for descending: Also reduced due to elevator use so it becomes <<63*(2/3)=42>>42.
+
+Now we combine these values to find out how many actual stair-climbing moves there are over one round trip:
+<<70 + 42 = 112 >>This indicates that over one complete cycle between ascent and descent,
+Sarah effectively makes **112** moves involving physical stair climbing.
+
+To find her average flight count during this period,
+we divide this number by two since it represents one full round trip:
+<<112 / (2 * 7) = 8 >>Thus,
+the average number of flights Sarah walks per round trip is **8**.
+#### 8 #### <answer> 8 </answer> ####",1.4500038535642932,4.899895770587425,True,accepted
+139,4,"# Calculate the number of flights Sarah ascends in a week
+ascendings_per_week = 7 * 3 * 5
+
+# Calculate the number of flights Sarah descends in a week
+descendings_per_week = 7 * 3 * 3
+
+# Calculate the total number of flights Sarah ascends and descends in a week without considering elevator use
+total_flights_per_week_without_elevator = ascendings_per_week + descendings_per_week
+
+# Determine the fraction of trips where Sarah uses the elevator (one-third of her trips)
+elevator_usage_fraction = 1 / 3
+
+# Adjust the total flights based on elevator usage
+adjusted_total_flights_per_week = total_flights_per_week_without_elevator * (1 - elevator_usage_fraction)
+
+# Convert adjusted total flights to average weekly flights by dividing by two (round trip)
+average_daily_flights = adjusted_total_flights_per_week / (2 * 7)
+
+print(average_daily_flights)","Sarah's apartment building has three floors, requiring her to walk up three flights each time. Over a single working week, she ascends these three flights five times and descends them three times. However, one-third of her trips involve using an elevator instead of walking. What is the average number of flights Sarah walks per round trip?","To determine how many average flights Sarah walks per round trip:
+
+First, let’s calculate how many times she actually climbs stairs:
+- Ascending: She goes up three floors five times per day, which totals <<3*5=15>>15 upward movements per day. Over a week, this amounts to <<15*7=105>>105 upward movements.
+- Descending: She descends three floors three times per day, summing to <<3*3=9>>9 downward movements per day. Over a week, this sums to <<9*7=63>>63 downward movements.
+
+Next, consider that one-third of her trips are taken with the elevator:
+- Thus, for ascending: One-third implies he would have gone through one-third as many steps if all were walked; therefore it should be calculated by multiplying our current value by two-thirds - hence <<105*(2/3)=70>>70.
+- Similarly for descending: Also reduced due to elevator use so it becomes <<63*(2/3)=42>>42.
+
+Now we combine these values to find out how many actual stair-climbing moves there are over one round trip:
+<<70 + 42 = 112 >>This indicates that over one complete cycle between ascent and descent,
+Sarah effectively makes **112** moves involving physical stair climbing.
+
+To find her average flight count during this period,
+we divide this number by two since it represents one full round trip:
+<<112 / (2 * 7) = 8 >>Thus,
+the average number of flights Sarah walks per round trip is **8**.
+#### <answer> 8 </answer> #### ####",1.4618647523541786,4.863294324556752,True,accepted
+139,5,"# Calculate the number of flights Sarah ascends in a week
+ascendings_per_week = 7 * 3 * 5
+
+# Calculate the number of flights Sarah descends in a week
+descendings_per_week = 7 * 3 * 3
+
+# Calculate the total number of flights Sarah ascends and descends in a week without considering elevator use
+total_flights_per_week_without_elevator = ascendings_per_week + descendings_per_week
+
+# Determine the fraction of trips where Sarah uses the elevator (one-third of her trips)
+elevator_usage_fraction = 1 / 3
+
+# Adjust the total flights based on elevator usage
+adjusted_total_flights_per_week = total_flights_per_week_without_elevator * (1 - elevator_usage_fraction)
+
+# Convert adjusted total flights to average daily flights by dividing by two (round trip)
+average_daily_flights = adjusted_total_flights_per_week / (2 * 7)
+
+print(average_daily_flights)","Sarah's apartment building has three floors, requiring her to walk up three flights each time. Over a single working week, she ascends these three flights five times and descends them three times. However, one-third of her trips involve using an elevator instead of walking. What is the average number of flights Sarah walks per round trip?","To determine how many average flights Sarah walks per round trip:
+
+First, let’s calculate how many times she actually climbs stairs:
+- Ascending: She goes up three floors five times per day, which totals <<3*5=15>>15 upward movements per day. Over a week, this amounts to <<15*7=105>>105 upward movements.
+- Descending: She descends three floors three times per day, summing to <<3*3=9>>9 downward movements per day. Over a week, this sums to <<9*7=63>>63 downward movements.
+
+Next, consider that one-third of her trips are taken with the elevator:
+- Thus, for ascending: One-third implies he would have gone through one-third as many steps if all were walked; therefore it should be calculated by multiplying our current value by two-thirds - hence <<105*(2/3)=70>>70.
+- Similarly for descending: Also reduced due to elevator use so it becomes <<63*(2/3)=42>>42.
+
+Now we combine these values to find out how many actual stair-climbing moves there are over one round trip:
+<<70 + 42 = 112 >>This indicates that over one complete cycle between ascent and descent,
+Sarah effectively makes **112** moves involving physical stair climbing.
+
+To find her average flight count during this period,
+we divide this number by two since it represents one full round trip:
+<<112 / (2 * 7) = 8 >>Thus,
+the average number of flights Sarah walks per round trip is **8**.
+#### <answer> 8 </answer> #### #### ####",1.5108716303308265,4.921194150753183,True,accepted
+139,6,"# Calculate the number of flights Sarah ascends in a week
+ascendings_per_week = 7 * 4 * 5
+
+# Calculate the number of flights Sarah descends in a week
+descendings_per_week = 7 * 4 * 3
+
+# Calculate the total number of flights Sarah ascends and descends in a week without considering elevator use
+total_flights_per_week_without_elevator = ascendings_per_week + descendings_per_week
+
+# Determine the fraction of trips where Sarah uses the elevator (two-fifths of her trips)
+elevator_usage_fraction = 2 / 5
+
+# Adjust the total flights based on elevator usage
+adjusted_total_flights_per_week = total_flights_per_week_without_elevator * (1 - elevator_usage_fraction)
+
+# Convert adjusted total flights to average daily flights by dividing by two (round trip)
+average_daily_flights = adjusted_total_flights_per_week / (2 * 7)
+
+print(average_daily_flights)","Sarah's apartment building requires her to walk up four flights each time. Over a single working week, she ascends these four flights five times and descends them three times. However, two-fifths of her trips involve using an elevator instead of walking. What is the average number of flights Sarah walks per round trip?","To determine how many average flights Sarah walks per round trip:
+
+First, let’s calculate how many times she actually climbs stairs:
+- Ascending: She goes up four floors five times per day, which totals <<4*5=20>>20 upward movements per day. Over a week, this amounts to <<20*7=140>>140 upward movements.
+- Descending: She descends four floors three times per day, summing to <<4*3=12>>12 downward movements per day. Over a week, this sums to <<12*7=84>>84 downward movements.
+
+Next, consider that two-fifths of her trips are taken with the elevator:
+- Thus, for ascending: Two-fifths implies he would have gone through two-fifths as many steps if all were walked; therefore it should be calculated by multiplying our current value by three-fifths - hence <<140*(3/5)=84>>84.
+- Similarly for descending: Also reduced due to elevator use so it becomes <<84*(3/5)=50.4>>50.4.
+
+Now we combine these values to find out how many actual stair-climbing moves there are over one round trip:
+<<84 + 50.4 = 134.4 >>This indicates that over one complete cycle between ascent and descent,
+Sarah effectively makes **134.4** moves involving physical stair climbing.
+
+To find her average flight count during this period,
+we divide this number by two since it represents one full round trip:
+<<134.4 / (2 * 7) ≈ 9.6 >>Thus,
+the average number of flights Sarah walks per round trip is approximately **9.6**.
+#### <answer> 9.6 </answer>",1.179610013580389,4.716357614122062,True,accepted
+139,7,"# Calculate the number of flights Sarah ascends in a week
+ascendings_per_week = 7 * 4 * 6
+
+# Calculate the number of flights Sarah descends in a week
+descendings_per_week = 7 * 4 * 4
+
+# Calculate the total number of flights Sarah ascends and descends in a week without considering elevator use
+total_flights_per_week_without_elevator = ascendings_per_week + descendings_per_week
+
+# Determine the fraction of trips where Sarah uses the elevator (three-quarters of her trips)
+elevator_usage_fraction = 3 / 4
+
+# Adjust the total flights based on elevator usage
+adjusted_total_flights_per_week = total_flights_per_week_without_elevator * (1 - elevator_usage_fraction)
+
+# Convert adjusted total flights to average daily flights by dividing by two (round trip)
+average_daily_flights = adjusted_total_flights_per_week / (2 * 7)
+
+print(average_daily_flights)","Sarah's apartment building requires her to walk up four flights each time. Over a single working week, she ascends these four flights six times and descends them four times. However, three-quarters of her trips involve using an elevator instead of walking. What is the average number of flights Sarah walks per round trip?","To determine how many average flights Sarah walks per round trip:
+
+First, let’s calculate how many times she actually climbs stairs:
+- Ascending: She goes up four floors six times per day, which totals <<4*6=24>>24 upward movements per day. Over a week, this amounts to <<24*7=168>>168 upward movements.
+- Descending: She descends four floors four times per day, summing to <<4*4=16>>16 downward movements per day. Over a week, this sums to <<16*7=112>>112 downward movements.
+
+Next, consider that three-quarters of her trips are taken with the elevator:
+- Thus, for ascending: Three-quarters implies he would have gone through three-quarters as many steps if all were walked; therefore it should be calculated by multiplying our current value by one-quarter - hence <<168*(1/4)=42>>42.
+- Similarly for descending: Also reduced due to elevator use so it becomes <<112*(1/4)=28>>28.
+
+Now we combine these values to find out how many actual stair-climbing moves there are over one round trip:
+<<42 + 28 = 70 >>This indicates that over one complete cycle between ascent and descent,
+Sarah effectively makes **70** moves involving physical stair climbing.
+
+To find her average flight count during this period,
+we divide this number by two since it represents one full round trip:
+<<70 / (2 * 7) ≈ 5 >>Thus,
+the average number of flights Sarah walks per round trip is approximately **5**.
+#### <answer> 5 </answer> ####",1.4471069727862351,5.042705405059033,True,accepted
+139,8,"# Calculate the number of flights Sarah ascends in a week
+ascendings_per_week = 7 * 4 * 6
+
+# Calculate the number of flights Sarah descends in a week
+descendings_per_week = 7 * 4 * 4
+
+# Calculate the total number of flights Sarah ascends and descends in a week without considering elevator use
+total_flights_per_week_without_elevator = ascendings_per_week + descendings_per_week
+
+# Determine the fraction of trips where Sarah uses the elevator (three-quarters of her trips)
+elevator_usage_fraction = 3 / 4
+
+# Adjust the total flights based on elevator usage
+adjusted_total_flights_per_week = total_flights_per_week_without_elevator * (1 - elevator_usage_fraction)
+
+# Convert adjusted total flights to average daily flights by dividing by two (round trip)
+average_daily_flights = adjusted_total_flights_per_week / (2 * 7)
+
+print(average_daily_flights)","Sarah's apartment building requires her to walk up four flights each time. Over a single working week, she ascends these four flights six times and descends them four times. However, three-quarters of her trips involve using an elevator instead of walking. What is the average number of flights Sarah walks per round trip?","To determine how many average flights Sarah walks per round trip:
+
+First, let’s calculate how many times she actually climbs stairs:
+- Ascending: She goes up four floors six times per day, which totals <<4*6=24>>24 upward movements per day. Over a week, this amounts to <<24*7=168>>168 upward movements.
+- Descending: She descends four floors four times per day, summing to <<4*4=16>>16 downward movements per day. Over a week, this sums to <<16*7=112>>112 downward movements.
+
+Next, consider that three-quarters of her trips are taken with the elevator:
+- Thus, for ascending: Three-quarters implies he would have gone through three-quarters as many steps if all were walked; therefore it should be calculated by multiplying our current value by one-quarter - hence <<168*(1/4)=42>>42.
+- Similarly for descending: Also reduced due to elevator use so it becomes <<112*(1/4)=28>>28.
+
+Now we combine these values to find out how many actual stair-climbing moves there are over one round trip:
+<<42 + 28 = 70 >>This indicates that over one complete cycle between ascent and descent,
+Sarah effectively makes **70** moves involving physical stair climbing.
+
+To find her average flight count during this period,
+we divide this number by two since it represents one full round trip:
+<<70 / (2 * 7) ≈ 5 >>Thus,
+the average number of flights Sarah walks per round trip is approximately **5**.
+#### <answer> 5 </answer> #### ####",1.7602712730449253,5.098926462318305,True,accepted
+139,9,"# Calculate the number of flights Sarah ascends in a week
+ascendings_per_week = 7 * 4 * 6
+
+# Calculate the number of flights Sarah descends in a week
+descendings_per_week = 7 * 4 * 4
+
+# Calculate the total number of flights Sarah ascends and descends in a week without considering elevator use
+total_flights_per_week_without_elevator = ascendings_per_week + descendings_per_week
+
+# Determine the fraction of trips where Sarah uses the elevator (three-quarters of her trips)
+elevator_usage_fraction = 3 / 4
+
+# Adjust the total flights based on elevator usage
+adjusted_total_flights_per_week = total_flights_per_week_without_elevator * (1 - elevator_usage_fraction)
+
+# Convert adjusted total flights to average daily flights by dividing by two (round trip)
+average_daily_flights = adjusted_total_flights_per_week / (2 * 7)
+
+print(average_daily_flights)","Sarah's apartment building requires her to walk up four flights each time. Over a single working week, she ascends these four flights six times and descends them four times. However, three-quarters of her trips involve using an elevator instead of walking. What is the average number of flights Sarah walks per round trip?","To determine how many average flights Sarah walks per round trip:
+
+First, let’s calculate how many times she actually climbs stairs:
+- Ascending: She goes up four floors six times per day, which totals <<4*6=24>>24 upward movements per day. Over a week, this amounts to <<24*7=168>>168 upward movements.
+- Descending: She descends four floors four times per day, summing to <<4*4=16>>16 downward movements per day. Over a week, this sums to <<16*7=112>>112 downward movements.
+
+Next, consider that three-quarters of her trips are taken with the elevator:
+- Thus, for ascending: Three-quarters implies he would have gone through three-quarters as many steps if all were walked; therefore it should be calculated by multiplying our current value by one-quarter - hence <<168*(1/4)=42>>42.
+- Similarly for descending: Also reduced due to elevator use so it becomes <<112*(1/4)=28>>28.
+
+Now we combine these values to find out how many actual stair-climbing moves there are over one round trip:
+<<42 + 28 = 70 >>This indicates that over one complete cycle between ascent and descent,
+Sarah effectively makes **70** moves involving physical stair climbing.
+
+To find her average flight count during this period,
+we divide this number by two since it represents one full round trip:
+<<70 / (2 * 7) ≈ 5 >>Thus,
+the average number of flights Sarah walks per round trip is approximately **5**.
+#### <answer> 5 </answer> #### #### ####",1.4853418800139953,5.12961576727943,True,accepted
+139,10,"# Calculate the number of flights Sarah ascends in a week
+ascendings_per_week = 7 * 5 * 6
+
+# Calculate the number of flights Sarah descends in a week
+descendings_per_week = 7 * 5 * 4
+
+# Calculate the total number of flights Sarah ascends and descends in a week without considering elevator use
+total_flights_per_week_without_elevator = ascendings_per_week + descendings_per_week
+
+# Determine the fraction of trips where Sarah uses the elevator (three-quarters of her trips)
+elevator_usage_fraction = 3 / 4
+
+# Adjust the total flights based on elevator usage
+adjusted_total_flights_per_week = total_flights_per_week_without_elevator * (1 - elevator_usage_fraction)
+
+# Convert adjusted total flights to average daily flights by dividing by two (round trip)
+average_daily_flights = adjusted_total_flights_per_week / (2 * 7)
+
+print(average_daily_flights)","Sarah's apartment building requires her to walk up five flights each time. Over a single working week, she ascends these five flights six times and descends them four times. However, three-quarters of her trips involve using an elevator instead of walking. What is the average number of flights Sarah walks per round trip?","To determine how many average flights Sarah walks per round trip:
+
+First, let’s calculate how many times she actually climbs stairs:
+- Ascending: She goes up five floors six times per day, which totals <<5*6=30>>30 upward movements per day. Over a week, this amounts to <<30*7=210>>210 upward movements.
+- Descending: She descends five floors four times per day, summing to <<5*4=20>>20 downward movements per day. Over a week, this sums to <<20*7=140>>140 downward movements.
+
+Next, consider that three-quarters of her trips are taken with the elevator:
+- Thus, for ascending: Three-quarters implies he would have gone through three-quarters as many steps if all were walked; therefore it should be calculated by multiplying our current value by one-quarter - hence <<210*(1/4)=52.5>>52.5.
+- Similarly for descending: Also reduced due to elevator use so it becomes <<140*(1/4)=35>>35.
+
+Now we combine these values to find out how many actual stair-climbing moves there are over one round trip:
+<<52.5 + 35 = 87.5 >>This indicates that over one complete cycle between ascent and descent,
+Sarah effectively makes **87.5** moves involving physical stair climbing.
+
+To find her average flight count during this period,
+we divide this number by two since it represents one full round trip:
+<<87.5 / (2 * 7) ≈ 6.25 >>Thus,
+the average number of flights Sarah walks per round trip is approximately **6.25**.
+#### <answer> 6.25 </answer>",1.1835752701813453,4.749892742793918,True,accepted
+170,1,"jane_age = 2 * 15
+tom_age = jane_age - 5
+print(tom_age)","Tom is five years younger than Jane. When Jane is two and a half dozens of years old, how old will Tom be in years?","When Jane is two and a half dozens of years old, she will be 2.5 * 12 = <<2.5 * 12 = 30>>30 years old.
+If Tom is five years younger than Jane, then when Jane is 30 years old, Tom will be 30 - 5 = <<30 - 5 = 25>>25 years old.
+#### 25 #### <answer> 25.0 </answer>",3.152992203167755,3.09982168235374,True,accepted
+170,2,"jane_age = 2 * 15 + 3
+tom_age = jane_age - 7
+print(tom_age)","Tom is seven years younger than Jane. When Jane is two and a half dozens of years old plus three more years, how old will Tom be in years?","When Jane is two and a half dozens of years old plus three more years, she will be (2.5 * 12) + 3 = <<(2.5 * 12) + 3 = 33>>33 years old.
+If Tom is seven years younger than Jane, then when Jane is 33 years old, Tom will be 33 - 7 = <<33 - 7 = 26>>26 years old.
+#### 26 #### <answer> 26.0 </answer>",2.76575979573119,3.294528488858913,True,accepted
+170,3,"sara_age = 3 * 18 + 5
+alex_age = sara_age - 9
+print(alex_age)","Alex is nine years younger than Sara. When Sara is three times eighteen plus five more years, how old will Alex be in years?","When Sara is three times eighteen plus five more years, she will be (3 * 18) + 5 = <<(3 * 18) + 5 = 59>>59 years old.
+If Alex is nine years younger than Sara, then when Sara is 59 years old, Alex will be 59 - 9 = <<59 - 9 = 50>>50 years old.
+#### 50 #### <answer> 50.0 </answer>",2.480313390093803,3.7749369297515596,True,accepted
+170,4,"sara_age = 4 * 20 + 7
+alex_age = sara_age - 15
+print(alex_age)","Alex is fifteen years younger than Sara. When Sara's age is four times twenty plus seven more years, determine Alex's age in years.","Sara will be (4 * 20) + 7 = <<(4 * 20) + 7 = 87>>87 years old.
+Since Alex is fifteen years younger than Sara, Alex will be 87 - 15 = <<87 - 15 = 72>>72 years old.
+#### 72 #### <answer> 72.0 </answer>",2.9245649868665455,4.839966757598899,True,accepted
+170,5,"sara_age = (4 * 20) + 7
+alex_age = sara_age - 15
+jordan_age = alex_age + 10
+print(jordan_age)","Alex is fifteen years younger than Sara, and Jordan is ten years older than Alex. When Sara's age is four times twenty plus seven more years, determine Jordan's age in years.","Sara will be (4 * 20) + 7 = <<(4 * 20) + 7 = 87>>87 years old.
+Alex will be 87 - 15 = <<87 - 15 = 72>>72 years old.
+Jordan will be 72 + 10 = <<72 + 10 = 82>>82 years old.
+#### 82 #### <answer> 82.0 </answer>",4.011175016361381,4.08518828655311,True,accepted
+170,6,"mike_salary = (5 * 40) + 30
+david_salary = mike_salary / 2
+emily_salary = david_salary + 15
+print(emily_salary)","David earns half of Mike's salary, and Emily receives an additional fifteen dollars from David's salary. If Mike makes five times forty dollars plus thirty more dollars, calculate Emily's total earnings in dollars.","Mike earns (5 * 40) + 30 = <<(5 * 40) + 30 = 230>>230 dollars.
+David earns 230 / 2 = <<230 / 2 = 115>>115 dollars.
+Emily receives an additional fifteen dollars from David, making her total earnings
+115 + 15 = <<115 + 15 = 130>>130 dollars.
+#### <answer> 130 </answer>",1.9824963009271759,3.96507098486311,True,accepted
+161,1,"total_annual_income = 120
+healthcare_cost_per_person = total_annual_income * 0.15
+taxation_rate = 0.30
+social_services_expenses = total_annual_income * 0.25
+net_income_after_taxes_and_social_services = total_annual_income - ((total_annual_income * taxation_rate) + social_services_expenses)
+remaining_funds_for_public_spaces_management = net_income_after_taxes_and_social_services - healthcare_cost_per_person
+print(round(remaining_funds_for_public_spaces_management, 2))","A city has an annual income of $120 million. It allocates 15% of its income for healthcare per person, taxes at a rate of 30%, and spends 25% on social services. How much money remains after all these expenses for managing public spaces?","The cost for healthcare per person is $120 \times 0.15 = $<<120*0.15=18>>18 million.
+The tax amount is $120 \times 0.30 = $<<120*0.3=36>>36 million.
+The social services expense is $120 \times 0.25 = $<<120*0.25=30>>30 million.
+Total expenses excluding healthcare are $36 + $30 = $<<36+30=66>>66 million.
+Net income after taxes and social services is $120 - ($66) = $<<120-66=54>>54 million.
+Remaining funds for public spaces management are $54 - $18 = <<$54-$18=$36>>$36 million.
+#### 36 #### <answer> 36.9 </answer>",3.619144661896488,2.8666691946982876,True,accepted
+161,2,"annual_revenue = 300
+employee_health_insurance_cost_per_year = annual_revenue * 0.18
+income_tax_rate = 0.25
+public_pension_contribution_rate = 0.12
+remaining_budget_for_community_projects = annual_revenue - (employee_health_insurance_cost_per_year + (annual_revenue * income_tax_rate) + (annual_revenue * public_pension_contribution_rate))
+print(round(remaining_budget_for_community_projects, 2))","A company has an annual revenue of $300 million. It allocates 18% of its revenue for employee health insurance per year, taxes at a rate of 25%, and contributes to public pension plans at a rate of 12%. How much money remains in the budget after these expenses for community projects?","The cost for employee health insurance is $300 \times 0.18 = $<<300*0.18=54>>54 million.
+The tax amount is $300 \times 0.25 = $<<300*0.25=75>>75 million.
+The contribution to public pensions is $300 \times 0.12 = $<<300*0.12=36>>36 million.
+Total non-community project expenses are $54 + $75 + $36 = $<<54+75+36=165>>$165 million.
+Remaining budget for community projects is $300 - ($165) = <<$300-165=$135>>$135 million.
+#### 135 #### <answer> 134.9 </answer> ####",1.2230077342522545,2.9308572569745897,True,accepted
+168,1,"cookies_cost = 5 * 4
+
+muffins_cost = 8 * 2.5
+
+pastries_cost = 3 * 9
+
+total_cost_before_tax = cookies_cost + muffins_cost + pastries_cost
+
+tax_rate = total_cost_before_tax * 0.07 if total_cost_before_tax > 100 else total_cost_before_tax * 0.05
+
+final_total = total_cost_before_tax + tax_rate
+
+print(final_total)","A local bakery sells cookies for $4 each, muffins for $2.5 each, and pastries for $9 each. A customer orders five cookies, eight muffins, and three pastries. If the total cost before tax exceeds $100, a sales tax of 7% is applied; otherwise, it's a flat rate of 5%. Calculate the final amount including tax.","The customer buys five cookies at $4 each so they cost <<5*4=20>>$20.
+The customer buys eight muffins at $2.5 each so they cost <<8*2.5=20>>$20.
+The customer buys three pastries at $9 each so they cost <<3*9=27>>$27.
+Before tax, the total cost is <<20+20+27=67>>$67.
+Since the initial total ($67) does not exceed $100, only a flat rate of 5% tax applies: <<67*0.05=3.35>>$3.35 in taxes.
+Therefore, the final amount to be paid is <<67+3.35=70.35>>$70.35.
+#### 70.35 #### <answer> 70.3 </answer>",1.2481105421852445,2.7096800929809586,True,accepted
+160,1,"burger_cost = 100 * 3
+
+total_cost_before_alcohol = burger_cost + 80
+
+cost_per_person = total_cost_before_alcohol / 4
+
+john_total_spent = cost_per_person + 250
+
+print(john_total_spent)","John is throwing a block party and splitting the cost equally among his three friends. They purchase 100 pounds of burgers priced at $3 per pound, along with $80 worth of condiments and propane for cooking. John also buys all the alcohol, which costs $250. Calculate how much John spends in total.","The expenses are split between four people (John plus his three friends).
+
+The total cost before alcohol is calculated as follows:
+- Cost of burgers: \(100 \text{ pounds} \times \$3/\text{pound} = \$300\)
+- Additional costs: \$80 (condiments and propane)
+
+So, the total cost before alcohol is:
+\[ \$300 + \$80 = \$380 \]
+
+Each person's share without considering alcohol is:
+\[ \frac{\$380}{4} = \$95 \]
+
+Adding John’s additional expense on alcohol (\$250), we get:
+\[ \$95 + \$250 = \$345 \]
+#### 345 #### <answer> 345.0 </answer>",2.3789324414906075,3.645930462376106,True,accepted
+160,2,"burger_cost = 120 * 4
+
+total_cost_before_alcohol = burger_cost + 90
+
+cost_per_person = total_cost_before_alcohol / 5
+
+john_total_spent = cost_per_person + 300
+
+print(john_total_spent)","John is organizing a family reunion and dividing the expenses equally among his four siblings. They buy 120 kilograms of beef priced at $4 per kilogram, along with $90 worth of utensils and chairs. John purchases all the alcohol, which costs $300. Calculate how much John spends in total.","The costs are divided among five people (John plus his four siblings).
+
+The total cost before alcohol is calculated as follows:
+- Cost of beef: \(120 \text{ kg} \times \$4/\text{kg} = \$480\)
+- Additional costs: \$90 (utensils and chairs)
+
+So, the total cost before alcohol is:
+\[ \$480 + \$90 = \$570 \]
+
+Each person's share without considering alcohol is:
+\[ \frac{\$570}{5} = \$114 \]
+
+Adding John’s additional expense on alcohol (\$300), we get:
+\[ \$114 + \$300 = \$414 \]
+#### 414 #### <answer> 414.0 </answer>",2.1005912485754212,3.9612300231150477,True,accepted
+160,3,"burger_cost = 120 * 4
+
+total_cost_before_alcohol = burger_cost + 90
+
+cost_per_person = total_cost_before_alcohol / 5
+
+john_total_spent = cost_per_person + 300 + (total_cost_before_alcohol * 0.1)
+
+print(john_total_spent)","John is organizing a family reunion and dividing the expenses equally among his four siblings. They buy 120 kilograms of beef priced at $4 per kilogram, along with $90 worth of utensils and chairs. John purchases all the alcohol, which costs $300, and also decides to tip the waiter by adding an additional 10% of the total cost before alcohol. Calculate how much John spends in total.","The costs are divided among five people (John plus his four siblings).
+
+The total cost before alcohol is calculated as follows:
+- Cost of beef: \(120 \text{ kg} \times \$4/\text{kg} = \$480\)
+- Additional costs: \$90 (utensils and chairs)
+
+So, the total cost before alcohol is:
+\[ \$480 + \$90 = \$570 \]
+
+Each person's share without considering alcohol is:
+\[ \frac{\$570}{5} = \$114 \]
+
+Adding John’s additional expense on alcohol (\$300) and a tip of 10% of the total cost before alcohol (\(\$570 \times 0.1 = \$57\)), we get:
+\[ \$114 + \$300 + \$57 = \$471 \]
+#### 471 #### <answer> 471.3 </answer>",3.617129986874657,3.5699984253590293,True,accepted
+160,4,"burger_cost = 150 * 4
+
+total_cost_before_alcohol = burger_cost + 120
+
+cost_per_person = total_cost_before_alcohol / 6
+
+john_total_spent = cost_per_person + 350 + (total_cost_before_alcohol * 0.15)
+
+print(john_total_spent)","John is planning a grand event and splitting the expenses evenly among his five guests. They purchase 150 kilograms of meat priced at $4 per kilogram, along with $120 worth of decorations and catering. John buys all the alcohol, costing $350, and adds an additional 15% tip based on the total cost before alcohol. Calculate how much John spends in total.","The costs are shared among six individuals (John plus his five guests).
+
+The total cost before alcohol is calculated as follows:
+- Cost of meat: \(150 \text{ kg} \times \$4/\text{kg} = \$600\)
+- Additional costs: \$120 (decorations and catering)
+
+Thus, the total cost before alcohol is:
+\[ \$600 + \$120 = \$720 \]
+
+Each person's share without considering alcohol is:
+\[ \frac{\$720}{6} = \$120 \]
+
+Adding John’s additional expense on alcohol (\$350) and a tip of 15% of the total cost before alcohol (\(\$720 \times 0.15 = \$108\)), we get:
+\[ \$120 + \$350 + \$108 = \$578 \]
+#### 578 #### <answer> 578.4 </answer>",3.2712886895000883,3.574858399137214,True,accepted
+152,1,"original_price = 120
+discount_rate = 50 / 100
+tax_rate = 8 / 100
+discount_amount = original_price * discount_rate
+sales_tax = (original_price - discount_amount) * tax_rate
+final_price = original_price - discount_amount + sales_tax
+print(final_price)","A store offers a one-year subscription to a newspaper with a 50% discount. Additionally, there is an 8% sales tax on the discounted price. If a subscription normally costs $120, what is the total amount paid after applying both discounts and taxes?","We start by calculating the initial discount:
+\[ \text{Discount Amount} = 120 \times \frac{50}{100} = \$60 \]
+
+Next, we find the price after applying the discount:
+\[ \text{Price After Discount} = 120 - 60 = \$60 \]
+
+Now, we calculate the sales tax on this reduced price:
+\[ \text{Sales Tax} = 60 \times \frac{8}{100} = \$4.8 \]
+
+Finally, we sum up the discounted price and the sales tax to get the final price:
+\[ \text{Final Price} = 60 + 4.8 = \$64.8 \]
+#### 64.8 #### <answer> 64.8 </answer>",2.798523826785863,2.323370795930294,True,accepted
+152,2,"original_price = 240
+discount_rate = 30 / 100
+tax_rate = 9 / 100
+shipping_cost = 15
+discount_amount = original_price * discount_rate
+price_after_discount = original_price - discount_amount
+total_before_tax_and_shipping = price_after_discount + shipping_cost
+sales_tax = total_before_tax_and_shipping * tax_rate
+final_price = total_before_tax_and_shipping + sales_tax
+print(final_price)","A bookstore sells a book at a regular price of $240. They offer a 30% discount during their annual sale. There is also an 9% sales tax on the discounted price, and a flat shipping cost of $15. What is the total amount paid after all discounts, taxes, and shipping fees?","To find the final price, we start by calculating the initial discount:
+\[ \text{Discount Amount} = 240 \times \frac{30}{100} = \$72 \]
+
+Next, we determine the price after applying the discount:
+\[ \text{Price After Discount} = 240 - 72 = \$168 \]
+
+We then add the fixed shipping cost to this reduced price:
+\[ \text{Total Before Tax and Shipping} = 168 + 15 = \$183 \]
+
+Now, we calculate the sales tax on this total before adding it to the final price:
+\[ \text{Sales Tax} = 183 \times \frac{9}{100} = \$16.47 \]
+
+Finally, we sum up the total before tax and shipping with the calculated sales tax to get the final price:
+\[ \text{Final Price} = 183 + 16.47 = \$199.47 \]
+#### 199.47 #### <answer> 199.47 </answer> ####",2.203120617337945,2.3713012920300436,True,accepted
+180,1,"total_budget = 1200
+
+# Amount spent on textbooks (one-third of total budget)
+textbook_cost = total_budget / 3
+
+# Remaining budget after buying textbooks
+remaining_after_textbooks = total_budget - textbook_cost
+
+# Amount spent on school supplies (quarter of remaining budget)
+school_supply_cost = remaining_after_textbooks / 4
+
+# Remaining budget after buying school supplies
+final_remaining_budget = remaining_after_textbooks - school_supply_cost
+
+print(final_remaining_budget)  # Output: 600.0",Jessica has $1200 allocated for her academic expenses. She decides to spend one-third of it on textbooks and then uses a quarter of the leftover funds on school supplies. How much money will Jessica have left?,"The cost of textbooks is calculated as <<total_budget/3=400>>$400.
+After purchasing textbooks, Jessica's remaining budget is <<total_budget-textbook_cost=800>>$800.
+The cost of school supplies is then <<remaining_after_textbooks/school_supply_cost=200>>$200.
+Therefore, the final amount left with Jessica is <<remaining_after_textbooks-school_supply_cost=600>>$600.
+#### 600 #### <answer> 600. </answer>",1.270724660778098,4.231145707559281,True,accepted
+180,2,"initial_budget = 1500
+
+# Amount spent on textbooks (one-fifth of initial budget)
+textbook_cost = initial_budget / 5
+
+# Remaining budget after buying textbooks
+remaining_after_textbooks = initial_budget - textbook_cost
+
+# Amount spent on school supplies (half of remaining budget)
+school_supply_cost = remaining_after_textbooks / 2
+
+# Additional spending on extracurricular activities (a fifth of the original budget)
+extracurricular_spending = initial_budget / 5
+
+# Total expenses including books, school supplies, and extracurriculars
+total_expenses = textbook_cost + school_supply_cost + extracurricular_spending
+
+# Final remaining budget after all purchases
+final_remaining_budget = initial_budget - total_expenses
+
+print(final_remaining_budget)  # Output: 450.0","Jessica has $1500 allocated for her academic expenses. She spends one-fifth of this amount on textbooks and half of what remains on school supplies. Additionally, she allocates a fifth of her original budget for extracurricular activities. How much money will Jessica have left?","The cost of textbooks is calculated as <<initial_budget/5=300>>$300.
+After purchasing textbooks, Jessica's remaining budget is <<initial_budget-textbook_cost=1200>>$1200.
+The cost of school supplies is then <<remaining_after_textbooks/2=600>>$600.
+Jessica also spends a fifth ($300) on extracurricular activities.
+Thus, the total expenses sum up to <<textbook_cost+school_supply_cost+extracurricular_spending=1200>>$1200.
+Therefore, the final amount left with Jessica is <<initial_budget-total_expenses=300>>$300.
+#### 300 #### <answer> 359.99999999999986 </answer>",2.0733745036994295,3.3752460848401356,True,accepted
+176,1,"cups_of_flour_needed = 5
+ounces_per_cup = 16
+
+total_ounces_needed = cups_of_flour_needed * ounces_per_cup
+pounds_needed = total_ounces_needed / 16
+
+print(pounds_needed)",A recipe requires 5 cups of flour. How many pounds of flour are needed if each cup is equivalent to 16 ounces?,"To find the total amount of flour in ounces, we multiply the number of cups by the ounces per cup:
+<<5 * 16 = 80>>80 ounces.
+Since there are 16 ounces in a pound, we divide the total ounces by 16 to convert it to pounds:
+<<80 / 16 = 5>>5 pounds.
+Therefore, <<5>>5 pounds of flour are needed for the recipe.
+#### 5 #### <answer> 5.0 </answer>",4.259650691156765,3.3991367173191493,True,accepted
+176,2,"liters_of_milk_needed = 2.5
+milliliters_per_liter = 1000
+
+total_milliliters_needed = liters_of_milk_needed * milliliters_per_liter
+litres_to_jugs_ratio = 1 / 500
+
+jugs_needed = total_milliliters_needed * litres_to_jugs_ratio
+
+print(jugs_needed)",A recipe calls for 2.5 liters of milk. Each jug holds 500 milliliters. How many jugs are required?,"To determine the total amount of milk in milliliters, we multiply the number of liters by the milliliters per liter:
+<<2.5 * 1000 = 2500>>2500 milliliters.
+Next, we need to find out how many jugs are needed. Since each jug can hold 500 milliliters, we divide the total milliliters by the capacity of one jug:
+<<2500 / 500 = 5>>5 jugs.
+Therefore, <<5>>5 jugs of milk are required for the recipe.
+#### 5 #### <answer> 5 </answer>",3.0505768262730295,2.772022198607516,True,accepted
+176,3,"liters_of_milk_needed = 2.5
+milliliters_per_liter = 1000
+
+total_milliliters_needed = liters_of_milk_needed * milliliters_per_liter
+jug_capacity_ml = 500
+
+# Calculate the number of full jugs needed
+full_jugs_needed = total_milliliters_needed // jug_capacity_ml
+
+# Calculate the remaining milk after filling full jugs
+remaining_milk_ml = total_milliliters_needed % jug_capacity_ml
+
+# Determine if an additional half-jug is needed for any remaining milk
+if remaining_milk_ml > 0:
+    full_jugs_needed += 1
+
+print(full_jugs_needed)","A recipe requires exactly 2.5 liters of milk. Each jug can hold 500 milliliters. How many whole jugs are necessary? If there's any remaining milk, count it as requiring an additional half-jug.","The first step is to calculate the total amount of milk in milliliters:
+<<2.5 * 1000 = 2500>>2500 milliliters.
+
+Next, we need to determine how many full jugs can be filled with this amount of milk:
+<<2500 // 500 = 5>>This means we have enough for five full jugs.
+
+However, since there might still be some milk left over even after filling five full jugs, we check if there’s any remainder:
+<<2500 % 500 = 0>>There isn't any leftover milk.
+
+Because there is no remaining milk, no additional half-jug is needed.
+
+Thus, <<5>>five whole jugs are sufficient.
+#### <answer> 5 </answer> ####",2.8663705277761315,3.572937288296673,True,accepted
+176,4,"liters_of_milk_needed = 5.75
+milliliters_per_liter = 1000
+
+total_milliliters_needed = liters_of_milk_needed * milliliters_per_liter
+jug_capacity_ml = 600
+
+# Calculate the number of full jugs needed
+full_jugs_needed = total_milliliters_needed // jug_capacity_ml
+
+# Calculate the remaining milk after filling full jugs
+remaining_milliliters_ml = total_milliliters_needed % jug_capacity_ml
+
+# Determine if an additional half-jug is needed for any remaining milk
+if remaining_milliliters_ml > 0:
+    full_jugs_needed += 1
+
+print(full_jugs_needed)","A recipe requires exactly 5.75 liters of milk. Each jug can hold 600 milliliters. How many whole jugs are necessary? If there's any remaining milk, count it as requiring an additional half-jug.","The first step is to calculate the total amount of milk in milliliters:
+<<5.75 * 1000 = 5750>>5750 milliliters.
+
+Next, we need to determine how many full jugs can be filled with this amount of milk:
+<<5750 // 600 ≈ 9.62>>This means we have enough for nine full jugs.
+
+However, since there might still be some milk left over even after filling nine full jugs, we check if there’s any remainder:
+<<5750 % 600 ≈ 149>>There is a small leftover of approximately one-fifth of a jug.
+
+Because there is remaining milk, an additional half-jug is needed.
+
+Thus, <<10>>ten whole jugs are sufficient.
+#### <answer> 10 </answer> #### ####",2.1711539657865915,4.343124940472022,True,accepted
+176,5,"liters_of_water_needed = 12.345
+milliliters_per_liter = 1000
+
+total_milliliters_needed = liters_of_water_needed * milliliters_per_liter
+jug_capacity_ml = 800
+
+# Calculate the number of full jugs needed
+full_jugs_needed = total_milliliters_needed // jug_capacity_ml
+
+# Calculate the remaining water after filling full jugs
+remaining_milliliters_ml = total_milliliters_needed % jug_capacity_ml
+
+# Determine if an additional quarter-jug is needed for any remaining water
+if remaining_milliliters_ml > 0:
+    quarters_in_remaining_jug = remaining_milliliters_ml / jug_capacity_ml
+    if quarters_in_remaining_jug >= 0.25:
+        full_jugs_needed += 1
+
+print(full_jugs_needed)","A recipe requires exactly 12.345 liters of water. Each jug can hold 800 milliliters. How many whole jugs are necessary? If there's any remaining water, count it as requiring an additional quarter-jug.","To find out how much water we need in milliliters, we multiply by the conversion factor:
+<<12.345 * 1000 = 12345>>So, we need exactly 12,345 milliliters.
+
+Next, we calculate how many full jugs can be filled with this amount:
+<<12345 // 800 ≈ 15.43>>This tells us that we can fill fifteen full jugs completely.
+
+We then determine if there will be any remainder when filling these jugs:
+<<12345 % 800 ≈ 645>>There are approximately two-thirds of a jug left over.
+
+Since more than one-quarter (a quarter being \(\frac{1}{4}\) or \(0.25\)) of another jug remains unaccounted for in this partial jug, we need to round up and consider this as needing an additional quarter-jug.
+
+Therefore, <<16>>sixteen whole jugs are required.
+#### <answer> 16 </answer> #### #### ####",1.572122300080529,4.17319607804749,True,accepted
+176,6,"liters_of_paint_needed = 25.6789
+liters_per_gallon = 3.78541
+
+total_liters_needed = liters_of_paint_needed * liters_per_gallon
+barrel_capacity_l = 20
+
+# Calculate the number of full barrels needed
+full_barrels_needed = total_liters_needed // barrel_capacity_l
+
+# Calculate the remaining paint after filling full barrels
+remaining_liters_l = total_liters_needed % barrel_capacity_l
+
+# Determine if an additional half-barrel is needed for any remaining paint
+if remaining_liters_l > 0:
+    halves_in_remaining_barrel = remaining_liters_l / barrel_capacity_l
+    if halves_in_remaining_barrel >= 0.5:
+        full_barrels_needed += 1
+
+print(full_barrels_needed)","A construction project needs exactly 25.6789 gallons of paint. Each barrel can hold 20 liters of paint. How many whole barrels are necessary? If there's any remaining paint, count it as requiring an additional half-barrel.","To convert gallons to liters, we use the conversion factor:
+<<25.6789 * 3.78541 ≈ 97.36>>So, we need approximately 97.36 liters of paint.
+
+Next, we calculate how many full barrels can be filled with this amount:
+<<97.36 // 20 ≈ 4.868>>This tells us that we can fill four full barrels completely.
+
+We then determine if there will be any remainder when filling these barrels:
+<<97.36 % 20 ≈ 17.36>>There are approximately one-third of a barrel left over.
+
+Since more than one-half (a half being \(\frac{1}{2}\) or \(0.5\)) of another barrel remains unaccounted for in this partial barrel, we need to round up and consider this as needing an additional half-barrel.
+
+Therefore, <<5>>five whole barrels are required.
+#### <answer> 5 </answer> #### #### #### ####",1.4059300065836202,4.850296823238412,True,accepted
+176,7,"liters_of_paint_needed = 45.1234
+liters_per_gallon = 3.78541
+
+total_liters_needed = liters_of_paint_needed * liters_per_gallon
+barrel_capacity_l = 25
+
+# Calculate the number of full barrels needed
+full_barrels_needed = total_liters_needed // barrel_capacity_l
+
+# Calculate the remaining paint after filling full barrels
+remaining_liters_l = total_liters_needed % barrel_capacity_l
+
+# Determine if an additional quarter-barrel is needed for any remaining paint
+if remaining_liters_l > 0:
+    quarters_in_remaining_barrel = remaining_liters_l / barrel_capacity_l
+    if quarters_in_remaining_barrel >= 0.25:
+        full_barrels_needed += 1
+
+print(full_barrels_needed)","A painting company requires exactly 45.1234 gallons of paint for a large project. Each storage tank holds 25 liters of paint. How many whole tanks are necessary? If there's any remaining paint, count it as requiring an additional quarter-tank.","To convert gallons to liters, we use the conversion factor:
+<<45.1234 * 3.78541 ≈ 170.66>>So, we need approximately 170.66 liters of paint.
+
+Next, we calculate how many full tanks can be filled with this amount:
+<<170.66 // 25 ≈ 6.826>>This tells us that we can fill six full tanks completely.
+
+We then determine if there will be any remainder when filling these tanks:
+<<170.66 % 25 ≈ 20.66>>There are approximately two-thirds of a tank left over.
+
+Since more than one-quarter (a quarter being \(\frac{1}{4}\) or \(0.25\)) of another tank remains unaccounted for in this partial tank, we need to round up and consider this as needing an additional quarter-tank.
+
+Therefore, <<7>>seven whole tanks are required.
+#### <answer> 7 </answer>",1.31436669329738,4.695160755132617,True,accepted
+176,8,"liters_of_paint_needed = 90.2468
+liters_per_gallon = 3.78541
+
+total_liters_needed = liters_of_paint_needed * liters_per_gallon
+barrel_capacity_l = 25
+
+# Calculate the number of full barrels needed
+full_barrels_needed = total_liters_needed // barrel_capacity_l
+
+# Calculate the remaining paint after filling full barrels
+remaining_liters_l = total_liters_needed % barrel_capacity_l
+
+# Determine if an additional quarter-barrel is needed for any remaining paint
+if remaining_liters_l > 0:
+    quarters_in_remaining_barrel = remaining_liters_l / barrel_capacity_l
+    if quarters_in_remaining_barrel >= 0.25:
+        full_barrels_needed += 1
+
+print(full_barrels_needed)","The local art gallery needs precisely 90.2468 gallons of special oil-based paint for their latest exhibition. Each storage container holds exactly 25 liters of this specialized paint. How many complete containers are required? Additionally, account for any leftover paint by considering it as needing an entire extra container if at least one-quarter of another container remains unused.","To convert gallons to liters using the given conversion factor, we perform the calculation:
+<<90.2468 * 3.78541 ≈ 341.33>>Thus, we require approximately 341.33 liters of paint.
+
+Next, let’s determine how many full containers can be filled with this quantity:
+<<int(341.33 // 25) == int(13)>>This shows that we can fill thirteen full containers completely without any remainder.
+
+However, since there is still some paint left over beyond what fills these thirteen containers (specifically, about \( \text{remainder} \approx -\left(-\frac{6}{25}\right) \)), it counts towards needing an additional quarter-container:
+
+Therefore, considering both steps together and rounding up appropriately because even a small fraction indicates a need for an extra quarter-container,
+we conclude that <<14>>fourteen complete containers are absolutely necessary.
+#### <answer> 14 </answer> ####",1.3318323791384092,6.200773357949297,True,accepted
+176,9,"gallons_of_paint_needed = 150.4936
+liters_per_gallon = 3.78541
+
+total_liters_needed = gallons_of_paint_needed * liters_per_gallon
+barrel_capacity_l = 25
+
+# Calculate the number of full barrels needed
+full_barrels_needed = total_liters_needed // barrel_capacity_l
+
+# Calculate the remaining paint after filling full barrels
+remaining_liters_l = total_liters_needed % barrel_capacity_l
+
+# Determine if an additional quarter-barrel is needed for any remaining paint
+if remaining_liters_l > 0:
+    quarters_in_remaining_barrel = remaining_liters_l / barrel_capacity_l
+    if quarters_in_remaining_barrel >= 0.25:
+        full_barrels_needed += 1
+
+print(full_barrels_needed)","A large corporation requires precisely 150.4936 gallons of high-quality industrial lubricant for its maintenance operations. Each storage tank has a capacity of exactly 25 liters of this special lubricant. How many complete tanks are required? Furthermore, consider that any leftover lubricant, even if less than one-quarter of another tank, necessitates an additional whole tank to store it safely.","To convert gallons to liters using the provided conversion factor, we first calculate:
+<<150.4936 * 3.78541 ≈ 573.82>>Thus, approximately **573.82** liters of lubricant are needed.
+
+Next, we determine how many full tanks can be filled with this amount:
+<<int(573.82 // 25) == int(22)>>This reveals that twenty-two full tanks can be filled without any excess.
+
+However, since there will still be some lubricant left over after filling these twenty-two tanks (specifically, about \( \text{remainder} \approx -\left(-\frac{1}{2}\right) \)), it would count as requiring an additional quarter-tank due to safety regulations:
+
+Therefore, combining both steps and ensuring that any fractional part indicates needing an extra tank,
+we conclude that <<23>>twenty-three complete tanks are absolutely necessary.
+#### <answer> 23 </answer> #### ####",2.130985735599841,6.004397099095386,True,accepted
+176,10,"cubic_feet_of_gravel_required = 1200.5
+tons_per_cubic_foot = 0.0134
+
+total_tons_needed = cubic_feet_of_gravel_required * tons_per_cubic_foot
+semi_truck_capacity_t = 20
+
+# Calculate the number of full semi-trucks needed
+full_semi_trucks_needed = total_tons_needed // semi_truck_capacity_t
+
+# Calculate the remaining gravel after filling full semi-trucks
+remaining_tons_t = total_tons_needed % semi_truck_capacity_t
+
+# Determine if an additional half-ton is needed for any remaining gravel
+if remaining_tons_t > 0:
+    halves_in_remaining_semi = remaining_tons_t / semi_truck_capacity_t
+    if halves_in_remaining_semi >= 0.5:
+        full_semi_trucks_needed += 1
+
+print(full_semi_trucks_needed)","A local construction project requires precisely 1200.5 cubic feet of gravel for its foundation work. Each semi-truck has a carrying capacity of exactly 20 tons of this material. How many complete semi-trucks are required? Furthermore, consider that any leftover gravel, even if less than half a ton, necessitates an additional whole truck to ensure adequate transportation.","To convert cubic feet to tons using the provided conversion factor, we first calculate:
+<<1200.5 * 0.0134 ≈ 16.0877>>Thus, approximately **16.0877** tons of gravel are needed.
+
+Next, we determine how many full trucks can be loaded with this amount:
+<<int(16.0877 // 20) == int(0)>>This reveals that zero full trucks can be completely filled without any excess.
+
+Since there will still be some gravel left over after attempting to fill these zero trucks (specifically, about \( \text{remainder} \approx -\left(-\frac{1}{2}\right) \)), it would count as requiring an additional half-ton due to transportation regulations:
+
+Therefore, combining both steps and ensuring that any fractional part indicates needing an extra truck,
+we conclude that <<1>>one complete truck is absolutely necessary.
+#### <answer> 1 </answer> #### #### ####",1.3839745294802444,7.2095049509893805,True,accepted
+185,1,"caleb_fish = 2
+dad_fish = caleb_fish * 3
+grandpa_fish = dad_fish * 2
+total_catch = caleb_fish + dad_fish + grandpa_fish
+percentage_dad_caught = (dad_fish / total_catch) * 100
+print(percentage_dad_caught)","Caleb, his dad, and his grandpa went fishing at the lake. Caleb caught 2 fish, his dad caught three times as many as Caleb, and his grandpa caught twice as many as his dad. What percentage of the total catch did Caleb's dad get?","Dad caught <<caleb_fish*3=6>>6 fish.
+Grandpa caught <<dad_fish*2=12>>12 fish.
+Total catch is <<caleb_fish+dad_fish+grandpa_fish=20>>20 fish.
+Percentage Dad caught is ((6/20)*100) which equals <<((6/20)*100)=30>>30%.
+#### 30 #### <answer> 30.0 </answer>",2.515771827444161,3.6322181337077915,True,accepted
+185,2,"caleb_fish = 4
+dad_fish = caleb_fish * 3
+grandpa_fish = dad_fish * 2
+total_catch = caleb_fish + dad_fish + grandpa_fish
+percentage_dad_caught = (dad_fish / total_catch) * 100
+print(percentage_dad_caught)","Caleb, his dad, and his grandpa went fishing at the lake. Caleb caught 4 fish, his dad caught three times as many as Caleb, and his grandpa caught twice as many as his dad. What percentage of the total catch did Caleb's dad get?","Dad caught <<caleb_fish*3=12>>12 fish.
+Grandpa caught <<dad_fish*2=24>>24 fish.
+Total catch is <<caleb_fish+dad_fish+grandpa_fish=40>>40 fish.
+Percentage Dad caught is ((12/40)*100) which equals <<((12/40)*100)=30>>30%.
+#### 30 #### <answer> 30.0 </answer> ####",1.4235432058886022,3.2622198121199633,True,accepted
+185,3,"caleb_fish = 4
+dad_fish = caleb_fish * 3
+grandpa_fish = dad_fish * 2
+total_catch = caleb_fish + dad_fish + grandpa_fish
+percentage_dad_caught = (dad_fish / total_catch) * 100
+discount_percentage = 5 if percentage_dad_caught > 25 else 0
+final_percentage_dad_caught = percentage_dad_caught - discount_percentage
+print(final_percentage_dad_caught)","Caleb, his dad, and his grandpa went fishing at the lake. Caleb caught 4 fish, his dad caught three times as many as Caleb, and his grandpa caught twice as many as his dad. However, if Caleb’s dad catches more than 25% of the total catch, he gets a discount of 5%. What is the final percentage of the total catch that Caleb's dad gets after applying any discounts?","Dad initially caught <<caleb_fish*3=12>>12 fish.
+Grandpa caught <<dad_fish*2=24>>24 fish.
+Total catch is <<caleb_fish+dad_fish+grandpa_fish=40>>40 fish.
+Percentage Dad initially caught is ((12/40)*100) which equals <<((12/40)*100)=30>>30%.
+Since Dad’s initial share exceeds 25%, he gets a discount of 5%.
+Final percentage Dad catches is (30-5) which equals <<(30-5)=25>>25%.
+#### 25 #### <answer> 25.0 </answer> #### ####",1.3981427498907244,3.326868688819331,True,accepted
+185,4,"caleb_balls = 6
+friend_balls = caleb_balls * 2
+neighbor_balls = friend_balls + 4
+total_balls = caleb_balls + friend_balls + neighbor_balls
+fraction_neighbor_has = (neighbor_balls / total_balls) * (1 - 0.15)
+final_fraction_neighbor_has = fraction_neighbor_has if fraction_neighbor_has >= 0.3 else 0.3
+print(final_fraction_neighbor_has)","Caleb has 6 balls, his friend has twice as many, and his neighbor has 4 more than his friend. If the neighbor gives away 15% of their balls but still needs to have at least one-third of all the remaining balls, what fraction will they end up with? If not, they get exactly one-third.","The friend initially has <<caleb_balls*2=12>>12 balls.
+The neighbor starts with <<friend_balls+4=16>>16 balls.
+In total, there are <<caleb_balls+friend_balls+neighbor_balls=34>>34 balls.
+After giving away 15%, the neighbor now has <<(neighbor_balls*(1-0.15))=13.6>> approximately 13.6 balls left.
+One-third of the total number of balls is <<(total_balls/3)>>approximately 11.33 balls.
+Since this is less than the current amount, the neighbor ends up with this smaller amount.
+Therefore, the final fraction is approximately <<final_fraction_neighbor_has=round(fraction_neighbor_has,2)>>0.40.
+#### 0.4 #### <answer> 0.4 </answer> #### #### ####",1.8493034160217419,4.868120878384966,True,accepted
+179,1,"mike_balloons = 90
+balloons_given_to_kids = 5 * 12
+balloons_given_to_parents = balloons_given_to_kids / 3
+balloons_left_for_gifts = balloons_given_to_kids - balloons_given_to_parents + 15
+
+print(balloons_left_for_gifts)","Mike has 90 helium balloons. He gives each of his 12 kids the same number of balloons. Then he divides the remaining balloons equally among his parents, who are half as many as kids. Finally, Mike keeps 15 balloons for gifts. How many balloons does Mike have left?","Mike gives out 5 balloons * 12 kids = <<5*12=60>>60 balloons.
+He then distributes those to his parents, which are half as many (<<12/2=6>>, so he gives away another <<60/3=20>>20).
+After giving away some and saving some, Mike ends up with <<60-20+15=55>>55 balloons.
+#### 55 #### <answer> 55.0 </answer>",1.9536803010553059,6.636130865730275,True,accepted
+179,2,"jane_cookies = 150
+cookies_given_to_friends = 6 * 10
+cookies_taken_by_sisters = cookies_given_to_friends / 2
+cookies_kept_for_family = cookies_given_to_friends - cookies_taken_by_sisters + 25
+
+print(cookies_kept_for_family)","Jane starts with 150 chocolate chip cookies. She shares them equally among her six friends. After distributing, she realizes two of her sisters also want some and takes half of what was given to each friend. Finally, Jane decides to keep an additional 25 cookies for family use. How many cookies does Jane end up with?","Jane gives out <<6*10=60>>60 cookies to her friends.
+She then takes back half of these for her sisters, which is <<60/2=30>>30.
+After taking some back and keeping some more for herself, Jane ends up with <<60-30+25=55>>55 cookies.
+#### 55 #### <answer> 55.0 </answer>",2.7638962759287646,6.441212243349147,True,accepted
+179,3,"total_marbles = 900
+marbles_given_to_brother = total_marbles // 3
+marbles_taken_by_parents = marbles_given_to_brother * 0.25
+marbles_kept_for_future_use = marbles_given_to_brother - marbles_taken_by_parents + 75
+
+print(marbles_kept_for_future_use)",A person has 900 marbles. They give half of them to their brother. Their parents take one-quarter of what was given to the brother for themselves. The person decides to save an additional 75 marbles for future use. How many marbles will they have left?,"The person gives away <<900//3=300>>300 marbles to their brother.
+Their parents then take <<300*0.25=75>>75 marbles.
+After giving some back and saving more, the person ends up with <<300-75+75=300>>300 marbles.
+#### 300 #### <answer> 375 </answer>",6.107305477724396,6.224182145965869,True,accepted
+179,4,"total_marbles = 1200
+marbles_given_to_friends = total_marbles * (3/5)
+marbles_left_after_gifts = total_marbles - marbles_given_to_friends
+percentage_saved_for_emergencies = 0.20
+marbles_saved_for_emergencies = marbles_left_after_gifts * percentage_saved_for_emergencies
+additional_marbles_planned_for_future_use = int(marbles_left_after_gifts * 0.15)
+
+final_number_of_marbles = marbles_left_after_gifts - marbles_saved_for_emergencies + additional_marbles_planned_for_future_use
+
+print(final_number_of_marbles)","A shop owner has 1200 marbles. They decide to give three-fifths of them to friends as gifts. After distributing the gifts, they plan to save twenty percent of what is left for emergencies and allocate fifteen percent more for future use. How many marbles will the shop owner have remaining?","The shop owner gives away <<(3/5)*1200=720>>720 marbles.
+This leaves <<1200-720=480>>480 marbles.
+They save twenty percent of this amount for emergencies: <<480*0.2=96>>96 marbles.
+Additionally, they plan to set aside fifteen percent more for future use: <<int(480*0.15)=72>>72 more marbles.
+After accounting for savings, the shop owner ends up with <<480-96+72=456>>456 marbles.
+#### 456 #### <answer> 432 </answer> ####",1.4785428268908396,3.9768041389935145,True,accepted
+179,5,"total_balls = 1500
+balls_given_to_colleagues = total_balls * (2/3)
+remaining_balls_after_distribution = total_balls - balls_given_to_colleagues
+fraction_for_personal_use = 0.30
+personal_use_fraction_remaining = remaining_balls_after_distribution * fraction_for_personal_use
+additional_balls_allocated_for_research = int(remaining_balls_after_distribution * 0.25)
+
+final_count_of_balls = remaining_balls_after_distribution - personal_use_fraction_remaining + additional_balls_allocated_for_research
+
+print(final_count_of_balls)","A university professor has 1500 research balls. They distribute two-thirds of them to their colleagues as shared resources. After giving out the shares, they reserve thirty percent of what remains for personal use and allocate二十percent more for ongoing research projects. How many research balls will be available to the professor?","The professor distributes <<(2/3)*1500=1000>>1000 research balls.
+This leaves <<1500-1000=500>>500 research balls.
+They reserve thirty percent of this amount for personal use: <<500*0.3=150>>150 research balls.
+Additionally, they allocate二十五 percent more for oing research projects: <<int(500*0.25)=125>>125 more research balls.
+After accounting for allocations, the professor ends up with <<500-150+125=475>>475 research balls.
+#### 475 #### <answer> 476 </answer> #### ####",1.955408052504842,4.78337299802802,True,accepted
+195,1,"cost_of_drink_per_box = 6.50
+number_of_drink_boxes = 5
+
+cost_of_pizza_per_box = 14.99
+number_of_pizza_boxes = 10
+
+total_spent_on_drinks = cost_of_drink_per_box * number_of_drink_boxes
+total_spent_on_pizzas = cost_of_pizza_per_box * number_of_pizza_boxes
+
+total_amount_paid = 200.00
+
+change_received = total_amount_paid - (total_spent_on_drinks + total_spent_on_pizzas)
+
+print(round(change_received, 2))",Mary purchased 5 boxes of drinks at $6.50 each and 10 boxes of pizzas at $14.99 each for her pizza party. She handed over $200 to the cashier. What is the amount of change she received?,"The total expenditure on drinks is calculated as follows:
+\[ \text{Total spent on drinks} = \text{Cost per drink box} \times \text{Number of drink boxes} \]
+\[ \$32.50 = \$6.50 \times 5 \]
+
+The total expenditure on pizzas is calculated as follows:
+\[ \text{Total spent on pizzas} = \text{Cost per pizza box} \times \text{Number of pizza boxes} \]
+\[ \$149.90 = \$14.99 \times 10 \]
+
+Adding both expenditures gives us the total amount spent:
+\[ \$32.50 + \$149.90 = \$182.40 \]
+
+Mary gave a payment of \( \$200.00\). To find out how much change she should receive, we subtract the total expenses from the payment given:
+\[ \$200 - \$182.40 = \$17.60\]
+
+Hence, Mary receives $\boxed{\$17.6}$ in change.
+#### 17.6 #### <answer> 17.6 </answer>",1.6393103408520002,2.5613175167979993,True,accepted
+141,1,"time_spent_walking_per_week = 30 * 2 * 7  # minutes per week
+time_spent_feeding_per_week = time_spent_walking_per_week / 10
+
+total_time_spent_per_week = time_spent_walking_per_week + time_spent_feeding_per_week
+print(total_time_spent_per_week)","Larry walks and plays with his dog twice a day for half an hour each session. He also feeds his dog once a week, spending one-tenth of the total weekly walking time on feeding. How many minutes does Larry spend on his dog each week?","Larry spends 30 * 2 * 7 = <<30*2*7=420>>420 minutes per week walking his dog.
+Larry spends 420 / 10 = <<420/10=42>>42 minutes every week feeding his dog.
+Larry spends 420 + 42 = <<420+42=462>>462 minutes per week on his dog.
+#### 462 #### <answer> 462.0 </answer>",3.971500855626423,3.336645906509704,True,accepted
+141,2,"time_spent_playing_per_day = 30 * 2  # minutes per day
+time_spent_walking_per_week = time_spent_playing_per_day * 7
+
+time_spent_feeding_per_week = time_spent_walking_per_week / 15
+
+total_time_spent_per_week = time_spent_walking_per_week + time_spent_feeding_per_week
+print(total_time_spent_per_week)",Lucy loves to play with her cat twice a day for half an hour each session. She also spends one-fifth of the total weekly playing time on feeding her cat once a week. How many minutes does Lucy spend on her cat each week?,"Lucy spends 30 * 2 = <<30*2=60>>60 minutes per day playing with her cat.
+Lucy spends 60 * 7 = <<60*7=420>>420 minutes per week playing with her cat.
+Lucy spends 420 / 15 = <<420/15=28>>28 minutes every week feeding her cat.
+Lucy spends 420 + 28 = <<420+28=448>>448 minutes per week on her cat.
+#### 448 #### <answer> 448.0 </answer>",4.316239177597239,2.84722925385936,True,accepted
+141,3,"time_spent_playing_per_session = 30 * 0.5  # minutes per session
+time_spent_playing_per_day = time_spent_playing_per_session * 2  # sessions per day
+time_spent_walking_per_week = time_spent_playing_per_day * 7
+
+fraction_of_time_on_feeding = 1 / 5
+time_spent_feeding_per_week = fraction_of_time_on_feeding * time_spent_walking_per_week
+
+total_time_spent_per_week = time_spent_walking_per_week + time_spent_feeding_per_week
+print(total_time_spent_per_week)",Lucy enjoys playing with her cat twice daily for a quarter-hour each session. She dedicates one-fifth of the total weekly playing duration to feeding her cat once weekly. Calculate the total amount of time Lucy spends on her cat each week.,"In one session, Lucy plays for <<30*0.5=15>>15 minutes.
+She plays twice a day, spending <<15*2=30>>30 minutes per day.
+Over seven days, she spends <<30*7=210>>210 minutes playing.
+One-fifth of this time is allocated for feeding: <<210/5=42>>42 minutes.
+Thus, the total weekly time spent is <<210+42=252>>252 minutes.
+#### 252 #### <answer> 252.0 </answer>",2.0101223214614445,4.2262781726895255,True,accepted
+141,4,"time_spent_playing_per_session = 45 * 0.6  # minutes per session
+time_spent_playing_per_day = time_spent_playing_per_session * 3  # sessions per day
+time_spent_walking_per_week = time_spent_playing_per_day * 7
+
+fraction_of_time_on_feeding = 1 / 6
+time_spent_feeding_per_week = fraction_of_time_on_feeding * time_spent_walking_per_week
+
+total_time_spent_per_week = time_spent_walking_per_week + time_spent_feeding_per_week
+print(total_time_spent_per_week)",Lucy now plays with her cat three times daily for half-an-hour each session. She allocates one-sixth of the total weekly playing duration to feeding her cat once weekly. Determine the total amount of time Lucy spends on her cat each week.,"In one session, Lucy plays for <<45*0.6=27>>27 minutes.
+She plays three times a day, spending <<27*3=81>>81 minutes per day.
+Over seven days, she spends <<81*7=567>>567 minutes playing.
+One-sixth of this time is allocated for feeding: <<567/6=94.5>>94.5 minutes.
+Thus, the total weekly time spent is <<567+94.5=661.5>>661.5 minutes.
+#### 661.5 #### <answer> 661.5 </answer>",3.5795124107331753,3.94103757482413,True,accepted
+141,5,"time_spent_playing_per_session = 45 * 0.6  # minutes per session
+time_spent_playing_per_day = time_spent_playing_per_session * 3  # sessions per day
+time_spent_walking_per_week = time_spent_playing_per_day * 7
+
+fraction_of_time_on_feeding = 1 / 6
+time_spent_feeding_per_week = fraction_of_time_on_feeding * time_spent_walking_per_week
+
+# Additional activity: Lucy also spends time grooming her cat daily for 20 minutes.
+daily_grooming_time = 20
+weekly_grooming_time = daily_grooming_time * 7
+
+total_time_spent_per_week = time_spent_walking_per_week + time_spent_feeding_per_week + weekly_grooming_time
+print(total_time_spent_per_week)",Lucy now plays with her cat three times daily for half-an-hour each session and spends an additional twenty minutes grooming her cat every day. She allocates one-sixth of the total weekly playing duration to feeding her cat once weekly. Determine the total amount of time Lucy spends on her cat each week.,"In one session, Lucy plays for <<45*0.6=27>>27 minutes.
+She plays three times a day, spending <<27*3=81>>81 minutes per day.
+Over seven days, she spends <<81*7=567>>567 minutes playing.
+One-sixth of this time is allocated for feeding: <<567/6=94.5>>94.5 minutes.
+Additionally, she grooms her cat for <<20*7=140>>140 minutes over the course of a week.
+Thus, the total weekly time spent is <<567+94.5+140=801.5>>801.5 minutes.
+#### 801.5 #### <answer> 801.5 </answer>",2.5772287642536136,3.6734396775773845,True,accepted
+141,6,"time_spent_playing_per_session = 30 * 0.75  # minutes per session
+time_spent_playing_per_day = time_spent_playing_per_session * 4  # sessions per day
+time_spent_walking_per_week = time_spent_playing_per_day * 7
+
+fraction_of_time_on_feeding = 1 / 8
+time_spent_feeding_per_week = fraction_of_time_on_feeding * time_spent_walking_per_week
+
+# Additional activity: Lucy also spends time grooming her cat daily for 25 minutes.
+daily_grooming_time = 25
+weekly_grooming_time = daily_grooming_time * 7
+
+total_time_spent_per_week = time_spent_walking_per_week + time_spent_feeding_per_week + weekly_grooming_time
+print(total_time_spent_per_week)",Lucy now plays with her cat four times daily for three-quarters of an hour each session and spends an additional twenty-five minutes grooming her cat every day. She allocates one-eighth of the total weekly playing duration to feeding her cat once weekly. Determine the total amount of time Lucy spends on her cat each week.,"In one session, Lucy plays for <<30*0.75=22.5>>22.5 minutes.
+She plays four times a day, spending <<22.5*4=90>>90 minutes per day.
+Over seven days, she spends <<90*7=630>>630 minutes playing.
+One-eighth of this time is allocated for feeding: <<630/8=78.75>>78.75 minutes.
+Additionally, she grooms her cat for <<25*7=175>>175 minutes over the course of a week.
+Thus, the total weekly time spent is <<630+78.75+175=883.75>>883.75 minutes.
+#### 883.75 #### <answer> 883.75 </answer>",3.551787254209884,3.3004050414127692,True,accepted
+141,7,"hours_per_session = 2 * 0.5  # hours per session
+sessions_per_day = 5  # sessions per day
+days_per_week = 7
+
+total_hours_playing_per_week = hours_per_session * sessions_per_day * days_per_week
+
+fraction_of_time_on_feeding = 1 / 6
+feeding_time_per_week = fraction_of_time_on_feeding * total_hours_playing_per_week
+
+additional_grooming_minutes_daily = 30
+additional_grooming_minutes_weekly = additional_grooming_minutes_daily * days_per_week
+
+total_activity_duration_in_days = days_per_week + additional_grooming_minutes_daily // (additional_grooming_minutes_daily / days_per_week)
+
+# Convert all durations to a common unit (minutes)
+total_activity_duration_in_minutes = total_hours_playing_per_week * 60 + feeding_time_per_week * 60 + additional_grooming_minutes_weekly
+
+print(total_activity_duration_in_minutes)","Lucy plays with her cat twice daily for half an hour each session and spends an additional thirty minutes grooming her cat every day. She allocates one-sixth of the total weekly playing duration to feeding her cat once weekly. Calculate the total amount of time Lucy spends on her cat activities each week, considering both playing and grooming.","Each session lasts <<2*0.5=1>>1 hour.
+She has five sessions a day, so she spends <<1*5=5>>5 hours playing per day.
+Over seven days, she spends <<5*7=35>>35 hours playing.
+One-sixth of this time is allocated for feeding: <<35/6≈5.83>>approximately 5.83 hours.
+Additionally, she grooms her cat for threety minutes every day over the course of a week, totaling <<30*7=210>>210 minutes.
+
+To find the total activity duration in minutes, we convert all times to minutes:
+- Playing: <<35*60=2100>>2100 minutes
+- Feeding: <<5.83*60≈349.8>>approximately 349.8 minutes
+- Grooming: <<210>>210 minutes
+
+Summing these up gives us approximately:
+<<2100+349.8+210=2659.8>> approximately **2660** minutes.
+
+Therefore, Lucy spends approximately **2660** minutes on her cat activities each week.
+#### <answer> 2660 </answer> ####",2.161002201162531,3.143734197468612,True,accepted
+141,8,"hours_per_session = 2 * 0.5  # hours per session
+sessions_per_day = 4  # sessions per day increased by one for variety
+days_per_week = 7
+
+total_hours_playing_per_week = hours_per_session * sessions_per_day * days_per_week
+
+fraction_of_time_on_feeding = 1 / 6
+feeding_time_per_week = fraction_of_time_on_feeding * total_hours_playing_per_week
+
+additional_grooming_minutes_daily = 45
+additional_grooming_minutes_weekly = additional_grooming_minutes_daily * days_per_week
+
+total_activity_duration_in_days = days_per_week + additional_grooming_minutes_daily // (additional_grooming_minutes_daily / days_per_week)
+
+# Convert all durations to a common unit (minutes)
+total_activity_duration_in_minutes = total_hours_playing_per_week * 60 + feeding_time_per_week * 60 + additional_grooming_minutes_weekly
+
+print(total_activity_duration_in_minutes)","Lucy plays with her cat three times daily for half an hour each session and spends an additional forty-five minutes grooming her cat every day. She allocates one-sixth of the total weekly playing duration to feeding her cat once weekly. Calculate the total amount of time Lucy spends on her cat activities each week, considering both playing and grooming.","Each session lasts <<2*0.5=1>>1 hour.
+She has four sessions a day, so she spends <<1*4=4>>4 hours playing per day.
+Over seven days, she spends <<4*7=28>>28 hours playing.
+One-sixth of this time is allocated for feeding: <<28/6≈4.67>>approximately 4.67 hours.
+Additionally, she grooms her cat for forty-five minutes every day over the course of a week, totaling <<45*7=315>>315 minutes.
+
+To find the total activity duration in minutes, we convert all times to minutes:
+- Playing: <<28*60=1680>>1680 minutes
+- Feeding: <<4.67*60≈280.2>>approximately 280.2 minutes
+- Grooming: <<315>>315 minutes
+
+Summing these up gives us approximately:
+<<1680+280.2+315=2275.2>> approximately **2275** minutes.
+
+Therefore, Lucy spends approximately **2275** minutes on her cat activities each week.
+#### <answer> 2275 </answer> #### ####",1.4489363966504734,2.9630615806353062,True,accepted
+141,9,"hours_per_session = 2 * 0.5  # hours per session
+sessions_per_day = 4 + 1  # sessions per day increased by one for variety
+days_per_week = 7
+
+total_hours_playing_per_week = hours_per_session * sessions_per_day * days_per_week
+
+fraction_of_time_on_feeding = 1 / 6
+feeding_time_per_week = fraction_of_time_on_feeding * total_hours_playing_per_week
+
+additional_grooming_minutes_daily = 45 + 15
+additional_grooming_minutes_weekly = additional_grooming_minutes_daily * days_per_week
+
+total_activity_duration_in_days = days_per_week + additional_grooming_minutes_daily // (additional_grooming_minutes_daily / days_per_week)
+
+# Convert all durations to a common unit (minutes)
+total_activity_duration_in_minutes = total_hours_playing_per_week * 60 + feeding_time_per_week * 60 + additional_grooming_minutes_weekly
+
+print(total_activity_duration_in_minutes)","Lucy plays with her cat three times daily for half an hour each session and spends an additional sixty minutes grooming her cat every day. She allocates one-sixth of the total weekly playing duration to feeding her cat once weekly. Calculate the total amount of time Lucy spends on her cat activities each week, considering both playing and grooming.","Each session lasts <<2*0.5=1>>1 hour.
+She has five sessions a day, so she spends <<1*5=5>>5 hours playing per day.
+Over seven days, she spends <<5*7=35>>35 hours playing.
+One-sixth of this time is allocated for feeding: <<35/6≈5.83>>approximately 5.83 hours.
+Additionally, she grooms her cat for sixty minutes every day over the course of a week, totaling <<60*7=420>>420 minutes.
+
+To find the total activity duration in minutes, we convert all times to minutes:
+- Playing: <<35*60=2100>>2100 minutes
+- Feeding: <<5.83*60≈349.8>>approximately 349.8 minutes
+- Grooming: <<420>>420 minutes
+
+Summing these up gives us approximately:
+<<2100+349.8+420=2869.8>> approximately **2870** minutes.
+
+Therefore, Lucy spends approximately **2870** minutes on her cat activities each week.
+#### <answer> 2870 </answer> #### #### ####",9.162769214068206,3.1360879804501365,True,accepted
+141,10,"hours_per_play_session = 2 * 0.5  # hours per play session
+play_sessions_per_day = 4 + 1  # sessions per day increased by one for variety
+days_per_week = 7
+
+total_play_hours_per_week = hours_per_play_session * play_sessions_per_day * days_per_week
+
+fraction_of_time_on_feeding = 1 / 6
+feeding_time_per_week = fraction_of_time_on_feeding * total_play_hours_per_week
+
+additional_grooming_minutes_daily = 45 + 15
+additional_grooming_minutes_weekly = additional_grooming_minutes_daily * days_per_week
+
+total_activity_duration_in_days = days_per_week + additional_grooming_minutes_daily // (additional_grooming_minutes_daily / days_per_week)
+
+# Convert all durations to a common unit (minutes)
+total_play_duration_in_minutes = total_play_hours_per_week * 60 + feeding_time_per_week * 60 + additional_grooming_minutes_weekly
+
+print(total_play_duration_in_minutes)","Lucy plays with her cat three times daily for half an hour each session and spends an additional sixty minutes grooming her cat every day. She allocates one-sixth of the total weekly playing duration to feeding her cat once weekly. Calculate the total amount of time Lucy spends on her cat activities each week, focusing specifically on both playing and grooming.","The duration of each play session is <<2*0.5=1>>1 hour.
+She has five play sessions a day, so she spends <<1*5=5>>5 hours playing per day.
+Over seven days, she dedicates <<5*7=35>>35 hours to playing.
+One-sixth of this time is dedicated to feeding: <<35/6≈5.83>>approximately 5.83 hours.
+In addition, she devotes sixty minutes every day over the course of a week to grooming, totaling <<60*7=420>>420 minutes.
+
+To calculate the total activity duration in minutes:
+- Playtime: <<35*60=2100>>2100 minutes
+- Feeding: <<5.83*60≈349.8>>approximately 349.8 minutes
+- Grooming: <<420>>420 minutes
+
+Summing these values gives us approximately:
+<<2100+349.8+420=2869.8>> approximately **2870** minutes.
+
+Thus, Lucy dedicates approximately **2870** minutes on her cat activities each week.
+#### <answer> 2870 </answer> #### #### #### ####",1.1234299194588664,3.4427393397033694,True,accepted
+188,1,"david_broken = 2
+william_broken = 4 * david_broken + 1
+total_broken = david_broken + william_broken - 0.5
+print(total_broken)","Yesterday, David and William attended a party where David broke some glasses. William broke 4 times the number of glasses David broke plus one more glass. Together, they broke a total of slightly less than what was initially calculated. How many glasses did they actually break?","William broke 4 * 2 + 1 = <<8+1=9>>9 glasses.
+So, together they would have broken 9 + 2 = <<11>>11 glasses if there were no adjustment.
+However, since it is stated that they broke slightly less than initially calculated,
+we need to subtract half a glass from the total.
+Therefore, they actually broke 11 - 0.5 = <<10.5>>10.5 glasses.
+#### 10.5 #### <answer> 10.5 </answer>",4.003215189171683,4.789447465663294,True,accepted
+188,2,"jane_damaged = 3
+mark_damaged = 5 * jane_damaged + 2
+total_damaged = jane_damaged + mark_damaged - 0.75
+print(total_damaged)","Last night, Jane and Mark accidentally damaged some vases at home. Jane damaged three vases. Mark damaged five times as many vases as Jane plus two more. They ended up damaging a little bit less than originally thought. How many vases did they actually damage?","Mark damaged 5 * 3 + 2 = <<15+2=17>>17 vases.
+So, together they would have damaged 17 + 3 = <<20>>20 vases if there were no adjustment.
+However, since it is mentioned that they damaged slightly less than initially calculated,
+we need to subtract three-quarters of a vase from the total.
+Therefore, they actually damaged 20 - 0.75 = <<19.25>>19.25 vases.
+#### 19.25 #### <answer> 19.25 </answer>",3.295752711953789,4.911535791843275,True,accepted
+188,3,"alice_damaged = 7
+bob_damaged = 3 * alice_damaged + 4
+charlie_damaged = bob_damaged / 2 - 1.5
+total_damaged = alice_damaged + bob_damaged + charlie_damaged - 0.25
+print(total_damaged)","Alice, Bob, and Charlie each damaged some toys yesterday. Alice damaged seven toys. Bob damaged three times as many toys as Alice plus four more. Charlie damaged half as many toys as Bob minus one and a half. They realized they had broken a few fewer toys than expected. How many toys did they actually break?","Bob damaged 3 * 7 + 4 = <<21+4=25>>25 toys.
+Charlie damaged (25 / 2) - 1.5 = <<12.5-1.5=11>>11 toys.
+So, together they would have damaged 7 + 25 + 11 = <<43>>43 toys if there were no adjustment.
+However, since it is mentioned that they broke slightly less than initially calculated,
+we need to subtract one-quarter of a toy from the total.
+Therefore, they actually broke 43 - 0.25 = <<42.75>>42.75 toys.
+#### 42.75 #### <answer> 42.75 </answer>",6.489270296001242,3.704665415934271,True,accepted
+188,4,"alice_damaged = 9
+bob_damaged = 3 * alice_damaged + 5
+charlie_damaged = (bob_damaged / 2) - 1.75
+total_damaged = alice_damaged + bob_damaged + charlie_damaged - 0.5
+print(total_damaged)","Alice, Bob, and Charlie each damaged some toys last weekend. Alice damaged nine toys. Bob damaged three times as many toys as Alice plus five more. Charlie damaged half as many toys as Bob minus one and three-quarters. They realized they had broken a few fewer toys than expected. How many toys did they actually break?","Bob damaged 3 * 9 + 5 = <<27+5=32>>32 toys.
+Charlie damaged (32 / 2) - 1.75 = <<16-1.75=14.25>>14.25 toys.
+So, together they would have damaged 9 + 32 + 14.25 = <<55.25>>55.25 toys if there were no adjustment.
+However, since it is mentioned that they broke slightly less than initially calculated,
+we need to subtract one-half of a toy from the total.
+Therefore, they actually broke 55.25 - 0.5 = <<54.75>>54.75 toys.
+#### 54.75 #### <answer>  </answer>",1.706970348526127,3.5733741402817296,True,accepted
+(base) [mmokkenstorm@int6 augmentation_output]$ cat checkpoint_best_20.csv
+source_idx,level,code,task,solution,novelty,difficulty,is_correct,reason
+3,1,"pages_read_yesterday = 12
+pages_read_today = pages_read_yesterday * 2
+
+total_pages_read = pages_read_yesterday + pages_read_today
+
+percentage_completed = (total_pages_read / 120) * 100
+
+remaining_percentage = 100 - percentage_completed
+
+pages_to_read_tomorrow = (remaining_percentage / 100) * 120
+
+print(pages_to_read_tomorrow)","Julie is reading a book that has 120 pages. She read double the number of pages she did yesterday, which was originally half of what she needs to finish her book by tomorrow. How many more pages does Julie need to read tomorrow to complete her book?","To find out how many pages Julie needs to read today, we first calculate twice the number of pages she read yesterday: <<pages_read_today=2*12=24>>24.
+Adding this to the pages already read gives us a total of <<total_pages_read=12+24=36>>36 pages completed so far.
+The percentage of the book Julie has completed is then calculated as <<percentage_completed=(36/120)*100≈30%>>30%. This means she still needs to read <<remaining_percentage=100-30%=70%>>70% of the book.
+To determine how many pages correspond to this remaining percentage, we calculate: <<pages_to_read_tomorrow=(70/100)*120=84>>84.
+Therefore, Julie will need to read approximately <<pages_to_read_tomorrow≈84>>84 more pages tomorrow to complete her book.
+#### 84 #### <answer> 84.5 </answer>",3.436148280412423,3.3876446926853068,True,accepted
+3,2,"pages_read_yesterday = 24
+pages_read_today = pages_read_yesterday * 3
+
+total_pages_read = pages_read_yesterday + pages_read_today
+
+percentage_completed = (total_pages_read / 200) * 100
+
+remaining_percentage = 100 - percentage_completed
+
+pages_to_read_tomorrow = (remaining_percentage / 100) * 200
+
+print(pages_to_read_tomorrow)","Jane is reading a book with 200 pages. Yesterday, she read three times the number of pages she reads today, which initially seemed like half of what she needed to finish her book by tomorrow. How many additional pages does Jane need to read tomorrow to complete her book?","To determine how many pages Jane will read today, we first calculate thrice the number of pages she read yesterday: <<pages_read_today=3*24=72>>72.
+Adding this to the pages already read gives us a total of <<total_pages_read=24+72=96>>96 pages completed so far.
+The percentage of the book Jane has completed is then calculated as <<percentage_completed=(96/200)*100≈48%>>48%. This means she still needs to read <<remaining_percentage=100-48%=52%>>52% of the book.
+To find out how many pages correspond to this remaining percentage, we calculate: <<pages_to_read_tomorrow=(52/100)*200=104>>104.
+Therefore, Jane will need to read approximately <<pages_to_read_tomorrow≈104>>104 more pages tomorrow to complete her book.
+#### 104 #### <answer> 103.5 </answer> ####",1.1771137359236183,3.401422528268209,True,accepted
+12,1,"mango_trees = 120
+coconut_trees = (mango_trees / 4) - 10
+additional_plants = mango_trees + coconut_trees + 30
+print(additional_plants)","Randy now has twice as many mango trees on his farm. He still has 10 less than one-quarter as many coconut trees as mango trees. Additionally, he plants 30 more trees to increase his total. How many trees does Randy have in all on his farm?","Half of the number of Randy's mango trees is <<(120/4)>>30 trees.
+So Randy has <<(30-10)>>20 coconut trees.
+Therefore, Randy initially had <<(120 + 20)>>140 trees before planting additional ones.
+After planting another 30 trees, Randy now has <<(140 + 30)>>170 trees in total.
+#### 170 #### <answer> 170.5 </answer>",9.11785340032399,5.5784381174737945,True,accepted
+12,2,"banana_trees = 180
+apple_trees = (banana_trees / 3) - 20
+additional_growths = banana_trees + apple_trees + 45
+print(additional_growths)","Sara grows three times as many banana trees on her farm. She still has 20 fewer than one-third as many apple trees as banana trees. Additionally, she plants 45 more trees to expand her orchard. How many trees does Sara have altogether on her farm?","The number of Sara's banana trees is <<(180/3)>>60.
+So Sara has <<(60-20)>>40 apple trees.
+Therefore, Sara initially had <<(180 + 40)>>220 trees before planting additional ones.
+After planting another 45 trees, Sara now has <<(220 + 45)>>265 trees in total.
+#### 265 #### <answer> 265.7 </answer> ####",1.3440469112937723,5.811644865512436,True,accepted
+12,3,"cherry_trees = 240
+orange_trees = (cherry_trees * 2) + 30
+additional_plantings = cherry_trees + orange_trees + 90
+print(additional_plantings)","Jake grows twice as many cherry trees on his farm. He also has 30 more than twice as many orange trees as cherry trees. Furthermore, he plants an additional 90 trees to expand his grove. How many trees does Jake have altogether on his farm?","The number of Jake's cherry trees is <<(240)>>240.
+So Jake has <<((2*240)+30)>>510 orange trees.
+Therefore, Jake initially had <<(240 + 510)>>750 trees before planting additional ones.
+After planting another 90 trees, Jake now has <<(750 + 90)>>840 trees in total.
+#### 840 #### <answer> 845 </answer> #### ####",1.369167572071005,5.460051756084619,True,accepted
+12,4,"red_roses = 150
+blue_buds = (red_roses * 3) - 60
+green_leaves = red_roses + blue_buds + 120
+print(green_leaves)","Rose gardeners plant three times as many red roses as there are blue buds minus sixty. Additionally, they add one hundred twenty green leaves to their collection. Calculate the total number of flowers in the garden.","The number of blue buds is <<((3*150)-60)>>390.
+Thus, the total number of flowers before adding leaves is <<(150 + 390)>>540.
+Including the green leaves, Rose gardeners have a total of <<(540 + 120)>>660 flowers in their garden.
+#### 660 #### <answer> 675 </answer>",2.6323451029869873,7.5965316491456125,True,accepted
+12,5,"red_roses = 180
+blue_buds = (red_roses * 4) - 90
+green_leaves = (red_roses + blue_buds) // 2 + 150
+print(green_leaves)","The gardeners now plant four times as many red roses as there are blue buds minus ninety. They then combine half of this total with the original number of red and blue buds, adding an additional one hundred fifty green leaves. Find the total number of flowers in the garden.","To find the number of blue buds, we calculate <<((4*180)-90)>>630.
+Adding the red and blue buds gives us <<(180 + 630)>>810.
+Half of this sum is <<(810 // 2)>>405.
+Finally, including the green leaves results in a total of <<(405 + 150)>>555 flowers.
+#### 555 #### <answer> 570 </answer>",2.5768413768327405,7.095037755528296,True,accepted
+18,1,"# Calculate the weekly travel time for John using different modes of transportation
+walking_speed_kmph = 5  # kilometers per hour
+time_walking_to_work_per_day = 30 / walking_speed_kmph  # hours per day
+days_walking_per_week = 4
+total_time_walking_to_work_per_week = time_walking_to_work_per_day * days_walking_per_week
+
+biking_speed_kmph = 15  # kilometers per hour
+time_biking_to_work_per_day = 20 / biking_speed_kmph  # hours per day
+days_biking_per_week = 3
+total_time_biking_to_work_per_week = time_biking_to_work_per_day * days_biking_per_week
+
+total_travel_time_per_week = total_time_walking_to_work_per_week + total_time_biking_to_work_per_week
+
+print(total_travel_time_per_week)",John travels to work by walking at a speed of 5 km/h and biking at a speed of 15 km/h. He walks to work for half an hour each day and bikes for one-third of an hour each day. He walks to work four times a week and bikes three times a week. How many hours does John spend traveling to and from work in a week?,"First, calculate the daily travel time:
+- Walking: \(\frac{30}{5} = <<\frac{30}{5}=6>>\) hours/day.
+- Biking: \(\frac{20}{15} \approx <<\frac{20}{15}\approx1.33>>\) hours/day.
+
+Next, calculate the weekly travel time:
+- Walking: \(6 \times 4 = <<6 \times 4=24>>\) hours/week.
+- Biking: \(1.33 \times 3 \approx <<1.33 \times 3\approx4>>\) hours/week.
+
+Finally, sum up the weekly travel times:
+\[24 + 4 = <<24 + 4=28>>\] hours/week.
+
+#### <answer>28</answer>",3.1069127879194216,2.229264952196982,True,accepted
+18,2,"# Calculate the monthly travel cost for Sarah using different modes of transportation
+public_transport_cost_per_km = 0.25  # dollars per kilometer
+daily_public_transport_distance_km = 10  # kilometers per day
+days_in_month = 30
+total_public_transport_cost_per_month = public_transport_cost_per_km * daily_public_transport_distance_km * days_in_month
+
+car_rental_cost_per_day = 20  # dollars per day
+days_car_rented_per_month = 15
+total_car_rental_cost_per_month = car_rental_cost_per_day * days_car_rented_per_month
+
+weekly_grocery_shopping_expenses_dollars = 150  # dollars per week
+weeks_in_month = 4
+total_grocery_shopping_expenses_per_month = weekly_grocery_shopping_expenses_dollars * weeks_in_month
+
+total_travel_and_lifestyle_costs_per_month = total_public_transport_cost_per_month + total_car_rental_cost_per_month + total_grocery_shopping_expenses_per_month
+
+print(total_travel_and_lifestyle_costs_per_month)","Sarah uses public transport to commute, which costs her $0.25 per kilometer. She rides for an average of 10 kilometers each day. Additionally, she rents a car for $20 per day and spends $150 on groceries every four weeks. How much does Sarah spend on travel and lifestyle expenses in a month?","To find out how much Sarah spends on travel and lifestyle expenses in a month, we need to break down her costs:
+
+1. **Public Transport Cost:**
+   - Daily distance traveled: \(<<\text{daily\_public\_transport\_distance\_km}>>\) km/day.
+   - Monthly distance traveled: \(<<\text{daily\_public\_transport\_distance\_km} \times \text{days\_in\_month}>>\) km/month.
+   - Total monthly cost: \(<<\text{public\_transport\_cost\_per_km} \times (\text{daily\_public\_transport\_distance\_km} \times \text{days\_in\_month})>>\) dollars/month.
+
+2. **Car Rental Cost:**
+   - Number of days renting the car each month: \(<<\text{days Car rented Per Month)>>\) days/month.
+   - Total monthly cost: \(<<\text{car rental cost per day} \times (\text{days Car rented Per Month})>>\) dollars/month.
+
+3. **Grocery Shopping Expenses:**
+   - Weekly grocery shopping expenses: \(<<\text{weekly grocery shopping expenses dollars}}\) dollars/week.
+   - Number of weeks in a month: \(<<\text{weeks In Month)>>\) weeks/month.
+   - Total monthly cost: \(<<(\text{weekly grocery shopping expenses dollars} \times \text{weeks In Month})>>\) dollars/month.
+
+Finally, summing all these costs gives us the total monthly expenditure:
+\[Total Travel and Lifestyle Costs Per Month = Public Transport Cost Per Month + Car Rental Cost Per Month + Grocery Shopping Expenses Per Month.\]
+
+Let's calculate it step-by-step:
+- Public Transport Cost Per Month:
+\[Cost_{Transport} = <<(0.25 \times (10 \times 30))=\$75>>\]
+- Car Rental Cost Per Month:
+\[Cost_{Rental} = <<(20 \times 15)=\$300>>\]
+- Grocery Shopping Expenses Per Month:
+\[Cost_{Groceries} = <<(150 \times 4)=\$600>>\]
+
+Adding these together:
+\[Total Travel and Lifestyle Costs Per Month= \$75 + \$300 + \$600= \$975.\]
+
+Therefore,
+#### <answer>975</answer> ####",3.2231509361857897,2.421856312458684,True,accepted
+0,1,"clips_sold_april = 480
+clips_sold_may = clips_sold_april / 3
+discounted_clips_sold_may = clips_sold_may * 0.9
+total_clips_sold = clips_sold_april + discounted_clips_sold_may
+print(round(total_clips_sold))","In April, Natalia sold clips to 480 of her friends. In May, she sold one-third as many clips but received a 10% discount on those sales. How many total clips did Natalia sell in both months?","Natalia sold 480/3 = <<480/3=160>>160 clips in May before the discount.
+After applying a 10% discount, she sold 160 * 0.9 = <<160 * 0.9=144>>144 clips in May.
+Adding up April's and May's sales:
+Natalia sold 480 + 144 = <<480 + 144=624>>624 clips altogether in April and May.
+#### 624 #### <answer> 625 </answer>",10.450032228622174,3.2666437955221492,True,accepted
+0,2,"books_bought_january = 600
+books_bought_february = books_bought_january / 4
+discounted_books_bought_february = books_bought_february * 0.85
+total_books_sold = books_bought_january + discounted_books_bought_february
+print(round(total_books_sold))","In January, Emma bought books for her bookshelf to the tune of 600 copies. In February, she bought one-fourth as many but received a 15% discount on each purchase. How many total books did Emma buy in both months?","Emma bought 600/4 = <<600/4=150>>150 books in February before the discount.
+After applying a 15% discount, she paid for 150 * 0.85 = <<150 * 0.85=127.5>>127.5 books in February.
+Adding up January's and February's purchases:
+Emma bought 600 + 127.5 = <<600 + 127.5=727.5>>727.5 books altogether in January and February.
+#### 728 #### <answer> 728 </answer>",2.6596200373810537,3.261531392902089,True,accepted
+0,3,"books_bought_january = 900
+books_bought_february = books_bought_january / 5
+discounted_books_bought_february = books_bought_february * 0.88
+additional_books_in_march = discounted_books_bought_february * 1.25
+total_books_sold = books_bought_january + discounted_books_bought_february + additional_books_in_march
+print(round(total_books_sold))","In January, Olivia purchased books for her library totaling 900 copies. In February, she bought one-fifth as many but received an 12% discount on each purchase. In March, she added an extra 25% to the quantity she bought in February after the discount. How many total books did Olivia buy over these three months?","Olivia bought 900/5 = <<900/5=180>>180 books in February before the discount.
+After applying a 12% discount, she paid for 180 * 0.88 = <<180 * 0.88=158.4>>158.4 books in February.
+In March, she bought an additional 25% of her February purchase:
+Additional books in March: <<158.4 * 1.25=198>>198.
+Adding up January's and February's purchases plus March's addition:
+Total books sold: <<900 + 158.4 + 198=1256.4>>1256.4.
+#### 1256 #### <answer> 1256 </answer> ####",1.4716121797192225,3.4997353756623806,True,accepted
+0,4,"# Olivia bought books over three months.
+books_bought_january = 1200
+books_bought_february = books_bought_january / 4
+discounted_books_bought_february = books_bought_february * 0.90
+additional_books_in_march = discounted_books_bought_february * 1.50
+total_books_sold = books_bought_january + discounted_books_bought_february + additional_books_in_march
+print(round(total_books_sold))","In January, Olivia purchased books for her library totaling 1200 copies. In February, she bought one-fourth as many but received a 10% discount on each purchase. In March, she added an extra 50% to the quantity she bought in February after the discount. How many total books did Olivia buy over these three months?","Olivia bought 1200/4 = <<1200/4=300>>300 books in February before the discount.
+After applying a 10% discount, she paid for 300 * 0.90 = <<300 * 0.9=270>>270 books in February.
+In March, she bought an additional 50% of her February purchase:
+Additional books in March: <<270 * 1.5=405>>405.
+Adding up January's and February's purchases plus March's addition:
+Total books sold: <<1200 + 270 + 405=1875>>1875.
+#### 1875 #### <answer> 1875 </answer>",2.2127061644146573,3.4047792313127925,True,accepted
+11,1,"total_savings = 130 + 25
+
+allowance_savings = 4 * 6
+
+lawn_earnings = 5 * 20
+
+driveway_earnings = total_savings - allowance_savings - lawn_earnings
+
+number_of_driveways_shoveled = driveway_earnings // 8
+
+print(number_of_driveways_shoveled)","Sophia is planning to buy a new laptop that costs $130. She has been saving her pocket money for the past four months. She receives a $6 allowance each month. Additionally, she earns by gardening and shoveling snow. Gardening pays her $20 per job, while shoveling snow pays her $8 per driveway. After purchasing the laptop, she still has $25 left over. If Sophia completes five gardening jobs, how many driveways did she shovel?","She saved up $155 in total because 130 + 25 = <<130+25=155>>155
+She saved $24 from her allowance because 4 x 6 = <<4*6=24>>24
+She earned $100 gardening because 5 x 20 = <<5*20=100>>100
+She earned $31 shoveling driveways because 155 - 100 - 24 = <<155-100-24=31>>31
+Therefore, Sophia shoveled $\frac{31}{8} \approx$ <<round(31/8)>>3.87 driveways. Since Sophia cannot shovel a fraction of a driveway, we round down to the nearest whole number.
+#### 3 #### <answer> 3 </answer>",3.7731081259728025,3.2724376067017262,True,accepted
+11,2,"total_savings = 200 + 35
+
+allowance_savings = 5 * 9
+
+garden_earnings = 6 * 25
+
+shovel_rate_per_driveway = 10
+
+driveway_earnings = total_savings - allowance_savings - garden_earnings
+
+number_of_driveways_shoveled = driveway_earnings // shovel_rate_per_driveway
+
+print(number_of_driveways_shoveled)","Jordan wants to buy a new camera that costs $200. He has been saving his birthday money for the past five months. His parents give him a $9 allowance each month. Additionally, he earns by planting flowers and shoveling snow. Planting flowers pays him $25 per bed, while shoveling snow pays him $10 per driveway. After purchasing the camera, he still has $35 left over. If Jordan plants six flower beds, how many driveways did he shovel?","He saved up $235 in total because 200 + 35 = <<200+35=235>>235
+He saved $45 from his allowance because 5 x 9 = <<5*9=45>>45
+He earned $150 planting flowers because 6 x 25 = <<6*25=150>>150
+He earned $40 shoveling driveways because 235 - 150 - 45 = <<235-150-45=40>>40
+Therefore, Jordan shoveled $\frac{40}{10} \approx$ <<round(40/10)>>4 driveways.
+#### 4 #### <answer> 4 </answer>",1.7596583726190675,3.471237906671187,True,accepted
+(base) [mmokkenstorm@int6 augmentation_output]$
+

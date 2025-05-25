@@ -1,4 +1,3 @@
-
 BASIC_MATH_REASONING_PROMPT = """You are a math reasoning assistant. 
 Your job is to solve the following problem step by step, showing your reasoning clearly and logically.
 
@@ -11,7 +10,7 @@ Your job is to solve the following problem step by step, showing your reasoning 
 
 #### Answer
 <Provide the final solution here with concise explanation>
-The final answer is: \boxed{{numeric result}}
+Answer: #### <answer>
 """
 
 
@@ -21,8 +20,8 @@ Question: {question}
 Answer: {answer}
 """
 
-#TODO: What is the prompt they normally use in research? Give it a question without answer: what will it generate?
-#TODO: adapt prompt to have same format, this will be the format of the prompt. Calculate logP of the solution part only
+# TODO: What is the prompt they normally use in research? Give it a question without answer: what will it generate?
+# TODO: adapt prompt to have same format, this will be the format of the prompt. Calculate logP of the solution part only
 
 PERPLEXITY_THRESHOLD = 10
 
