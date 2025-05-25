@@ -153,29 +153,69 @@ def safe_chat_completion(
 
 
 def novelty_score(prompt: str, temperature=0.8, sample_size=8) -> float:
-    """Higher - more surprising to the model; simple mean‑logP → perplexity."""
-    r = client.completions.create(
-        model=MODEL_NAME,
-        prompt=prompt,
-        n=sample_size,
-        temperature=0.8,
-        # logprobs=1,
-    )
-    # for r in r.choices:
+    """Higher novelty score means the model struggles more with the task (more novel/difficult).
+    Calculated as 1 - (correct_solutions / total_attempts).
+    """
+    # Extract the expected answer from the solution part of the prompt
+    answer_match = TAG_RX['answer'].search(prompt)
+    if not answer_match:
+        logging.warning("Couldn't find answer in prompt for novelty calculation")
+        return 0.0
 
-    # lps = r.choices[0].logprobs.token_logprobs
-    # TODO: Change to make it run 8 times - > Claculate how many times it was correct -> Probabiltiy
-    # 1 - (correct / total) -> will show how good my model can solve it
-    # If its not able to solve it -> it will be a good question
-    # then we have a NOVEL GOOD SAMPLE : This is great
-    # If it is able to solve it -> it will be a bad question and we need to augment further / make more difficult
-    # Then train the model
-    # Create a parameter for answer
-    # return math.exp(-sum(lps) / len(lps))
-    raise NotImplementedError
+    expected_answer = answer_match.group(1) or answer_match.group(2)
+    expected_answer = float(expected_answer)
+
+    # Extract just the task part for querying the model
+    task_match = TAG_RX['task'].search(prompt)
+    if not task_match:
+        # Fall back to using the whole prompt if task cannot be isolated
+        task = prompt
+    else:
+        task = task_match.group(1)
+
+    # Generate multiple completions and check correctness
+    correct_count = 0
+
+    for _ in range(sample_size):
+        try:
+            response = client.chat.completions.create(
+                model=MODEL_NAME,
+                messages=[
+                    {
+                        'role': 'system',
+                        'content': 'You are solving a math problem. Provide only the final numeric answer.',
+                    },
+                    {'role': 'user', 'content': task},
+                ],
+                temperature=temperature,
+                max_tokens=MAX_TOKENS_RESPONSE,
+            )
+
+            completion = response.choices[0].message.content
+
+            # Try to extract a numeric answer from the completion
+            number_pattern = r'[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?'
+            answer_matches = re.findall(number_pattern, completion)
+
+            if answer_matches:
+                # Check all extracted numbers, with priority to those at the end
+                for answer_str in reversed(answer_matches):
+                    try:
+                        answer = float(answer_str)
+                        # Consider it correct if within small epsilon or within 1% for larger values
+                        epsilon = max(1e-6, abs(expected_answer) * 0.01)
+                        if abs(answer - expected_answer) < epsilon:
+                            correct_count += 1
+                            break
+                    except ValueError:
+                        continue
+        except Exception as e:
+            logging.warning(f'Error during novelty calculation: {e}')
+
+    # Calculate novelty as 1 - accuracy (higher means more novel/difficult)
+    return 1.0 - (correct_count / sample_size) if sample_size > 0 else 0.0
 
 
-# TODO: can I remove this
 def answer_difficulty(task: str, answer: str) -> float:
     """Per‑token perplexity of the numeric answer, conditioned on the task."""
     prompt = task.rstrip() + '\n'
@@ -555,7 +595,7 @@ if __name__ == '__main__':
 
     logging.info(os.getcwd())
     gsm8k_dataset = load_dataset('openai/gsm8k', 'main', split='train')
-    gsm8k_train = pd.DataFrame(gsm8k_dataset)[:1000]
+    gsm8k_train = pd.DataFrame(gsm8k_dataset)[:2]
 
     best_df, all_df = augment_dataframe(gsm8k_train, max_concurrent=30, checkpoint_every=20)
 
