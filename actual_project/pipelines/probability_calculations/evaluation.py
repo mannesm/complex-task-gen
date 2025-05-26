@@ -13,18 +13,30 @@ sys.path.extend(
     ],
 )
 
-from pipelines.gsm_evaluation_dataset_creation import create_full_gsm8k_test_dataset
+
+# from pipelines.gsm_evaluation_dataset_creation import create_full_gsm8k_test_dataset
+from complex_task_gen.actual_project.pipelines.gsm_evaluation_dataset_creation import create_full_gsm8k_test_dataset
+
+FILE_1 = '/Users/mannes/thesis/eval_full_20250525_182752Qwen/Qwen2.5-Math-7B-Instruct.json'
+FILE_2 = '/Users/mannes/thesis/rows_step800_20250525_174102Qwen/Qwen2.5-Math-7B-Instruct.csv'
+
+df_1 = pd.read_json(FILE_1)
+df_2 = pd.read_csv(FILE_2)
+
+df_total = pd.concat([df_1, df_2], ignore_index=True)
+df_total.sort_values(by=[df_total.columns[0]], inplace=True)
+
 
 OUTPUT_FOLDER_LOCATION = '/home/mmokkenstorm/tmp/complex_task_gen/output'
 
 # Load generated & test data
-df_gen = pd.read_json(OUTPUT_FOLDER_LOCATION + '/gsm8k_pass1_logp_15b_sub.json')
+# df_gen = pd.read_json(OUTPUT_FOLDER_LOCATION + '/gsm8k_pass1_logp_15b_sub.json')
 test_df = create_full_gsm8k_test_dataset(to_df=True)
 test_df.rename(columns={'original_id': 'id'}, inplace=True)
 
 # 1) regex patterns in order of specificity → last match
 
-df_eval = pd.merge(test_df, df_gen, on='id')
+df_eval = pd.merge(test_df, df_total, on='id')
 
 
 def extract_numeric_value_hybrid(text: str) -> float | None:
@@ -106,7 +118,7 @@ def corr_table(df: pd.DataFrame) -> pd.DataFrame:
                     'pearson_p': np.nan,
                     'spearman': np.nan,
                     'spearman_p': np.nan,
-                }
+                },
             )
         else:
             pear, p_pear = pearsonr(df[col], df['pass1_int'])
@@ -118,7 +130,7 @@ def corr_table(df: pd.DataFrame) -> pd.DataFrame:
                     'pearson_p': p_pear,
                     'spearman': spear,
                     'spearman_p': p_spear,
-                }
+                },
             )
     return pd.DataFrame(rows)
 
@@ -126,7 +138,9 @@ def corr_table(df: pd.DataFrame) -> pd.DataFrame:
 df_corr = corr_table(df_eval)
 print('\nCorrelation table:')
 print(df_corr.to_string(index=False))
-
+df_eval['pass1_int'] = df_eval['pass1'].astype(int)
+df_eval.to_csv('/Users/mannes/thesis/correlation_evaluation/Qwen7B_math_run.csv')
+df_eval.columns
 
 # ---------------------------------------------------------
 # Visual analytics for GSM-8K pass-fail evaluation
@@ -256,3 +270,6 @@ sns.pairplot(
 plt.suptitle('Pair-wise relationships (pass vs. fail)', y=1.02)
 plt.tight_layout()
 plt.show()
+
+
+df_corr.to_csv('/Users/mannes/thesis/correlation_evaluation/correlation_table.csv', index=False)

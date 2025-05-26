@@ -39,9 +39,9 @@ N_SAMPLES = 5  # k for pass@1
 BATCH_SIZE = 32  # GPU batch for log‑prob scoring
 ASYNC_LIMIT = 32  # max concurrent chat calls
 CHECKPOINT_INTERVAL = 100  # examples per checkpoint write
-CHECKPOINT_DIR = Path('checkpoints')
-CHECKPOINT_DIR.mkdir(exist_ok=True)
-
+# Change this line in the configuration section
+CHECKPOINT_DIR = Path('/home/mmokkenstorm/tmp/complex_task_gen/output/checkpoints/')
+CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)  # Create parent directories as needed
 PROMPT_TMPL = """You are a math reasoning assistant.
 
 **Question**: {problem}
@@ -111,14 +111,6 @@ The answer is 350
 
 Question: {question}
 Let's think step by step"""
-
-
-def save_full_dataframe(rows: list[dict], step: int | None = None):
-    ts = datetime.now().strftime('%Y%m%d_%H%M%S')
-    step_str = f'_step{step}' if step is not None else ''
-    path = CHECKPOINT_DIR / f'eval_full{step_str}_{ts}{MODEL_NAME}.json'
-    pd.DataFrame(rows).to_json(path, orient='records', lines=False, indent=2)
-    logger.info('Full checkpoint saved to %s', path)
 
 
 logger = logging.getLogger(__name__)
@@ -244,8 +236,28 @@ async def pass_at_1_async(question: str, numeric_gt: float, k: int = N_SAMPLES) 
 def save_checkpoint(step: int, rows: list[dict]):
     ts = datetime.now().strftime('%Y%m%d_%H%M%S')
     path = CHECKPOINT_DIR / f'rows_step{step}_{ts}{MODEL_NAME}.csv'
-    pd.DataFrame(rows).to_csv(path, index=False)
-    logger.info('Checkpoint → %s (%d rows)', path.name, len(rows))
+    logger.info(f'Saving checkpoint to {path}')
+    try:
+        # Ensure directory exists before saving
+        path.parent.mkdir(parents=True, exist_ok=True)
+        pd.DataFrame(rows).to_csv(path, index=False)
+        logger.info('Checkpoint → %s (%d rows)', path.name, len(rows))
+    except Exception as e:
+        logger.error(f'Failed to save checkpoint: {e}')
+
+
+def save_full_dataframe(rows: list[dict], step: int | None = None):
+    ts = datetime.now().strftime('%Y%m%d_%H%M%S')
+    step_str = f'_step{step}' if step is not None else ''
+    path = CHECKPOINT_DIR / f'eval_full{step_str}_{ts}{MODEL_NAME}.json'
+    logger.info(f'Saving full dataframe to {path}')
+    try:
+        # Ensure directory exists before saving
+        path.parent.mkdir(parents=True, exist_ok=True)
+        pd.DataFrame(rows).to_json(path, orient='records', lines=False, indent=2)
+        logger.info('Full checkpoint saved to %s', path)
+    except Exception as e:
+        logger.error(f'Failed to save full dataframe: {e}')
 
 
 def corr_table(df: pd.DataFrame) -> pd.DataFrame:
@@ -277,10 +289,10 @@ async def run_eval(df: pd.DataFrame) -> pd.DataFrame:
     process = psutil.Process()
     mem_start = process.memory_info().rss / (1024 * 1024)
     logger.info(f'Initial memory usage: {mem_start:.2f} MB')
-
-    for start in tqdm.trange(0, len(df), BATCH_SIZE, desc='batches'):
+    df_run = df[800:]
+    for start in tqdm.trange(0, len(df_run), BATCH_SIZE, desc='batches'):
         batch_start = time.time()
-        chunk = df.iloc[start : start + BATCH_SIZE].copy()
+        chunk = df_run.iloc[start : start + BATCH_SIZE].copy()
 
         # Step 1: Prepare prompts and data
         step_start = time.time()
@@ -366,7 +378,7 @@ async def run_eval(df: pd.DataFrame) -> pd.DataFrame:
 
         batch_time = time.time() - batch_start
         logger.info(
-            f'Batch {start // BATCH_SIZE + 1}/{(len(df) + BATCH_SIZE - 1) // BATCH_SIZE} completed in {batch_time:.2f}s',
+            f'Batch {start // BATCH_SIZE + 1}/{(len(df_run) + BATCH_SIZE - 1) // BATCH_SIZE} completed in {batch_time:.2f}s',
         )
 
         # Log memory usage every few batches
@@ -384,7 +396,7 @@ async def run_eval(df: pd.DataFrame) -> pd.DataFrame:
 
     df_out = pd.DataFrame(rows)
     folder_path = '/home/mmokkenstorm/tmp/complex_task_gen/output/'
-    df_out.to_json(folder_path + f'/gsm8k_pass1_logp_{MODEL_NAME}sub_new-prompt.json', index=False)
+    df_out.to_json(folder_path + f'/gsm8k_pass1_logp_{MODEL_NAME}sub_new-prompt_800.json', index=False)
     corr = corr_table(df_out)
     corr.to_csv(folder_path + f'correlation_output{MODEL_NAME}.csv')
     corr.to_json(folder_path + f'metric_correlations15b_sub_new_prompt{MODEL_NAME}.json', index=False)
