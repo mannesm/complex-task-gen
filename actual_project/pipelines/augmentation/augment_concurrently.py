@@ -1,5 +1,4 @@
 import logging
-import math
 import random
 import re
 import subprocess
@@ -14,12 +13,15 @@ import pandas as pd
 from datasets import load_dataset
 from openai import OpenAI
 
-MODEL_NAME = 'Qwen/Qwen2.5-Coder-7B-Instruct'
-BASE_URL = 'http://localhost:8000/v1'
+SOLVER_MODEL_NAME = 'Qwen/Qwen2.5-Math-1.5B-Instruct'
+BASE_URL_SOLVER = 'http://localhost:8001/v1'
+AUGMENTER_MODEL_NAME = 'Qwen/Qwen2.5-Coder-7B-Instruct'
+BASE_URL_AUGMENTER = 'http://localhost:8000/v1'
+
 N_AUGS_PER_SOURCE = 10  # how many *levels* of augmentation per task
 SAMPLE_PER_AUG = 10  # how many candidate generations at each level
 
-MAX_TOKENS_RESPONSE = 10000
+MAX_TOKENS_RESPONSE = 2000
 
 TEMPERATURE = 0.8
 MIN_NOVELTY = 0  # threshold; higher = more novel
@@ -33,7 +35,8 @@ REASONS = {
     'LOW_DIFFICULTY': 'too_low_difficulty',
 }
 
-client = OpenAI(base_url=BASE_URL, api_key='EMPTY')
+solver_client = OpenAI(base_url=BASE_URL_SOLVER, api_key='EMPTY')
+augmenter_client = OpenAI(base_url=BASE_URL_AUGMENTER, api_key='EMPTY')
 
 logging.basicConfig(
     level=logging.INFO,
@@ -44,6 +47,72 @@ logging.basicConfig(
 VALID_BLOCK_TEMPLATE = (
     '<code>```python\n$PY\n```</code>\n<task>$TASK</task>\n<solution>$SOL #### <answer> $ANS </answer></solution>'
 )
+
+SOLVER_PROMPT = """Question: In 2004, there were 60 kids at a cookout. In 2005, half the number of kids came to the cookout as compared to 2004. In 2006, 2/3 as many kids came to the cookout as in 2005. How many kids came to the cookout in 2006?
+Let's think step by step
+In 2005, 60/2=30 kids came to the cookout.
+In 2006, 30*2/3=20 kids came to the cookout.
+The answer is 20
+
+Question: Zilla spent 7% of her monthly earnings on rent, half of it on her other monthly expenses, and put the rest in her savings. If she spent $133 on her rent, how much does she deposit into her savings account in a month?
+Let's think step by step
+Since $133 is equal to 7% of her earnings, then 1% is equal to $133/7 = $19.
+The total monthly earning of Zilla is represented by 100%, so $19 × 100 = $1900 is her monthly earnings.
+So, $1900/2 = $950 is spent on her other monthly expenses.
+The total amount spent on the rent and other monthly expenses is $133 + $950 = $1083.
+Hence, she saves $1900 - $1083 = $817 per month.
+The answer is 817
+
+Question: If Buzz bought a pizza with 78 slices at a restaurant and then decided to share it with the waiter in the ratio of 5:8, with Buzz’s ratio being 5, what's twenty less the number of slices of pizza that the waiter ate?
+Let's think step by step
+The total ratio representing the slices of pizza that Buzz bought is 5+8=13
+If he shared the slices of pizza with the waiter, the waiter received a fraction of 8/13 of the total number of slices, which totals 8/13 * 78 = 48 slices
+Twenty less the number of slices of pizza that the waiter ate is 48-20 = 28
+The answer is 28
+
+Question: Jame gets a raise to $20 per hour and works 40 hours a week. His old job was $16 an hour for 25 hours per week. How much more money does he make per year in his new job than the old job if he works 52 weeks a year?
+Let's think step by step
+He makes 20*40=$800 per week
+He used to make 16*25=$400 per week
+So his raise was 800-400=$400 per week
+So he makes 400*52=$20,800 per year more
+The answer is 20800
+
+Question: Mr. Gardner bakes 20 cookies, 25 cupcakes, and 35 brownies for his second-grade class of 20 students. If he wants to give each student an equal amount of sweet treats, how many sweet treats will each student receive?
+Let's think step by step
+Mr. Gardner bakes a total of 20 + 25 + 35 = 80 sweet treats
+Each student will receive 80 / 20 = 4 sweet treats
+The answer is 4
+
+Question: A used car lot has 24 cars and motorcycles (in total) for sale. A third of the vehicles are motorcycles, and a quarter of the cars have a spare tire included. How many tires are on the used car lot’s vehicles in all?
+Let's think step by step
+The used car lot has 24 / 3 = 8 motorcycles with 2 tires each.
+The lot has 24 - 8 = 16 cars for sale
+There are 16 / 4 = 4 cars with a spare tire with 5 tires each.
+The lot has 16 - 4 = 12 cars with 4 tires each.
+Thus, the used car lot’s vehicles have 8 * 2 + 4 * 5 + 12 * 4 = 16 + 20 + 48 = 84 tires in all.
+The answer is 84
+
+Question: Norma takes her clothes to the laundry. She leaves 9 T-shirts and twice as many sweaters as T-shirts in the washer. When she returns she finds 3 sweaters and triple the number of T-shirts. How many items are missing?
+Let's think step by step
+Norma left 9 T-shirts
+And twice as many sweaters, she took 9 * 2= 18 sweaters
+Adding the T-shirts and sweaters, Norma left 9 + 18 = 27 clothes
+When she came back, she found 3 sweaters
+And triple the number of T-shirts, she found 3 * 3 = 9 T-shirts
+Adding the T-shirts and sweaters, Norma found 3 + 9 = 12 clothes
+Subtracting the clothes she left from the clothes she found, 27 - 12 = 15 clothes are missing
+The answer is 15
+
+Question: Adam has an orchard. Every day for 30 days he picks 4 apples from his orchard. After a month, Adam has collected all the remaining apples, which were 230. How many apples in total has Adam collected from his orchard?
+Let's think step by step
+During 30 days Adam picked 4 * 30 = 120 apples.
+So in total with all the remaining apples, he picked 120 + 230 = 350 apples from his orchard.
+The answer is 350
+
+Question: {question}
+Let's think step by step"""
+
 
 difficulty = 0
 SYSTEM_PROMPT_TEMPLATE = rf"""
@@ -152,7 +221,7 @@ def safe_chat_completion(
             time.sleep(wait)
 
 
-def novelty_score(prompt: str, temperature=0.8, sample_size=8) -> float:
+def novelty_score(prompt: str, temperature=0.8, sample_size=8, solver_model_name: str = SOLVER_MODEL_NAME) -> float:
     """Higher novelty score means the model struggles more with the task (more novel/difficult).
     Calculated as 1 - (correct_solutions / total_attempts).
     """
@@ -165,27 +234,24 @@ def novelty_score(prompt: str, temperature=0.8, sample_size=8) -> float:
     expected_answer = answer_match.group(1) or answer_match.group(2)
     expected_answer = float(expected_answer)
 
-    # Extract just the task part for querying the model
     task_match = TAG_RX['task'].search(prompt)
     if not task_match:
-        # Fall back to using the whole prompt if task cannot be isolated
         task = prompt
     else:
         task = task_match.group(1)
 
-    # Generate multiple completions and check correctness
     correct_count = 0
 
     for _ in range(sample_size):
         try:
-            response = client.chat.completions.create(
-                model=MODEL_NAME,
+            response = solver_client.chat.completions.create(
+                model=solver_model_name,
                 messages=[
                     {
                         'role': 'system',
-                        'content': 'You are solving a math problem. Provide only the final numeric answer.',
+                        'content': 'You are helpful assistant. Solve the question step-by-step. At the end, write: "The final answer is <number>".',
                     },
-                    {'role': 'user', 'content': task},
+                    {'role': 'user', 'content': SOLVER_PROMPT.format(question=task)},
                 ],
                 temperature=temperature,
                 max_tokens=MAX_TOKENS_RESPONSE,
@@ -212,34 +278,7 @@ def novelty_score(prompt: str, temperature=0.8, sample_size=8) -> float:
         except Exception as e:
             logging.warning(f'Error during novelty calculation: {e}')
 
-    # Calculate novelty as 1 - accuracy (higher means more novel/difficult)
-    return 1.0 - (correct_count / sample_size) if sample_size > 0 else 0.0
-
-
-def answer_difficulty(task: str, answer: str) -> float:
-    """Per‑token perplexity of the numeric answer, conditioned on the task."""
-    prompt = task.rstrip() + '\n'
-
-    resp = client.completions.create(
-        model=MODEL_NAME,
-        prompt=prompt + answer,
-        temperature=0,
-        logprobs=1,
-        echo=True,
-    )
-    lps = resp.choices[0].logprobs.token_logprobs
-    ans_tok_count = len(resp.choices[0].logprobs.tokens) - len(
-        client.completions.create(
-            model=MODEL_NAME,
-            prompt=prompt,
-            max_tokens=1,
-            logprobs=1,
-        )
-        .choices[0]
-        .logprobs.tokens,
-    )
-    answer_lps = lps[-ans_tok_count:]
-    return math.exp(-sum(answer_lps) / len(answer_lps))
+    return 1.0 - (correct_count / sample_size)
 
 
 def extract_blocks(text: str) -> tuple[str, str, str]:
@@ -343,8 +382,8 @@ def chat_completion(
     if log_probs:
         kwargs['logprobs'] = True
     kwargs['n'] = max(1, number_of_generated_outputs)
-    response = client.chat.completions.create(
-        model=MODEL_NAME,
+    response = augmenter_client.chat.completions.create(
+        model=AUGMENTER_MODEL_NAME,
         messages=messages,
         temperature=TEMPERATURE,
         max_tokens=MAX_TOKENS_RESPONSE,
@@ -396,14 +435,14 @@ def evaluate_candidate(code: str, task: str, sol: str) -> dict[str, Any]:
 
     # Only compute novelty & difficulty if correct (saves API calls)
     novelty = novelty_score(f'{task}\n{sol}')
-    difficulty_val = answer_difficulty(task, sol)
+    # difficulty_val = answer_difficulty(task, sol)
     result['novelty'] = novelty
-    result['difficulty'] = difficulty_val
+    # result['difficulty'] = difficulty_val
 
     if abs(novelty) < MIN_NOVELTY:
         result['reason'] = REASONS['LOW_NOVELTY']
-    elif abs(difficulty_val) < MIN_DIFFICULTY:
-        result['reason'] = REASONS['LOW_DIFFICULTY']
+    # elif abs(difficulty_val) < MIN_DIFFICULTY:
+    #     result['reason'] = REASONS['LOW_DIFFICULTY']
     else:
         result['reason'] = REASONS['ACCEPTED']
 
@@ -470,11 +509,14 @@ def augment_once(
             logging.debug('Accepted candidates: %s', accepted_candidates)
             best_candidate = max(
                 accepted_candidates,
-                key=lambda c: (c['novelty'], c['difficulty']),  # sort by novelty, then difficulty
+                key=lambda c: (
+                    c['novelty']
+                ),  # sort by novelty, take the Max value --> this indicated that the model struggled the most
             )
             logging.debug('Best candidate: %s', best_candidate)
         else:
             best_candidate = None
+
             logging.debug('No accepted candidates: %s', accepted_candidates)
     return best_candidate, attempted
 
@@ -557,8 +599,7 @@ def augment_dataframe(
 
     best_rows = []
     all_rows = []
-
-    with ThreadPoolExecutor(max_workers=max_concurrent) as executor:
+    with ThreadPoolExecutor(max_concurrent) as executor:
         futures = {
             executor.submit(augment_one_row, idx, row['question'], row['answer']): idx for idx, row in df.iterrows()
         }
@@ -595,11 +636,11 @@ if __name__ == '__main__':
 
     logging.info(os.getcwd())
     gsm8k_dataset = load_dataset('openai/gsm8k', 'main', split='train')
-    gsm8k_train = pd.DataFrame(gsm8k_dataset)[:2]
+    gsm8k_train = pd.DataFrame(gsm8k_dataset)
 
-    best_df, all_df = augment_dataframe(gsm8k_train, max_concurrent=30, checkpoint_every=20)
+    best_df, all_df = augment_dataframe(df=gsm8k_train, max_concurrent=30, checkpoint_every=20)
 
-    best_df.to_csv('augmented_best.csv', index=False)
-    all_df.to_csv('augmented_all.csv', index=False)
+    best_df.to_csv('augmented_best_subset_new.csv', index=False)
+    all_df.to_csv('augmented_all_subset_new.csv', index=False)
 
     logging.info('Saved augmented_best.csv and augmented_all.csv')
