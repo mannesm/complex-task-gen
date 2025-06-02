@@ -5,10 +5,9 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+from complex_task_gen.actual_project.pipelines.gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
 from openai import OpenAI
 from scipy.stats import pearsonr, spearmanr
-
-from complex_task_gen.actual_project.pipelines.gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
 
 logging.basicConfig(
     level=logging.INFO,
@@ -16,7 +15,7 @@ logging.basicConfig(
 )
 
 MODEL_NAME = 'Qwen/Qwen2.5-Math-7B-Instruct'
-BASE_URL = 'http://localhost:8000/v1'
+BASE_URL = 'http://localhost:8002/v1'
 MAX_TOKENS_RESPONSE = 2000
 
 client = OpenAI(base_url=BASE_URL, api_key='EMPTY')
@@ -39,6 +38,18 @@ Always finish with the final numeric answer boxed in LaTeX format on a separate 
 \\boxed{{<numeric_answer>}}
 \\]
 """
+
+
+TAG_RX = {
+    'code': re.compile(r'<code>\s*```python\s*(.*?)\s*```.*?</code>', re.DOTALL | re.IGNORECASE),
+    'task': re.compile(r'<task>(.*?)</task>', re.DOTALL | re.IGNORECASE),
+    'solution': re.compile(r'<solution>(.*?)</solution>', re.DOTALL | re.IGNORECASE),
+    'answer': re.compile(
+        r'(?:<answer>\s*([+-]?\d+(?:\.\d+)?)\s*</answer>'  # alt‑1 – tags
+        r'|####\s*([+-]?\d+(?:\.\d+)?)\b)',  # alt‑2 – hashes
+        re.IGNORECASE,
+    ),
+}
 
 
 def extract_answer_robust(model_output: str) -> float | None:
@@ -92,6 +103,66 @@ def extract_answer_robust(model_output: str) -> float | None:
 
     logging.info('Could not extract numeric answer from model output')
     return None
+
+
+def novelty_score(prompt: str, temperature=0.8, sample_size=8, solver_model_name: str = SOLVER_MODEL_NAME) -> float:
+    """Higher novelty score means the model struggles more with the task (more novel/difficult).
+    Calculated as 1 - (correct_solutions / total_attempts).
+    """
+    # Extract the expected answer from the solution part of the prompt
+    answer_match = TAG_RX['answer'].search(prompt)
+    if not answer_match:
+        logging.warning("Couldn't find answer in prompt for novelty calculation")
+        return 0.0
+
+    expected_answer = answer_match.group(1) or answer_match.group(2)
+    expected_answer = float(expected_answer)
+
+    task_match = TAG_RX['task'].search(prompt)
+    if not task_match:
+        task = prompt
+    else:
+        task = task_match.group(1)
+
+    correct_count = 0
+
+    for _ in range(sample_size):
+        try:
+            response = solver_client.chat.completions.create(
+                model=solver_model_name,
+                messages=[
+                    {
+                        'role': 'system',
+                        'content': 'You are helpful assistant. Solve the question step-by-step. At the end, write: "The final answer is <number>".',
+                    },
+                    {'role': 'user', 'content': SOLVER_PROMPT.format(question=task)},
+                ],
+                temperature=temperature,
+                max_tokens=MAX_TOKENS_RESPONSE,
+            )
+
+            completion = response.choices[0].message.content
+
+            # Try to extract a numeric answer from the completion
+            number_pattern = r'[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?'
+            answer_matches = re.findall(number_pattern, completion)
+
+            if answer_matches:
+                # Check all extracted numbers, with priority to those at the end
+                for answer_str in reversed(answer_matches):
+                    try:
+                        answer = float(answer_str)
+                        # Consider it correct if within small epsilon or within 1% for larger values
+                        epsilon = max(1e-6, abs(expected_answer) * 0.01)
+                        if abs(answer - expected_answer) < epsilon:
+                            correct_count += 1
+                            break
+                    except ValueError:
+                        continue
+        except Exception as e:
+            logging.warning(f'Error during novelty calculation: {e}')
+
+    return 1.0 - (correct_count / sample_size)
 
 
 def make_prediction(problem: str) -> tuple[str, dict[str, Any]]:

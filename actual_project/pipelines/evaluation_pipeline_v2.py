@@ -9,6 +9,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
 )
 
+K_SOLVE_ATTEMPTS = 5
 SOLVER_MODEL_NAME = 'Qwen/Qwen2.5-Math-1.5B-Instruct'
 BASE_URL = 'http://localhost:8000/v1'
 MAX_TOKENS_RESPONSE = 2000
@@ -255,29 +256,49 @@ def run_full_evaluation(
             )
             results.append(eval_result)
         except Exception as e:
-            logging.exception(f"Failed evaluation for row {row['source_idx']}: {e}")
+            logging.exception(f'Failed evaluation for row {row["source_idx"]}: {e}')
             continue
 
     return pd.DataFrame(results)
 
 
-# Full evaluation at levels 0–10
+def add_columns_not_in_df(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
+    """Add columns to DataFrame if they do not exist."""
+    for column in columns:
+        if column not in df.columns:
+            df[column] = None
+    return df
 
-result_df = run_full_evaluation(
-    df_n30,
-    k=5,
-    levels=list(range(11)),
-    max_samples=None,
-)
 
-result_df['attempts'] = 5
-result_df['pass_percentage'] = result_df['correct_count'] / result_df['attempts'] * 100
+if __name__ == '__main__':
+    from pipelines.gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
 
-# Ablation: level 3 only, 30 augmentations
-# run_full_evaluation(
-#     df_n30[df_n30['level'] == 3],
-#     k=5,
-#     max_samples=10,
-#     output_path=FOLDER_PREFIX + N30_FOLDER + 'eval_ablation_level3.csv',
-# )
-result_df.to_csv(FOLDER_PREFIX + N30_FOLDER + 'augmented_best_eval_result.csv', index=False)
+    selected_gsm8k, selected_easy, selected_medium, selected_hard = create_gsm_evaluation_datasets(to_df=True)
+    LEVELS_TO_EVALUATE = 10
+    levels = list(range(LEVELS_TO_EVALUATE + 1))
+    df_n30 = pd.read_csv(FOLDER_PREFIX + N30_FOLDER + 'augmented_best.csv')
+    df_gsm_10_eval = pd.read_csv(FOLDER_PREFIX + N10_GSM8K_EVAL_FOLDER + 'augmented_best.csv')
+
+    datasets_to_process = [
+        (selected_gsm8k, 'selected_gsm8k'),
+        (selected_easy, 'selected_easy'),
+        (selected_medium, 'selected_medium'),
+        (selected_hard, 'selected_hard'),
+    ]
+
+    for df, df_name in datasets_to_process:
+        df = add_columns_not_in_df(df, ['source_idx', 'level', 'n_augmented', 'code', 'novelty', 'difficulty'])
+        df['source_idx'] = df['original_id']
+        df['level'] = 0
+        df['task'] = df['question']
+        df['solution'] = df['answer']
+
+        result_df = run_full_evaluation(
+            df=df,
+            k=K_SOLVE_ATTEMPTS,
+            levels=None,
+            max_samples=None,
+        )
+        result_df['attempts'] = K_SOLVE_ATTEMPTS
+        result_df['pass_percentage'] = result_df['correct_count'] / result_df['attempts'] * 100
+        result_df.to_csv(FOLDER_PREFIX + N30_FOLDER + f'{df_name}_eval_result_len_{len(result_df)}.csv', index=False)

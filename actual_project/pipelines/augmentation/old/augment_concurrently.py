@@ -10,7 +10,6 @@ from typing import Any
 
 import openai
 import pandas as pd
-from datasets import load_dataset
 from openai import OpenAI
 
 SOLVER_MODEL_NAME = 'Qwen/Qwen2.5-Math-1.5B-Instruct'
@@ -590,7 +589,7 @@ def augment_dataframe(
     df: pd.DataFrame,
     max_concurrent: int = 10,
     checkpoint_every: int = 100,
-    checkpoint_dir: str = '/home/mmokkenstorm/sync/outputs/augmentation_output',
+    checkpoint_dir: str = '/home/mmokkenstorm/sync/outputs/augmentation_output/evaluation_checkpoints',
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Augment the input DataFrame concurrently and return (best_df, all_attempts_df).
     Saves checkpoint every `checkpoint_every` examples.
@@ -633,14 +632,25 @@ def augment_dataframe(
 
 if __name__ == '__main__':
     import os
+    import sys
 
+    sys.path.extend(
+        [
+            '/gpfs/home6/mmokkenstorm/tmp/complex_task_gen/',
+            '/tmp/ChIfXZallM',
+            '/home/mmokkenstorm/tmp/complex_task_gen/actual_project',
+        ],
+    )
+    from actual_project.pipelines.gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
+
+    gsm8k, gsm_easy, gsm_med, gsm_hard = create_gsm_evaluation_datasets(to_df=True)
     logging.info(os.getcwd())
-    gsm8k_dataset = load_dataset('openai/gsm8k', 'main', split='train')
-    gsm8k_train = pd.DataFrame(gsm8k_dataset)
+    # gsm8k_dataset = load_dataset('openai/gsm8k', 'main', split='train')
+    gsm8k_train = pd.DataFrame(gsm8k)
 
-    best_df, all_df = augment_dataframe(df=gsm8k_train, max_concurrent=30, checkpoint_every=20)
+    best_df, all_df = augment_dataframe(df=gsm8k_train[40:], max_concurrent=10, checkpoint_every=10)
 
-    best_df.to_csv('augmented_best_subset_new.csv', index=False)
-    all_df.to_csv('augmented_all_subset_new.csv', index=False)
+    best_df.to_csv('augmented_best_subset_new_gsm8k_eval_10.csv', index=False)
+    all_df.to_csv('augmented_all_subset_new_gsm8k_eval_10.csv', index=False)
 
     logging.info('Saved augmented_best.csv and augmented_all.csv')

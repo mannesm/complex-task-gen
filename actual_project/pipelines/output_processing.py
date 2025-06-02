@@ -36,9 +36,7 @@ def load_model_output(
     return dataframes
 
 
-def extract_generated_answer(
-    example: Dict[str, str], regex_patterns: list[str] = [r'####\s*(\d+)']
-) -> str | None:
+def extract_generated_answer(example: Dict[str, str], regex_patterns: list[str] = [r'####\s*(\d+)']) -> str | None:
     """
     Extracts an answer from the example using a list of regex patterns.
 
@@ -51,9 +49,7 @@ def extract_generated_answer(
         match = re.search(pattern, answer)
         if match:
             return match.group(1)
-    logging.info(
-        f'Failed to match answer value for pattern: {regex_patterns} to {answer}'
-    )
+    logging.info(f'Failed to match answer value for pattern: {regex_patterns} to {answer}')
     return None
 
 
@@ -63,9 +59,7 @@ for dataset_name, dataset in model_output_df_dict.items():
     print(f'Processing dataset: {dataset_name}')
     dataset['extracted_actual_answer'] = dataset.apply(extract_generated_answer, axis=1)
     dataset['extracted_generated_answer'] = dataset.apply(
-        lambda x: extract_generated_answer(
-            {'answer': x['generated_answer']}, output_prediction_patterns
-        ),
+        lambda x: extract_generated_answer({'answer': x['generated_answer']}, output_prediction_patterns),
         axis=1,
     )
     dataset['correct'] = dataset.apply(
