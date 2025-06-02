@@ -7,6 +7,7 @@ import sys
 import tempfile
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime
 from typing import Any
 
 import openai
@@ -24,15 +25,6 @@ API_KEY = os.environ.get('OPENAI_API_KEY')
 # AUGMENTER_MODEL_NAME = 'Qwen/Qwen2.5-Coder-7B-Instruct'
 # BASE_URL_AUGMENTER = 'http://localhost:8000/v1'
 
-N_AUGS_PER_SOURCE = 1  # how many *levels* of augmentation per task
-SAMPLE_PER_AUG = 1  # how many candidate generations at each level
-
-MAX_TOKENS_RESPONSE = 2000
-
-TEMPERATURE = 0.8
-MIN_NOVELTY = 0  # threshold; higher = more novel
-MIN_DIFFICULTY = 0  # threshold; higher = harder
-MAX_API_RETRIES = 3
 
 REASONS = {
     'ACCEPTED': 'accepted',
@@ -46,6 +38,19 @@ REASONS = {
 #
 solver_client = OpenAI(api_key=API_KEY)
 augmenter_client = OpenAI(api_key=API_KEY)
+
+N_AUGS_PER_SOURCE = 10  # how many *levels* of augmentation per task
+SAMPLE_PER_AUG = 10  # how many candidate generations at each level
+BASE_AUG_PER_SOURCE = 10
+MAX_TOKENS_RESPONSE = 2000
+
+TEMPERATURE = 0.8
+MIN_NOVELTY = 0  # threshold; higher = more novel
+MIN_DIFFICULTY = 0  # threshold; higher = harder
+MAX_API_RETRIES = 3
+
+# solver_client = OpenAI(base_url=BASE_URL_SOLVER, api_key='EMPTY')
+# augmenter_client = OpenAI(base_url=BASE_URL_AUGMENTER, api_key='EMPTY')
 
 logging.basicConfig(
     level=logging.INFO,
@@ -170,20 +175,11 @@ You can add your reasoning steps In the <solution> </solution> block.
 """
 
 
-TEXT2CODE_SYSTEM_PROMPT = """
-Convert the <task> and <solution> below into working Python.
-
-The script **MUST finish with exactly one line**
-    print(<numeric_answer>)
-so that running it writes only the answer to stdout.
-
-Wrap the code in:
-
-<code>```python
-# …code…
-```</code>
-
-Do not add comments or any text outside the <code> block.
+TEXT2CODE_SYSTEM_PROMPT = """Convert the <task> and <solution> below into working Python
+that converts the question-answer pair into Python code.
+Wrap the code in <code>...</code> tags and triple-back-ticked Python so downstream parsers can extract it.
+Don't add any extra text or comments.
+The code should be valid and executable.
 """
 
 RX_CODE_BLOCK = re.compile(r'<code>.*?```python(.*?)```.*?</code>', re.DOTALL)
@@ -566,10 +562,19 @@ def enforce_format(raw: str, retries: int = 2) -> str:  # TODO: Remove this duri
     raise ValueError('Unable to repair formatting after retries')
 
 
+def generate_base_code(task: str, solution: str, attempts: int):
+    for i in range(attempts):
+        base_code = text2code(task, solution)
+        if base_code:
+            return base_code
+    logging.warning(f'Failed to generate base code for task after {attempts} attempts.')
+    return None
+
+
 def augment_one_row(idx: int, task: str, solution: str) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     """Performs all augmentations for a single row."""
     try:
-        base_code = text2code(task, solution)
+        base_code = generate_base_code(task, solution, attempts=BASE_AUG_PER_SOURCE)
     except Exception as e:
         logging.exception('[%s] text2code failed: %s', idx, e)
         return [], []
@@ -604,11 +609,14 @@ def augment_one_row(idx: int, task: str, solution: str) -> tuple[list[dict[str, 
     return best_rows, all_rows
 
 
+now = pd.to_datetime(datetime.now()).strftime('%Y-%m-%d %H:%M:%S')
+
+
 def augment_dataframe(
     df: pd.DataFrame,
     max_concurrent: int = 10,
     checkpoint_every: int = 100,
-    checkpoint_dir: str = '~/sync/outputs/augmentation_output/evaluation_checkpoints_n30',
+    checkpoint_dir: str = f'/home/mmokkenstorm/augmentation_outputs/N_SAMPLES_{SAMPLE_PER_AUG}_N_AUGS_{N_AUGS_PER_SOURCE}/{now}',
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Augment the input DataFrame concurrently and return (best_df, all_attempts_df).
     Saves checkpoint every `checkpoint_every` examples.
@@ -653,6 +661,7 @@ if __name__ == '__main__':
     import os
     import sys
 
+    # BASE_DIR = '/home/mmokkenstorm/augmentation_output/evaluation_checkpoints_n30'
     sys.path.extend(
         [
             '/gpfs/home6/mmokkenstorm/tmp/complex_task_gen/',
@@ -660,16 +669,17 @@ if __name__ == '__main__':
             '/home/mmokkenstorm/tmp/complex_task_gen/actual_project',
         ],
     )
-    from actual_project.pipelines.gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
+    from pipelines.gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
 
     gsm8k, gsm_easy, gsm_med, gsm_hard = create_gsm_evaluation_datasets(to_df=True)
     logging.info(os.getcwd())
     # gsm8k_dataset = load_dataset('openai/gsm8k', 'main', split='train')
-    gsm8k_train = pd.DataFrame(gsm8k[:1])
-
+    gsm8k_train = pd.DataFrame(gsm8k)[:1]
+    base_dir = f'/home/mmokkenstorm/augmentation_outputs/N_SAMPLES_{SAMPLE_PER_AUG}_N_AUGS_{N_AUGS_PER_SOURCE}/{now}/'
+    # os.makedirs(base_dir, exist_ok=True)
     best_df, all_df = augment_dataframe(df=gsm8k_train, max_concurrent=1, checkpoint_every=20)
 
-    best_df.to_csv('augmented_best_subset_new_gsm8k_n30.csv', index=False)
-    all_df.to_csv('augmented_all_subset_new_gsm8k_n30.csv', index=False)
+    best_df.to_csv(base_dir + '/augmented_best_subset_new_gsm8k_n30.csv', index=False)
+    all_df.to_csv(base_dir + '/augmented_all_subset_new_gsm8k_n30.csv', index=False)
 
     logging.info('Saved augmented_best.csv and augmented_all.csv')
