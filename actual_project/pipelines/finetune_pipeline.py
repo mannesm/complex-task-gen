@@ -1,24 +1,13 @@
 #!/usr/bin/env python
-# train_qwen_gsm8k.py
-# ------------------------------------------------------------
-# Fine tunes a Qwen-Chat model for chain-of-thought math reasoning
-# (GSM8K format) using LoRA + PEFT via Unsloth.
-#
-# Tested with:
-#   unsloth==0.6.2
-#   transformers>=4.40
-#   datasets>=2.19
-#   bitsandbytes>=0.43
-# ------------------------------------------------------------
+# Updated Qwen2.5 Math Fine-Tuning Script using Unsloth + JSONL + ChatML
+
+import json
 import os
 from pathlib import Path
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import pandas as pd
-
-# Then import torch or tensorflow, etc.
 import torch
-from datasets import Dataset, DatasetDict
+from datasets import DatasetDict, load_dataset
 from transformers import (
     BitsAndBytesConfig,
     Trainer,
@@ -27,30 +16,54 @@ from transformers import (
 )
 from unsloth import FastLanguageModel
 
+# ---------------------------- Configuration ----------------------------
+CUDA_VISIBLE_DEVICES = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = CUDA_VISIBLE_DEVICES
+
 BASE_MATH_MODEL = 'Qwen/Qwen2.5-Math-1.5B-Instruct'
-# ---------------------------------------------------------------------
-# 0. CLI
-# ---------------------------------------------------------------------
+OUTPUT_DIR = '/home/mmokkenstorm/sync/qwen_models/finetuned_models/n30_best/math_instruct_chattemplatetrue_v2'
+DATA_CSV = (
+    '/gpfs/home6/mmokkenstorm/augmentation_outputs/N_SAMPLES_30_N_AUGS_1/2025-06-08 18:43:21/checkpoint_best_7460.csv'
+)
+JSONL_PATH = '/gpfs/home6/mmokkenstorm/data/qwen2.5_math_finetune_chatml.jsonl'
 
-training_epochs = 3
-batch_size = 64
-accum_steps = 8  # "Gradient accumulation to reach effective batch."
-learning_rate = 2e-4
-max_len = 1024
+# ------------------------- Generate JSONL ------------------------------
+df = pd.read_csv(DATA_CSV)
 
-output_dir = '/home/mmokkenstorm/sync/qwen_models/finetuned_models/n30_best/math_instruct_chattemplatetrue'
-MODEL_NAME = BASE_MATH_MODEL
-
-
-# ---------------------------------------------------------------------
-# 1. System prompt
-# ---------------------------------------------------------------------
-SYSTEM_PROMPT = (
+system_prompt = (
     'You are a helpful assistant. Solve the math problem step by step. '
     'The answer should be a number, and you should always return it in the format: '
     'The final answer is: <answer> 42 </answer>.'
-).strip()
+)
 
+
+def format_example(row):
+    try:
+        answer_line = row['solution'].strip().splitlines()[-1]
+        last_number = [float(tok) for tok in answer_line.replace(',', '').split() if tok.replace('.', '', 1).isdigit()]
+        final = last_number[-1] if last_number else ''
+    except Exception:
+        final = ''
+
+    return {
+        'messages': [
+            {'role': 'system', 'content': system_prompt},
+            {'role': 'user', 'content': row['task'].strip()},
+            {
+                'role': 'assistant',
+                'content': row['solution'].strip() + f'\n\nThe final answer is: <answer> {final} </answer>',
+            },
+        ],
+    }
+
+
+formatted = [format_example(row) for _, row in df.iterrows()]
+
+with open(JSONL_PATH, 'w') as f:
+    for ex in formatted:
+        f.write(json.dumps(ex) + '\n')
+
+# ---------------------------- Load Model -------------------------------
 print('🔹 Loading base model & tokenizer …')
 bnb_cfg = BitsAndBytesConfig(
     load_in_4bit=True,
@@ -60,15 +73,15 @@ bnb_cfg = BitsAndBytesConfig(
 )
 
 model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name=MODEL_NAME,
-    max_seq_length=max_len,
+    model_name=BASE_MATH_MODEL,
+    max_seq_length=2048,
     dtype=torch.bfloat16,
     load_in_4bit=True,
     device_map='auto',
     quantization_config=bnb_cfg,
 )
 
-# Add LoRA adapters
+# ---------------------------- Add LoRA ---------------------------------
 print('🔹 Injecting LoRA adapters …')
 model = FastLanguageModel.get_peft_model(
     model,
@@ -79,101 +92,65 @@ model = FastLanguageModel.get_peft_model(
     target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj', 'gate_proj'],
 )
 
-# ---------------------------------------------------------------------
-# 3. Dataset
-# ---------------------------------------------------------------------
-print('🔹 Loading GSM8K …')
-# raw = load_dataset('gsm8k', 'main')
-# Create a sample DataFrame
-# df['question'] = df['task']
-df = pd.read_csv(
-    '/gpfs/home6/mmokkenstorm/augmentation_outputs/N_SAMPLES_30_N_AUGS_1/2025-06-08 18:43:21/checkpoint_best_7460.csv',
-)
-df['answer'] = df['solution']
-df['question'] = df['task']
-# Convert to Hugging Face Dataset
-# Filter df where passed = True
-# df = df[df['passed'] == True]
-hf_dataset = Dataset.from_pandas(df)
-hf_dataset
-# Inspect the dataset
-print(hf_dataset)
-raw = DatasetDict({'train': hf_dataset})
-raw
-raw = raw.remove_columns([c for c in raw['train'].column_names if c not in ('question', 'answer')])
-raw
+# --------------------------- Load Dataset ------------------------------
+print('🔹 Loading formatted JSONL dataset …')
+raw = load_dataset('json', data_files={'train': JSONL_PATH})
+raw = raw['train'].train_test_split(test_size=0.05, seed=42)
+data = DatasetDict({'train': raw['train'], 'validation': raw['test']})
 
 
-def build_chat(example):
-    """Convert GSM8K row → ChatML conversation string."""
-    messages = [
-        {'role': 'system', 'content': SYSTEM_PROMPT},
-        {'role': 'user', 'content': example['question'].strip()},
-        {'role': 'assistant', 'content': example['answer'].strip()},
-    ]
-    chat = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
+def apply_chat_template(example):
+    chat = tokenizer.apply_chat_template(
+        example['messages'],
+        tokenize=False,
+        add_generation_prompt=True,
+    )
     return {'text': chat}
 
 
-raw['train']
-raw = raw.map(build_chat, desc='💬 Building chat examples')
-
-# ── split train/val (5 % dev) ────────────────────────────────────────
-train_val = raw['train'].train_test_split(test_size=0.05, seed=42, shuffle=True)
-data = DatasetDict(
-    {
-        'train': train_val['train'],
-        'validation': train_val['test'],
-    },
-)
-
+data = data.map(apply_chat_template, desc='💬 Applying chat templates')
 data
 
 
-# ---------------------------------------------------------------------
-# 4. Tokenisation & label masking
-# ---------------------------------------------------------------------
+# ---------------------- Tokenization & Masking -------------------------
 def mask_labels(example):
     encoded = tokenizer(
         example['text'],
         truncation=True,
         padding='max_length',
-        max_length=max_len,
+        max_length=1024,
     )
     input_ids = encoded['input_ids']
-
-    # Mask tokens up to (and incl.) first <|im_start|>assistant tag
-    im_start_id = tokenizer.convert_tokens_to_ids('<|im_start|>')
+    # Mask all tokens before assistant response
     try:
-        first_im_start = input_ids.index(im_start_id)  # system tag
-        second_im_start = input_ids.index(im_start_id, first_im_start + 1)
-        assistant_start = input_ids.index(im_start_id, second_im_start + 1)
+        assistant_index = input_ids.index(tokenizer.convert_tokens_to_ids('<|im_start|>'))
+        assistant_index = input_ids.index(
+            tokenizer.convert_tokens_to_ids('<|im_start|>'),
+            assistant_index + 1,
+        )
+        assistant_index = input_ids.index(
+            tokenizer.convert_tokens_to_ids('<|im_start|>'),
+            assistant_index + 1,
+        )
     except ValueError:
-        assistant_start = 0  # should not happen
+        assistant_index = 0
 
-    labels = [-100] * (assistant_start + 1) + input_ids[assistant_start + 1 :]
-    encoded['labels'] = labels[:max_len]
+    encoded['labels'] = [-100] * (assistant_index + 1) + input_ids[assistant_index + 1 :]
+    encoded['labels'] = encoded['labels'][:1024]
     return encoded
 
 
-raw
+data = data.map(mask_labels, remove_columns=['text', 'messages'], desc='🔑 Tokenising')
 
-tokenised = data.map(
-    mask_labels,
-    remove_columns=['text'],
-    desc='🔑 Tokenising',
-)
-
-# ---------------------------------------------------------------------
-# 5. Training
-# ---------------------------------------------------------------------
+data
+# --------------------------- Training ----------------------------------
 print('🔹 Preparing trainer …')
 training_args = TrainingArguments(
-    output_dir=output_dir,
-    per_device_train_batch_size=batch_size,
-    gradient_accumulation_steps=accum_steps,
-    num_train_epochs=training_epochs,
-    learning_rate=learning_rate,
+    output_dir=OUTPUT_DIR,
+    per_device_train_batch_size=64,
+    gradient_accumulation_steps=8,
+    num_train_epochs=3,
+    learning_rate=2e-4,
     lr_scheduler_type='cosine',
     warmup_steps=100,
     bf16=True,
@@ -190,50 +167,18 @@ training_args = TrainingArguments(
 trainer = Trainer(
     model=model,
     args=training_args,
-    train_dataset=tokenised['train'],
-    eval_dataset=tokenised['validation'],
+    train_dataset=data['train'],
+    eval_dataset=data['validation'],
     data_collator=default_data_collator,
 )
 
 print('🚀 Starting fine-tuning …')
 trainer.train()
 
-# ---------------------------------------------------------------------
-# 6. Save artefacts
-# ---------------------------------------------------------------------
+# ----------------------------- Save ------------------------------------
 print('💾 Saving LoRA adapter and tokenizer …')
-adapter_path = Path(output_dir) / 'lora'
+adapter_path = Path(OUTPUT_DIR) / 'lora'
 adapter_path.mkdir(parents=True, exist_ok=True)
-# Unsloth provides a helper for adapter-only save:
 model.save_pretrained(adapter_path, safe_serialization=True)
-
 tokenizer.save_pretrained(adapter_path)
-
 print('✅ Done.  Adapter written to', adapter_path.resolve())
-
-# model, _ = FastLanguageModel.from_pretrained(model_path)  # Unpack if it returns a tuple
-# Load the model and tokenizer
-
-import torch
-from transformers import AutoTokenizer
-from unsloth import FastLanguageModel
-
-model_path = '/gpfs/home6/mmokkenstorm/sync/qwen_models/finetuned_models/math_instruct/lora'
-
-# Load tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained(model_path)
-model, _ = FastLanguageModel.from_pretrained(model_path)
-
-# Set device and move model
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = model.to(device)
-
-# Prepare inputs and move to same device
-input_text = 'Solve: What is 12 + 8?'
-inputs = tokenizer(input_text, return_tensors='pt').to(device)
-
-# Generate output
-outputs = model.generate(**inputs, max_new_tokens=500)
-
-# Decode and print
-print(tokenizer.decode(outputs[0], skip_special_tokens=True))

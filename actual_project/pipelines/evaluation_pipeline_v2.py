@@ -11,7 +11,7 @@ logging.basicConfig(
 
 K_SOLVE_ATTEMPTS = 5
 SOLVER_MODEL_NAME = 'Qwen/Qwen2.5-Math-1.5B-Instruct'
-BASE_URL = 'http://localhost:8000/v1'
+BASE_URL = 'http://localhost:8004/v1'
 MAX_TOKENS_RESPONSE = 2000
 
 client = OpenAI(base_url=BASE_URL, api_key='EMPTY')
@@ -226,6 +226,7 @@ def run_full_evaluation(
     k: int = 5,
     levels: list[int] = None,
     max_samples: int = None,
+    batch_size: int = 10000,  # <== New argument
 ) -> pd.DataFrame:
     results = []
 
@@ -241,7 +242,59 @@ def run_full_evaluation(
             logging.warning(f'Requested {max_samples} samples, but only {len(df_unique)} available. Using all.')
             df = df_unique
 
-    for _, row in tqdm(df.iterrows(), total=len(df)):
+    # Process in batches
+    num_batches = (len(df) + batch_size - 1) // batch_size
+    for i in range(num_batches):
+        batch_df = df.iloc[i * batch_size : (i + 1) * batch_size]
+        logging.info(f'Processing batch {i + 1}/{num_batches} with {len(batch_df)} samples')
+
+        for _, row in tqdm(batch_df.iterrows(), total=len(batch_df)):
+            try:
+                eval_result = evaluate_question(row['task'], row['solution'], k=k)
+                eval_result.update(
+                    {
+                        'source_idx': row['source_idx'],
+                        'level': row['level'],
+                        'n_augmented': df[df['source_idx'] == row['source_idx']].shape[0],
+                        'code': row.get('code', ''),
+                        'novelty': row.get('novelty', ''),
+                        'difficulty': row.get('difficulty', ''),
+                    },
+                )
+                results.append(eval_result)
+            except Exception as e:
+                logging.exception(f'Failed evaluation for row {row["source_idx"]}: {e}')
+                continue
+
+    return pd.DataFrame(results)
+
+
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+
+def run_full_evaluation_parallel(
+    df: pd.DataFrame,
+    k: int = 5,
+    levels: list[int] = None,
+    max_samples: int = None,
+    batch_size: int = 1000,
+    max_workers: int = 200,  # Number of parallel threads
+) -> pd.DataFrame:
+    results = []
+
+    # Optional filtering
+    if levels is not None:
+        df = df[df['level'].isin(levels)]
+
+    if max_samples is not None:
+        df_unique = df.groupby('source_idx').head(1)
+        if len(df_unique) >= max_samples:
+            df = df_unique.sample(n=max_samples, random_state=42)
+        else:
+            logging.warning(f'Requested {max_samples} samples, but only {len(df_unique)} available. Using all.')
+            df = df_unique
+
+    def process_row(row):
         try:
             eval_result = evaluate_question(row['task'], row['solution'], k=k)
             eval_result.update(
@@ -254,10 +307,23 @@ def run_full_evaluation(
                     'difficulty': row.get('difficulty', ''),
                 },
             )
-            results.append(eval_result)
+            return eval_result
         except Exception as e:
             logging.exception(f'Failed evaluation for row {row["source_idx"]}: {e}')
-            continue
+            return None
+
+    # Batch processing
+    num_batches = (len(df) + batch_size - 1) // batch_size
+    for i in range(num_batches):
+        batch_df = df.iloc[i * batch_size : (i + 1) * batch_size]
+        logging.info(f'Processing batch {i + 1}/{num_batches} with {len(batch_df)} samples')
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(process_row, row): idx for idx, row in batch_df.iterrows()}
+            for future in tqdm(as_completed(futures), total=len(futures)):
+                result = future.result()
+                if result:
+                    results.append(result)
 
     return pd.DataFrame(results)
 
@@ -271,29 +337,41 @@ def add_columns_not_in_df(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
 
 
 if __name__ == '__main__':
-    from pipelines.gsm_evaluation_dataset_creation import create_gsm_evaluation_datasets
-
-    selected_gsm8k, selected_easy, selected_medium, selected_hard = create_gsm_evaluation_datasets(to_df=True)
+    # selected_gsm8k, selected_easy, selected_medium, selected_hard = create_gsm_evaluation_datasets(to_df=True)
     LEVELS_TO_EVALUATE = 10
     levels = list(range(LEVELS_TO_EVALUATE + 1))
-    df_n30 = pd.read_csv(FOLDER_PREFIX + N30_FOLDER + 'augmented_best.csv')
-    df_gsm_10_eval = pd.read_csv(FOLDER_PREFIX + N10_GSM8K_EVAL_FOLDER + 'augmented_best.csv')
+    df_n256_all = pd.read_csv(FOLDER_PREFIX + 'all_df_256.csv', header=None)
+    df_n256_best = pd.read_csv(FOLDER_PREFIX + 'best_df_256.csv')
+    # df_n30 = pd.read_csv(FOLDER_PREFIX + N30_FOLDER + 'augmented_best.csv')
+    # df_gsm_10_eval = pd.read_csv(FOLDER_PREFIX + N10_GSM8K_EVAL_FOLDER + 'augmented_best.csv')
 
     datasets_to_process = [
-        (selected_gsm8k, 'selected_gsm8k'),
-        (selected_easy, 'selected_easy'),
-        (selected_medium, 'selected_medium'),
-        (selected_hard, 'selected_hard'),
+        (df_n256_all, 'df_n256_all'),
+        (df_n256_best, 'df_n256_best'),
+        # (selected_medium, 'selected_medium'),
+        # (selected_hard, 'selected_hard'),
     ]
 
+    colnames = df_n256_all.columns.tolist()
+    colnames[0] = 'Unnamed: 0'
+    colnames[1] = 'source_idx'
+    colnames[2] = 'level'
+    colnames[3] = 'code'
+    colnames[4] = 'task'
+    colnames[5] = 'solution'
+    colnames[6] = 'novelty'
+    colnames[7] = 'difficulty'
+    colnames[8] = 'is_correct'
+    colnames[9] = 'reason'
+    df_n256_all.columns = colnames
     for df, df_name in datasets_to_process:
         df = add_columns_not_in_df(df, ['source_idx', 'level', 'n_augmented', 'code', 'novelty', 'difficulty'])
-        df['source_idx'] = df['original_id']
-        df['level'] = 0
-        df['task'] = df['question']
-        df['solution'] = df['answer']
+        # df['source_idx'] = df['original_id']
+        # df['level'] = 0
+        # df['task'] = df['question']
+        # df['solution'] = df['answer']
 
-        result_df = run_full_evaluation(
+        result_df = run_full_evaluation_parallel(
             df=df,
             k=K_SOLVE_ATTEMPTS,
             levels=None,
