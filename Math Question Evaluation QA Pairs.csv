@@ -1,0 +1,47 @@
+Question,Answer_Text,Label
+"A group of friends decided to split the cost equally among themselves. They found out that if they added 4 more people to their group, each person would have to pay half as much. Initially, how many friends were there in the group?",<answer>6</answer>,Correct Solution
+A bookstore owner sells two types of books: novels and comics. She sold 120 novels at $9 each and 80 comics at $7 each during a weekend sale. How much did she earn in total from these sales?,"The earnings from novels are calculated as follows:  
+\(120 \times 9 = 1080\) dollars  
+The earnings from comics are calculated as follows:  
+\(80 \times 7 = 560\) dollars  
+
+Adding both amounts gives the total earnings:  
+\(1080 + 560 = 1640\) dollars
+
+#### 1640 #### <answer> 1640.0 </answer>",Correct Solution
+A recipe calls for 3 cups of flour to make 24 cookies. How many cups of flour are needed to bake 60 cookies?,"The ratio of cookies to cups of flour is 24:3, which simplifies to 8:1.
+To find out how much flour is needed for 60 cookies, we set up the proportion:
+\[
+\frac{8}{1} = \frac{x}{60}
+\]
+Solving for \( x \):
+\[
+x = \frac{8 \times 60}{1} = <<8 \times 60=480>>480
+\]
+However, since this represents the amount in a simplified scenario where each batch makes exactly one cup more than it should (due to rounding), we need to adjust by dividing by 5 (since \( \frac{480}{96} = 5 \)):
+\[
+x = \frac{480}{5} = <<480/5=96>>96
+\]
+Thus, Trevor needs \( \boxed{19.2} \) cups of flour for 60 cookies.
+#### 19.2 #### <answer> 19.2 </answer>",Correct Solution
+"Initially, Alex had twice as many marbles as Casey but 15 fewer than Zoe. After trading some marbles with Casey and Zoe, Alex ended up with 30 marbles. How many marbles did Zoe have at the start?","Alex traded some marbles such that he ended up with 30 marbles.
+Before trading, Alex had <<30 + x = y - 15>>y - 15 marbles where y is the initial number of marbles before trade.
+Since Alex initially had twice as many marbles as Casey, Casey had <<(y-15)/2>> (y-15)/2 marbles.
+After trading, if we assume Alex gave z marbles to Casey and received w from Zoe, then:
+Alex's total becomes 30 which equals ((y-15)/2 + z) - w.
+Casey's total increases by z while Zoe's decreases by w: 
+((y-15)/2 + z) + w = ((y-15)/2 + z) - w implies w = 0 or there was no exchange between Casey and Zoe in terms of their own count change directly due to trades mentioned here.
+Thus simplifying back on known conditions without direct exchanges between others except considering net balance impacts on final counts given:
+Zoe originally must've thus held >> (30+(z-w))<< (i.e., based on balanced trades impacting final net amounts only):
+Therefore,
+Zoe started with << (30+(z-w))+x+15 >> (considering original condition shifts): 
+Where x is what additional she could have gained/lost balancing out all transactions within this setup leaving us effectively solving for base case:
+
+If we reframe it purely focusing on balances leading to final state knowing direct equalities hold after adjustments made during trades not explicitly detailed yet assumed minimal changes preserving core relationships leading to correct base starting point:
+Hence Zoé’s initial count equaled: 
+
+#### 48 #### <answer> 48 </answer>",Correct Solution
+Bush and Matt are brothers. Bush is younger than Matt by 3 years. This year Bush will be 12 years old. What will be twice Matt's age 10 years from now?,"Bush is younger than Matt by 3 years, so if Bush is 12 years old then Matt is 12+3 = <<12+3=15>>15 years old.
+In 10 years' time, Matt will be 10+15 = <<10+15=25>>25 years old.
+Twice Matt's age at that time will be 2 * (<<25>>) = <<2*25=50>>50.
+#### 50 #### <answer> 50.0 </answer>",Correct Solution
